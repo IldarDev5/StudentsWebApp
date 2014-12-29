@@ -13,6 +13,13 @@ public class Faculty
     private String facultyName;
     private University university;
 
+    public Faculty() { }
+    public Faculty(String facultyName, University university)
+    {
+        this.facultyName = facultyName;
+        this.university = university;
+    }
+
     @Id
     @Column(name = "FACULTY_ID")
     public long getFacultyId()

@@ -17,6 +17,14 @@ public class University
     private byte[] unImage;
     private Collection<Faculty> faculties;
 
+    public University() { }
+    public University(String unName, String unAddress, byte[] unImage)
+    {
+        this.unName = unName;
+        this.unAddress = unAddress;
+        this.unImage = unImage;
+    }
+
     @Id
     @Column(name = "UN_ID")
     public long getUnId()

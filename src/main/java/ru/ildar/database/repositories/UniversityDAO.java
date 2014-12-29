@@ -5,5 +5,5 @@ import ru.ildar.database.entities.University;
 
 public interface UniversityDAO extends CrudRepository<University, Long>
 {
-
+    University findByUnName(String unName);
 }

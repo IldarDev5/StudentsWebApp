@@ -13,6 +13,16 @@ public class Grade
     private Person student;
     private String subject;
 
+    public Grade() { }
+    public Grade(long gradeValue, long semester, Person teacher, Person student, String subject)
+    {
+        this.gradeValue = gradeValue;
+        this.semester = semester;
+        this.teacher = teacher;
+        this.student = student;
+        this.subject = subject;
+    }
+
     @Id
     @Column(name = "GRADE_ID")
     public long getGradeId()

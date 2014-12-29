@@ -68,8 +68,7 @@ create table students_app.grades(
     references students_app.subjects(subject_name)
 );
 
-
-insert into students_app.roles(role_name) values ('Student');
-insert into students_app.roles(role_name) values ('Teacher');
-insert into students_app.roles(role_name) values ('Faculty_Moderator');
-insert into students_app.roles(role_name) values ('Admin');
+insert into students_app.roles(role_name) values ('ROLE_STUDENT');
+insert into students_app.roles(role_name) values ('ROLE_TEACHER');
+insert into students_app.roles(role_name) values ('ROLE_FACULTY_MODERATOR');
+insert into students_app.roles(role_name) values ('ROLE_ADMIN');

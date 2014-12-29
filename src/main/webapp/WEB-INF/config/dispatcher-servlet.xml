@@ -14,6 +14,8 @@
     <mvc:annotation-driven />
 
     <mvc:resources mapping="/scripts/**" location="/WEB-INF/js/" />
+    <mvc:resources mapping="/css/**" location="/WEB-INF/styles/" />
+    <mvc:resources mapping="/images/**" location="/WEB-INF/images/" />
     
     <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />

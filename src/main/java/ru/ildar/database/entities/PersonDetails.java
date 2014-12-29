@@ -4,9 +4,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
-/**
- * Created by Ildar on 28.12.14.
- */
 @Entity
 @Table(name = "PEOPLE_DETAILS", schema = "STUDENTS_APP", catalog = "")
 public class PersonDetails
@@ -17,8 +14,22 @@ public class PersonDetails
     private String email;
     private String title;
     private Timestamp enrollment;
+    private Faculty faculty;
     private byte[] personPhoto;
     private Person person;
+
+    public PersonDetails() { }
+    public PersonDetails(String username, String firstName, String lastName,
+                         String email, String title, Timestamp enrollment, byte[] personPhoto)
+    {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.title = title;
+        this.enrollment = enrollment;
+        this.personPhoto = personPhoto;
+    }
 
     @Id
     @Column(name = "USERNAME")
@@ -112,7 +123,7 @@ public class PersonDetails
 
         PersonDetails that = (PersonDetails) o;
 
-        return username == that.getUsername();
+        return username.equals(that.getUsername());
     }
 
     @Override
@@ -132,4 +143,10 @@ public class PersonDetails
     {
         this.person = person;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "FACULTY_ID", referencedColumnName = "FACULTY_ID", nullable = false)
+    public Faculty getFaculty() { return faculty; }
+
+    public void setFaculty(Faculty faculty) { this.faculty = faculty; }
 }

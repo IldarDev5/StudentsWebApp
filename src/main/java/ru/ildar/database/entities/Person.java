@@ -2,9 +2,6 @@ package ru.ildar.database.entities;
 
 import javax.persistence.*;
 
-/**
- * Created by Ildar on 28.12.14.
- */
 @Entity
 @Table(name = "PEOPLE", schema = "STUDENTS_APP", catalog = "")
 public class Person
@@ -13,6 +10,14 @@ public class Person
     private String password;
     private String role;
     private PersonDetails details;
+
+    public Person() { }
+    public Person(String username, String password, String role)
+    {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
     @Id
     @Column(name = "USERNAME")
@@ -67,7 +72,7 @@ public class Person
         return username.hashCode();
     }
 
-    @OneToOne(mappedBy = "person")
+    @OneToOne(mappedBy = "person", cascade = CascadeType.REMOVE)
     public PersonDetails getDetails()
     {
         return details;
