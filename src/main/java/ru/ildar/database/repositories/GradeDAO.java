@@ -9,4 +9,5 @@ import java.util.List;
 public interface GradeDAO extends CrudRepository<Grade, Long>
 {
     List<Grade> findByStudentAndSemester(Person student, long semester);
+    List<Grade> findByStudent_Username(String userName);
 }

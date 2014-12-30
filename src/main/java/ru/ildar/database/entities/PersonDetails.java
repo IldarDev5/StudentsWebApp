@@ -19,6 +19,7 @@ public class PersonDetails
     private Person person;
 
     public PersonDetails() { }
+    public PersonDetails(String username) { this.username = username; }
     public PersonDetails(String username, String firstName, String lastName,
                          String email, String title, Timestamp enrollment, byte[] personPhoto)
     {

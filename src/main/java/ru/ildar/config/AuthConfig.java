@@ -31,9 +31,8 @@ public class AuthConfig extends WebSecurityConfigurerAdapter
                 .usernameParameter("username").passwordParameter("password")
             .and().logout().logoutUrl("/logout").logoutSuccessUrl("/startPage")
             .and().authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')").
-             antMatchers("/moderation/**")
-              .access("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER','ROLE_FACULTY_MODERATOR')")
-             .antMatchers("/stud/**")
-              .access("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER','ROLE_FACULTY_MODERATOR','ROLE_STUDENT')");
+                antMatchers("/moderation/**").access("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER')").
+                antMatchers("/stud/**").access("hasAnyRole('ROLE_STUDENT')").
+                antMatchers("/auth/**").access("isFullyAuthenticated()");
     }
 }

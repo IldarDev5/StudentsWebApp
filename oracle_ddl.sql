@@ -1,11 +1,22 @@
 create user students_app identified by ildar;
 grant connect, resource to students_app;
 
+create table students_app.cities(
+  id int primary key,
+  city_name varchar2(100) not null,
+  country varchar2(100) not null,
+
+  constraint uk_city_country unique(city_name, country)
+);
+
 create table students_app.universities(
   un_id int primary key,
   un_name varchar2(150) not null,
-  un_address varchar2(200) not null,
-  un_image blob
+  un_city_id int not null,
+  un_image blob,
+
+  constraint fk_city foreign key(un_city_id)
+    references students_app.cities(id)
 );
 
 create table students_app.faculties(
@@ -70,5 +81,4 @@ create table students_app.grades(
 
 insert into students_app.roles(role_name) values ('ROLE_STUDENT');
 insert into students_app.roles(role_name) values ('ROLE_TEACHER');
-insert into students_app.roles(role_name) values ('ROLE_FACULTY_MODERATOR');
 insert into students_app.roles(role_name) values ('ROLE_ADMIN');

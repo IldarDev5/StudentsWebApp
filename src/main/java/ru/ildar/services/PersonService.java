@@ -47,4 +47,9 @@ public class PersonService
     {
         return personDetailsDAO.findByTitleAndFaculty(title, faculty);
     }
+
+    public void savePersonDetails(PersonDetails details)
+    {
+        personDetailsDAO.save(details);
+    }
 }

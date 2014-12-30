@@ -1,6 +1,15 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header>
     <div id="strapline">
+
+        <sec:authorize access="isFullyAuthenticated()">
+            <h3><a href="/info"><c:out value="${pageContext.request.userPrincipal.name}" /></a></h3>
+            <h3><a href="/logout">Log Out</a></h3>
+        </sec:authorize>
+
         <div id="welcome_slogan">
             <h3>Welcome To Free HTML5 <span>Streets</span></h3>
         </div><!--close welcome_slogan-->
@@ -8,11 +17,27 @@
     <nav>
         <div id="menubar">
             <ul id="nav">
-                <li class="current"><a href="index.html">Home</a></li>
-                <li><a href="ourwork.html">Our Work</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
+                <li class="current"><a href="/startPage">Main Page</a></li>
+
+                <sec:authorize access="hasRole('ROLE_STUDENT')">
+                    <li class="current"><a href="/stud/grades">Grades</a></li>
+                    <li class="current"><a href="/stud/teachers">Teachers</a></li>
+                </sec:authorize>
+
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <li class="current"><a href="/admin/unis">Universities and Faculties</a></li>
+                    <li class="current"><a href="/admin/subjects">Subjects</a></li>
+                    <li class="current"><a href="/admin/teachers">Teachers</a></li>
+                </sec:authorize>
+
+                <sec:authorize access="hasRole('ROLE_TEACHER')">
+                </sec:authorize>
+
+                <sec:authorize access="isAnonymous()">
+                    <li class="current"><a href="/loginPage">Log In</a></li>
+                    <li class="current"><a href="/registerPage?reg=stud">Register as a student</a></li>
+                    <li class="current"><a href="/registerPage?reg=teach">Register as a teacher</a></li>
+                </sec:authorize>
             </ul>
         </div><!--close menubar-->
     </nav>
