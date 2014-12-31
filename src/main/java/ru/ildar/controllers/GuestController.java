@@ -28,19 +28,19 @@ public class GuestController
     @Autowired
     private PersonService personService;
 
-    @RequestMapping("/startPage")
+    @RequestMapping(value = "/startPage", method = RequestMethod.GET)
     public String startPage()
     {
         return "startPage";
     }
 
-    @RequestMapping("/loginPage")
+    @RequestMapping(value = "/loginPage", method = RequestMethod.GET)
     public String loginPage()
     {
         return "loginPage";
     }
 
-    @RequestMapping("/registerPage")
+    @RequestMapping(value = "/registerPage", method = RequestMethod.GET)
     public ModelAndView registerPage(@RequestParam("reg") String regType)
     {
         UserRegisterPojo user = new UserRegisterPojo();

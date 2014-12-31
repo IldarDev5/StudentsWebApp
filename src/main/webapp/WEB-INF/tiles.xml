@@ -25,32 +25,32 @@
 
     <definition name="userDetails" extends="base.definition">
         <put-attribute name="title" value="User Details" />
-        <put-attribute name="body" value="/WEB-INF/pages/userDetails.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/personDetails.jsp" />
     </definition>
 
-    <definition name="auth/info" extends="base.definition">
+    <definition name="info" extends="base.definition">
         <put-attribute name="title" value="Student information" />
         <put-attribute name="body" value="/WEB-INF/pages/info.jsp" />
     </definition>
 
-    <definition name="stud/grades" extends="base.definition">
+    <definition name="grades" extends="base.definition">
         <put-attribute name="title" value="Student grades" />
         <put-attribute name="body" value="/WEB-INF/pages/student/grades.jsp" />
     </definition>
-    <definition name="stud/teachers" extends="base.definition">
+    <definition name="studTeachers" extends="base.definition">
         <put-attribute name="title" value="Student teachers" />
         <put-attribute name="body" value="/WEB-INF/pages/student/teachers.jsp" />
     </definition>
 
-    <definition name="admin/unis" extends="base.definition">
+    <definition name="unis" extends="base.definition">
         <put-attribute name="title" value="Universities and Faculties" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/unis.jsp" />
     </definition>
-    <definition name="admin/subjects" extends="base.definition">
+    <definition name="subjects" extends="base.definition">
         <put-attribute name="title" value="Subjects" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/subjects.jsp" />
     </definition>
-    <definition name="admin/teachers" extends="base.definition">
+    <definition name="teachers" extends="base.definition">
         <put-attribute name="title" value="Teachers" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/teachers.jsp" />
     </definition>

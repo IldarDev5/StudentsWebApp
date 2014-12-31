@@ -18,9 +18,9 @@ public class GradeService
     @Autowired
     private GradeDAO gradeDAO;
 
-    public List<Grade> getStudentGradesInSemester(Person student, int semester)
+    public List<Grade> getStudentGradesInSemester(String studUsername, long semester)
     {
-        return gradeDAO.findByStudentAndSemester(student, semester);
+        return gradeDAO.findByStudent_UsernameAndSemester(studUsername, semester);
     }
 
     public void addGrade(Grade grade)
