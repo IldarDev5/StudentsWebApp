@@ -54,5 +54,9 @@
         <put-attribute name="title" value="Teachers" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/teachers.jsp" />
     </definition>
+    <definition name="faculties" extends="base.definition">
+        <put-attribute name="title" value="Faculties" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/faculties.jsp" />
+    </definition>
 
 </tiles-definitions>

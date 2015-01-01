@@ -4,7 +4,8 @@
 <script type="text/javascript">
     $(function() {
 
-        $('#semesterBox').change(function() {
+        var semesterBox = $('#semesterBox');
+        semesterBox.change(function() {
             var semester = $(this).val();
             $.getJSON("/stud/semesterGrades?sem=" + semester, function(grades) {
                 var table = $('#gradesTable');
@@ -17,12 +18,14 @@
                     table.append(elem);
                 }
             });
-
-            function insertHeadRow(table) {
-                var elem = "<tr><th>Semester</th><th>Grade</th><th>Teacher</th><th>Subject</th></tr>";
-                table.append(elem);
-            }
         });
+
+        function insertHeadRow(table) {
+            var elem = "<tr><th>Semester</th><th>Grade</th><th>Teacher</th><th>Subject</th></tr>";
+            table.append(elem);
+        }
+
+        semesterBox.trigger("change");
     });
 </script>
 

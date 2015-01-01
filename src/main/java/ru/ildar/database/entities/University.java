@@ -4,9 +4,6 @@ import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
 
-/**
- * Created by Ildar on 28.12.14.
- */
 @Entity
 @Table(name = "UNIVERSITIES", schema = "STUDENTS_APP", catalog = "")
 public class University

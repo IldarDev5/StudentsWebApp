@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "PEOPLE", schema = "STUDENTS_APP", catalog = "")
-public class Person
+public class Person implements Comparable<Person>
 {
     private String username;
     private String password;
@@ -81,5 +81,22 @@ public class Person
     public void setDetails(PersonDetails details)
     {
         this.details = details;
+    }
+
+    @Override
+    public int compareTo(Person p2)
+    {
+        Person p1 = this;
+
+        PersonDetails pd1 = p1.getDetails();
+        PersonDetails pd2 = p2.getDetails();
+
+        if(pd1 == null || pd2 == null)
+            return 0;
+
+        if(!pd1.getFirstName().equals(pd2.getFirstName()))
+            return pd1.getFirstName().compareTo(pd2.getFirstName());
+        else
+            return pd1.getLastName().compareTo(pd2.getLastName());
     }
 }

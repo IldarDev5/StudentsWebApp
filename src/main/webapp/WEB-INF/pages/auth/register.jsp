@@ -1,5 +1,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h1>Register</h1>
+<span style="color: red">
+    <c:if test="${passNotEqual != null}">
+        Please enter equal passwords.
+    </c:if>
+    <c:if test="${hasUsername != null}">
+        Such username already exists. Please choose another.
+    </c:if>
+</span>
 <form:form method="post" action="/registerPage" commandName="user">
     <table>
         <tr>

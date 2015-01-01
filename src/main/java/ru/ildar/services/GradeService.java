@@ -7,10 +7,7 @@ import ru.ildar.database.entities.Person;
 import ru.ildar.database.entities.PersonDetails;
 import ru.ildar.database.repositories.GradeDAO;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 @Service
 public class GradeService
@@ -37,26 +34,19 @@ public class GradeService
         return results;
     }
 
-    public Set<Person> getStudentTeachers(String studName)
+    public Map<Person, Set<String>> getStudentTeachers(String studName)
     {
         List<Grade> grades = gradeDAO.findByStudent_Username(studName);
-        Set<Person> teachers = new TreeSet<>(personComparator());
-        grades.stream().map(Grade::getTeacher).forEach(teachers::add);
+        Map<Person, Set<String>> teachers = new TreeMap<>();
+        grades.stream().forEach((gr) ->
+        {
+            Set<String> subjects = teachers.get(gr.getTeacher());
+            if(subjects != null)
+                subjects.add(gr.getSubjectName());
+            else
+                teachers.put(gr.getTeacher(), new HashSet<>(Arrays.asList(gr.getSubjectName())));
+        });
 
         return teachers;
-    }
-
-    private Comparator<? super Person> personComparator()
-    {
-        return (p1, p2) ->
-        {
-            PersonDetails pd1 = p1.getDetails();
-            PersonDetails pd2 = p2.getDetails();
-
-            if(!pd1.getFirstName().equals(pd2.getFirstName()))
-                return pd1.getFirstName().compareTo(pd2.getFirstName());
-            else
-                return pd1.getLastName().compareTo(pd2.getLastName());
-        };
     }
 }

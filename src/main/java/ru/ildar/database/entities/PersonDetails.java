@@ -2,7 +2,8 @@ package ru.ildar.database.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Arrays;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "PEOPLE_DETAILS", schema = "STUDENTS_APP", catalog = "")
@@ -13,7 +14,7 @@ public class PersonDetails
     private String lastName;
     private String email;
     private String title;
-    private Timestamp enrollment;
+    private Date enrollment;
     private Faculty faculty;
     private byte[] personPhoto;
     private Person person;
@@ -21,7 +22,7 @@ public class PersonDetails
     public PersonDetails() { }
     public PersonDetails(String username) { this.username = username; }
     public PersonDetails(String username, String firstName, String lastName,
-                         String email, String title, Timestamp enrollment, byte[] personPhoto)
+                         String email, String title, Date enrollment, byte[] personPhoto)
     {
         this.username = username;
         this.firstName = firstName;
@@ -30,6 +31,11 @@ public class PersonDetails
         this.title = title;
         this.enrollment = enrollment;
         this.personPhoto = personPhoto;
+    }
+
+    public String enrollmentDateAsString()
+    {
+        return new SimpleDateFormat("dd/MM/yyyy").format(enrollment);
     }
 
     @Id
@@ -94,12 +100,12 @@ public class PersonDetails
 
     @Basic
     @Column(name = "ENROLLMENT")
-    public Timestamp getEnrollment()
+    public Date getEnrollment()
     {
         return enrollment;
     }
 
-    public void setEnrollment(Timestamp enrollment)
+    public void setEnrollment(Date enrollment)
     {
         this.enrollment = enrollment;
     }

@@ -13,8 +13,11 @@ import ru.ildar.database.entities.Person;
 import ru.ildar.services.GradeService;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.BinaryOperator;
 
 @Controller
 public class StudentController
@@ -33,8 +36,15 @@ public class StudentController
     public ModelAndView studTeachers(Principal principal)
     {
         String studName = principal.getName();
-        Set<Person> teachers = gradeService.getStudentTeachers(studName);
-        return new ModelAndView("studTeachers", "teachers", teachers);
+        Map<Person, Set<String>> teachers = gradeService.getStudentTeachers(studName);
+
+        Map<Person, String> teachersSubjs = new HashMap<>();
+        teachers.entrySet().stream().forEach((t) ->
+        {
+            teachersSubjs.put(t.getKey(), t.getValue().stream().reduce((s, s2) -> s + ", " + s2).get());
+        });
+
+        return new ModelAndView("studTeachers", "teachers", teachersSubjs);
     }
 
     @RequestMapping(value = "stud/semesterGrades", method = RequestMethod.GET,
@@ -42,6 +52,8 @@ public class StudentController
     @ResponseBody
     public List<Grade> semesterGrades(@RequestParam("sem") long semester, Principal principal)
     {
-        return gradeService.getStudentGradesInSemester(principal.getName(), semester);
+        List<Grade> grades = gradeService.getStudentGradesInSemester(principal.getName(), semester);
+        grades.stream().forEach((g) -> { g.setStudent(null); g.getTeacher().setDetails(null); });
+        return grades;
     }
 }
