@@ -22,7 +22,7 @@ public class PersonDetails
     public PersonDetails() { }
     public PersonDetails(String username) { this.username = username; }
     public PersonDetails(String username, String firstName, String lastName,
-                         String email, String title, Date enrollment, byte[] personPhoto)
+                         String email, String title, Date enrollment, Faculty faculty, byte[] personPhoto)
     {
         this.username = username;
         this.firstName = firstName;

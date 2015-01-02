@@ -2,9 +2,6 @@ package ru.ildar.database.entities;
 
 import javax.persistence.*;
 
-/**
- * Created by Ildar on 28.12.14.
- */
 @Entity
 @Table(name = "FACULTIES", schema = "STUDENTS_APP", catalog = "")
 public class Faculty

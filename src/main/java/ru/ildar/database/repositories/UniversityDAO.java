@@ -1,13 +1,10 @@
 package ru.ildar.database.repositories;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import ru.ildar.database.entities.University;
 
 import java.util.List;
 
-public interface UniversityDAO extends CrudRepository<University, Long>
+public interface UniversityDAO extends PagingAndSortingRepository<University, Long>
 {
-    University findByUnName(String unName);
-    List<University> find(PageRequest pageRequest);
 }

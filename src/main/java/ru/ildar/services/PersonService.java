@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.Faculty;
 import ru.ildar.database.entities.Person;
 import ru.ildar.database.entities.PersonDetails;
+import ru.ildar.database.entities.University;
+import ru.ildar.database.repositories.FacultyDAO;
 import ru.ildar.database.repositories.PersonDAO;
 import ru.ildar.database.repositories.PersonDetailsDAO;
+import ru.ildar.database.repositories.UniversityDAO;
 
 import java.util.List;
 
@@ -17,6 +20,8 @@ public class PersonService
     private PersonDAO personDAO;
     @Autowired
     private PersonDetailsDAO personDetailsDAO;
+    @Autowired
+    private FacultyDAO facultyDAO;
 
     public void addPerson(Person person)
     {
@@ -48,8 +53,15 @@ public class PersonService
         return personDetailsDAO.findByTitleAndFaculty(title, faculty);
     }
 
-    public void savePersonDetails(PersonDetails details)
+    public void saveOrUpdatePersonDetails(PersonDetails details)
     {
+        personDetailsDAO.save(details);
+    }
+
+    public void setFacultyAndUpdate(PersonDetails details, long facultyId)
+    {
+        Faculty fac = facultyDAO.findOne(facultyId);
+        details.setFaculty(fac);
         personDetailsDAO.save(details);
     }
 }

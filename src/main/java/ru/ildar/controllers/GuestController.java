@@ -79,7 +79,7 @@ public class GuestController
     @RequestMapping(value = "/userDetails", method = RequestMethod.POST)
     public String userDetails(@ModelAttribute("user") PersonDetails details)
     {
-        personService.savePersonDetails(details);
+        personService.saveOrUpdatePersonDetails(details);
         return "redirect:/startPage";
     }
 

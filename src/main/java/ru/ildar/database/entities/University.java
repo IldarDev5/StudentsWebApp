@@ -1,7 +1,6 @@
 package ru.ildar.database.entities;
 
 import javax.persistence.*;
-import java.util.Arrays;
 import java.util.Collection;
 
 @Entity
@@ -13,13 +12,15 @@ public class University
     private String unAddress;
     private byte[] unImage;
     private Collection<Faculty> faculties;
+    private City city;
 
     public University() { }
-    public University(String unName, String unAddress, byte[] unImage)
+    public University(String unName, String unAddress, City city, byte[] unImage)
     {
         this.unName = unName;
         this.unAddress = unAddress;
         this.unImage = unImage;
+        this.city = city;
     }
 
     @Id
@@ -32,6 +33,18 @@ public class University
     public void setUnId(long unId)
     {
         this.unId = unId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "UN_CITY_ID", referencedColumnName = "ID", nullable = false)
+    public City getCity()
+    {
+        return city;
+    }
+
+    public void setCity(City city)
+    {
+        this.city = city;
     }
 
     @Basic

@@ -23,11 +23,6 @@
         <put-attribute name="body" value="/WEB-INF/pages/auth/register.jsp" />
     </definition>
 
-    <definition name="userDetails" extends="base.definition">
-        <put-attribute name="title" value="User Details" />
-        <put-attribute name="body" value="/WEB-INF/pages/personDetails.jsp" />
-    </definition>
-
     <definition name="info" extends="base.definition">
         <put-attribute name="title" value="Student information" />
         <put-attribute name="body" value="/WEB-INF/pages/info.jsp" />

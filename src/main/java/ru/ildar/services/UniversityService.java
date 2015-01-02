@@ -2,10 +2,12 @@ package ru.ildar.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.University;
 import ru.ildar.database.repositories.UniversityDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,14 +26,14 @@ public class UniversityService
         return universityDAO.findOne(id);
     }
 
-    public University getByName(String unName)
-    {
-        return universityDAO.findByUnName(unName);
-    }
-
     public List<University> getUniversities(int pageNumber, int unisPerPage)
     {
-        return universityDAO.find(new PageRequest(pageNumber, unisPerPage));
+        Slice<University> slice = universityDAO.findAll(new PageRequest(pageNumber, unisPerPage));
+        List<University> result = new ArrayList<>();
+        for(University un : slice)
+            result.add(un);
+
+        return result;
     }
 
     public int getPagesCount(int unisPerPage)
