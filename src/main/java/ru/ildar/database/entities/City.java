@@ -33,6 +33,7 @@ public class City
         this.id = id;
     }
 
+    @Column(name = "CITY_NAME")
     public String getCityName()
     {
         return cityName;
@@ -43,6 +44,7 @@ public class City
         this.cityName = cityName;
     }
 
+    @Column(name = "COUNTRY")
     public String getCountry()
     {
         return country;

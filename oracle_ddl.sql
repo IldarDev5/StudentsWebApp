@@ -43,19 +43,20 @@ create table students_app.people(
 
 create table students_app.people_details(
   username varchar2(70) primary key,
-  first_name varchar2(100) not null,
-  last_name varchar2(100) not null,
+  first_name varchar2(100),
+  last_name varchar2(100),
   email varchar2(100),
-  faculty_id int not null,
+  faculty_id int,
   title varchar2(150),
   enrollment date,
   person_photo blob,
 
   constraint fk_people foreign key(username)
-    references students_app.people(username),
+  references students_app.people(username),
   constraint fk_faculties foreign key(faculty_id)
-    references students_app.faculties(faculty_id)
+  references students_app.faculties(faculty_id)
 );
+
 
 create table students_app.subjects(
   subject_name varchar2(100) primary key

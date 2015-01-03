@@ -73,7 +73,7 @@ public class GuestController
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         PersonDetails details = new PersonDetails(user.getUsername());
-        return new ModelAndView("userDetails", "user", details);
+        return new ModelAndView("info", "user", details);
     }
 
     @RequestMapping(value = "/userDetails", method = RequestMethod.POST)

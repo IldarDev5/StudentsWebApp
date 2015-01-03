@@ -35,6 +35,8 @@ public class PersonDetails
 
     public String enrollmentDateAsString()
     {
+        if(enrollment == null)
+            return "";
         return new SimpleDateFormat("dd/MM/yyyy").format(enrollment);
     }
 

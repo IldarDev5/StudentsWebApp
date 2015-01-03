@@ -47,43 +47,49 @@
             var updForm = $('#updateForm');
 
             updForm.submit(function() {
-                var firstName = $('#firstName').text();
-                var lastName = $('#lastName').text();
-                var email = $('#email').text();
-                var title = $('#title') ? $('#title').text() : null;
-                var enrollment = $('#enrollment').text();
+                var firstName = $('#firstName').val();
+                var lastName = $('#lastName').val();
+                var email = $('#email').val();
+                var title = $('#title') ? $('#title').val() : null;
+                var enrollment = $('#enrollment').val();
                 var city = $('#citySelect').val();
                 var university = $('#universitySelect').val();
                 var facultyId = $('#facultySelect').val();
 
                 $.ajax({
-                    dataType : 'json',
+                    contentType : 'application/json',
                     url : updForm.attr('action'),
-                    headers : { '${_csrf.headerName}' : '${_csrf.token}' },
-                    data : {
+                    data : JSON.stringify({
                         firstName : firstName,
                         lastName : lastName,
                         email : email,
                         title : title,
                         enrollment : enrollment,
                         facultyId : facultyId
-                    },
+                    }),
                     type : 'post',
+                    beforeSend : function(xhr) {
+                        xhr.setRequestHeader('${_csrf.headerName}', '${_csrf.token}');
+                    },
                     success : function(data) {
-                        alert('In success func.');
-                        if(data == true) {
+                        university = $('#universitySelect').text();
+                        city = $('#citySelect').text();
+                        var faculty = $('#facultySelect').text();
+
+                        if(data) {
                             $('#firstNameTd').html(firstName);
                             $('#lastNameTd').html(lastName);
                             $('#emailTd').html(email);
                             if($('#titleTd'))
                                 $('#titleTd').html(title);
                             $('#enrollmentTd').html(enrollment);
-                            $('#universityTd').html(university);
-                            $('#facultyTd').html(facultyId);
+                            $('#universityTd').html(university + ", " + city);
+                            $('#facultyTd').html(faculty);
 
                             $('#updateSpan').html('Data is successfully updated.');
                         }
                     }
+
                 });
 
                 return false;
@@ -144,25 +150,25 @@
         <table>
             <tr>
                 <td><label for="firstName">First name:</label></td>
-                <td><input type="text" id="firstName"></td>
+                <td><input type="text" id="firstName" value="${user.details.firstName}"></td>
             </tr>
             <tr>
                 <td><label for="lastName">Last name:</label></td>
-                <td><input type="text" id="lastName"></td>
+                <td><input type="text" id="lastName" value="${user.details.lastName}"></td>
             </tr>
             <tr>
                 <td><label for="email">E-Mail:</label></td>
-                <td><input type="text" id="email"></td>
+                <td><input type="text" id="email" value="${user.details.email}"></td>
             </tr>
             <sec:authorize access="hasRole('ROLE_TEACHER')">
                 <tr>
                     <td><label for="title">Your title:</label></td>
-                    <td><input type="text" id="title"></td>
+                    <td><input type="text" id="title" value="${user.details.title}"></td>
                 </tr>
             </sec:authorize>
             <tr>
                 <td><label for="enrollment">Enrollment/work start date:</label></td>
-                <td><input type="text" id="enrollment"></td>
+                <td><input type="text" id="enrollment" value="${user.details.enrollmentDateAsString()}"></td>
             </tr>
             <tr>
                 <td><label for="citySelect">City:</label></td>

@@ -41,23 +41,90 @@ public class AuthController
         return new ModelAndView("info", "user", person);
     }
 
-    @RequestMapping(value = "/auth/info", method = RequestMethod.POST)
+    public static class JsonPersonDetails
+    {
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String enrollment;
+        private String title;
+        private String facultyId;
+
+        public String getFirstName()
+        {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName)
+        {
+            this.firstName = firstName;
+        }
+
+        public String getLastName()
+        {
+            return lastName;
+        }
+
+        public void setLastName(String lastName)
+        {
+            this.lastName = lastName;
+        }
+
+        public String getEmail()
+        {
+            return email;
+        }
+
+        public void setEmail(String email)
+        {
+            this.email = email;
+        }
+
+        public String getEnrollment()
+        {
+            return enrollment;
+        }
+
+        public void setEnrollment(String enrollment)
+        {
+            this.enrollment = enrollment;
+        }
+
+        public String getTitle()
+        {
+            return title;
+        }
+
+        public void setTitle(String title)
+        {
+            this.title = title;
+        }
+
+        public String getFacultyId()
+        {
+            return facultyId;
+        }
+
+        public void setFacultyId(String facultyId)
+        {
+            this.facultyId = facultyId;
+        }
+    }
+
+    @RequestMapping(value = "/auth/info", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public String userInfo(@RequestBody Map<String, String> map, Principal principal)
+    public String userInfo(@RequestBody JsonPersonDetails pd, Principal principal)
             throws ParseException
     {
-        String firstName = map.get("firstName");
-        String lastName = map.get("lastName");
-        String email = map.get("email");
-        String title = map.get("title");
-        String enrollment = map.get("enrollment");
-        int facultyId = Integer.parseInt(map.get("facultyId"));
+        int facultyId = Integer.parseInt(pd.getFacultyId());
 
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        Date dt = pd.getEnrollment().equals("") ? null :
+                new Date(fmt.parse(pd.getEnrollment()).getTime());
 
         String username = principal.getName();
-        PersonDetails details = new PersonDetails(username, firstName, lastName, email,
-                        title, new Date(fmt.parse(enrollment).getTime()), null, null);
+        PersonDetails details = new PersonDetails(username, pd.getFirstName(), pd.getLastName(),
+                    pd.getEmail(), pd.getTitle(), dt, null, null);
 
         personService.setFacultyAndUpdate(details, facultyId);
         return "true";
