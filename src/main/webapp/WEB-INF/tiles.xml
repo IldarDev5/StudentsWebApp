@@ -53,5 +53,13 @@
         <put-attribute name="title" value="Faculties" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/faculties.jsp" />
     </definition>
+    <definition name="addFaculty" extends="base.definition">
+        <put-attribute name="title" value="Add new faculty" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/addFaculty.jsp" />
+    </definition>
+    <definition name="addSubject" extends="base.definition">
+        <put-attribute name="title" value="Add new subject" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/addSubject.jsp" />
+    </definition>
 
 </tiles-definitions>

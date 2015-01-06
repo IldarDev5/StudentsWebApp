@@ -42,6 +42,9 @@
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('ROLE_TEACHER')">
+                    <li class="current"><a href=""></a></li>
+                    <li class="current"><a href=""></a></li>
+
                 </sec:authorize>
 
                 <sec:authorize access="isAnonymous()">

@@ -4,12 +4,14 @@
 <%--@elvariable id="teachers" type="java.util.Map<ru.ildar.database.entities.Person, java.lang.String>"--%>
 <table>
     <tr>
+        <th>Username</th>
         <th>First Name</th>
         <th>Last name</th>
         <th>Subjects</th>
     </tr>
     <c:forEach items="${teachers}" var="teacher">
         <tr>
+            <td><c:out value="${teacher.key.username}" /></td>
             <td><c:out value="${teacher.key.details.firstName}" /></td>
             <td><c:out value="${teacher.key.details.lastName}" /></td>
             <td><c:out value="${teacher.value}" /></td>

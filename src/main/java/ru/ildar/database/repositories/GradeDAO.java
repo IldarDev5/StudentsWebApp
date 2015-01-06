@@ -10,4 +10,5 @@ public interface GradeDAO extends CrudRepository<Grade, Long>
 {
     List<Grade> findByStudent_UsernameAndSemester(String studUsername, long semester);
     List<Grade> findByStudent_Username(String userName);
+    List<Grade> findBySubjectName(String subjectName);
 }

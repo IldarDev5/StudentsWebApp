@@ -6,4 +6,5 @@ import ru.ildar.database.entities.University;
 
 public interface FacultyDAO extends CrudRepository<Faculty, Long>
 {
+    Iterable<Faculty> findByUniversity_UnId(long universityId);
 }

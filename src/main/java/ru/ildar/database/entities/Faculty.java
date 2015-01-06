@@ -1,6 +1,8 @@
 package ru.ildar.database.entities;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "FACULTIES", schema = "STUDENTS_APP", catalog = "")
@@ -8,12 +10,16 @@ public class Faculty
 {
     private long facultyId;
     private String facultyName;
+    private Date foundDate;
+    private int studentsCount;
+    private int teachersCount;
     private University university;
 
     public Faculty() { }
-    public Faculty(String facultyName, University university)
+    public Faculty(String facultyName, Date foundDate, University university)
     {
         this.facultyName = facultyName;
+        this.foundDate = foundDate;
         this.university = university;
     }
 
@@ -39,6 +45,44 @@ public class Faculty
     public void setFacultyName(String facultyName)
     {
         this.facultyName = facultyName;
+    }
+
+    @Basic
+    @Column(name = "STUDENTS_COUNT")
+    public int getStudentsCount()
+    {
+        return studentsCount;
+    }
+
+    public void setStudentsCount(int studentsCount)
+    {
+        this.studentsCount = studentsCount;
+    }
+
+    @Basic
+    @Column(name = "TEACHERS_COUNT")
+    public int getTeachersCount() { return teachersCount; }
+
+    public void setTeachersCount(int teachersCount) { this.teachersCount = teachersCount; }
+
+    @Basic
+    @Column(name = "FOUND_DATE")
+    public Date getFoundDate()
+    {
+        return foundDate;
+    }
+
+    public void setFoundDate(Date foundDate)
+    {
+        this.foundDate = foundDate;
+    }
+
+    public String foundDateAsString()
+    {
+        if(foundDate == null)
+            return "";
+
+        return new SimpleDateFormat("dd/MM/yyyy").format(foundDate);
     }
 
     @Override

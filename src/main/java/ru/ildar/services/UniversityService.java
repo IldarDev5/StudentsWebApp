@@ -1,5 +1,6 @@
 package ru.ildar.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -39,5 +40,17 @@ public class UniversityService
     public int getPagesCount(int unisPerPage)
     {
         return (int)Math.ceil((double)universityDAO.count() / unisPerPage);
+    }
+
+    public University getByIdWithFaculties(int unId)
+    {
+        University un = getById(unId);
+        Hibernate.initialize(un.getFaculties());
+        return un;
+    }
+
+    public Iterable<University> getUniversitiesByCity(int cityId)
+    {
+        return universityDAO.findByCity_Id(cityId);
     }
 }

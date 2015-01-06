@@ -4,6 +4,7 @@
 
 <%--@elvariable id="user" type="ru.ildar.database.entities.Person"--%>
 <h1>Information about <c:out value="${user.username}" /></h1>
+<img src="/pictures/avatar?username=${user.username}" height="200" />
 <table>
     <tr>
         <td>First name:</td>
@@ -38,112 +39,17 @@
 </table>
 
 <c:if test="${pageContext.request.userPrincipal.name.equals(user.username)}">
+
     <script type="text/javascript">
-        function showUpdateForm() {
-            $('#updateForm').show();
-        }
+        //Necessary variables that are initialized with model values
+        var facultyId = ${user.details.faculty.facultyId};
+        var universityId = ${user.details.faculty.university.unId};
+        var cityId = ${user.details.faculty.university.city.id};
 
-        $(function() {
-            var updForm = $('#updateForm');
-
-            updForm.submit(function() {
-                var firstName = $('#firstName').val();
-                var lastName = $('#lastName').val();
-                var email = $('#email').val();
-                var title = $('#title') ? $('#title').val() : null;
-                var enrollment = $('#enrollment').val();
-                var city = $('#citySelect').val();
-                var university = $('#universitySelect').val();
-                var facultyId = $('#facultySelect').val();
-
-                $.ajax({
-                    contentType : 'application/json',
-                    url : updForm.attr('action'),
-                    data : JSON.stringify({
-                        firstName : firstName,
-                        lastName : lastName,
-                        email : email,
-                        title : title,
-                        enrollment : enrollment,
-                        facultyId : facultyId
-                    }),
-                    type : 'post',
-                    beforeSend : function(xhr) {
-                        xhr.setRequestHeader('${_csrf.headerName}', '${_csrf.token}');
-                    },
-                    success : function(data) {
-                        university = $('#universitySelect').text();
-                        city = $('#citySelect').text();
-                        var faculty = $('#facultySelect').text();
-
-                        if(data) {
-                            $('#firstNameTd').html(firstName);
-                            $('#lastNameTd').html(lastName);
-                            $('#emailTd').html(email);
-                            if($('#titleTd'))
-                                $('#titleTd').html(title);
-                            $('#enrollmentTd').html(enrollment);
-                            $('#universityTd').html(university + ", " + city);
-                            $('#facultyTd').html(faculty);
-
-                            $('#updateSpan').html('Data is successfully updated.');
-                        }
-                    }
-
-                });
-
-                return false;
-            });
-
-            function loadDataForSelect(path, elemId, data, callback) {
-                $.getJSON(path + data, function(elems) {
-                    $.each(elems, function(index, elem) {
-                        $(elemId).append("<option value=\"" + elem.id
-                                + "\">" + elem.value + "</option>");
-                    });
-
-                    if(callback)
-                        callback();
-                });
-            }
-
-            var facultyId = ${user.details.faculty.facultyId};
-            var universityId = ${user.details.faculty.university.unId};
-            var cityId = ${user.details.faculty.university.city.id};
-
-            loadDataForSelect('/auth/cities', '#citySelect', "");
-            loadDataForSelect('/auth/universities', '#universitySelect', "?cityId=" + cityId);
-            loadDataForSelect('/auth/faculties', '#facultySelect', "?universityId=" + universityId);
-
-            var citySelect = $('#citySelect');
-            var uniSelect = $('#universitySelect');
-            var facultySelect = $('#facultySelect');
-
-            facultySelect.val(facultyId);
-            uniSelect.val(universityId);
-            citySelect.val(cityId);
-
-            citySelect.change(function() {
-                var cityId = $(this).val();
-                loadDataForSelect('/auth/universities', '#universitySelect', "?cityId=" + cityId,
-                        function() {
-                            var firstUniId = uniSelect.find("option:first").val();
-                            loadDataForSelect('/auth/faculties',
-                                    '#facultySelect', "?universityId=" + firstUniId);
-                        });
-
-                uniSelect.val(uniSelect.find("option:first").val());
-                facultySelect.val(facultySelect.find("option:first").val());
-            });
-
-            uniSelect.change(function() {
-                var uniId = $(this).val();
-                loadDataForSelect('/auth/faculties', '#facultySelect', "?universityId=" + uniId);
-
-                facultySelect.val(facultySelect.find("option:first").val());
-            });
-        });
+        var csrfToken = '${_csrf.token}';
     </script>
+    <script type="text/javascript" src="/scripts/selectBox.js"></script>
+    <script type="text/javascript" src="/scripts/info.js"></script>
 
     <a href="javascript:showUpdateForm();">Update Info</a>
     <form method="post" action="/auth/info" hidden="hidden" id="updateForm">
@@ -186,5 +92,14 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         <input type="submit" value="Save">
     </form>
+
+    <a href="javascript:showUploadAvatarForm();">Upload new avatar</a>
+    <form hidden="hidden" id="avatarForm" method="post"
+            action="/auth/avatar?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+        Upload new image: <input type="file" name="avatar"> <br />
+        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
+        <input type="submit" value="Upload">
+    </form>
+
     <span id="updateSpan" style="color : red;"></span>
 </c:if>

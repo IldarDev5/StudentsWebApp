@@ -32,18 +32,18 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 </form>
 
+<br />
+
 <%--@elvariable id="pagesCount" type="java.lang.Integer"--%>
 <%--@elvariable id="pageNumber" type="java.lang.Integer"--%>
-<c:forEach begin="0" end="${pagesCount}" step="1" var="page">
+<c:forEach begin="1" end="${pagesCount}" step="1" var="page">
     <c:choose>
         <c:when test="${page eq pageNumber}">
             <b>${page}</b>
         </c:when>
         <c:otherwise>
-            ${page}
+            <a href="/admin/unis/${page}">${page}</a>
         </c:otherwise>
     </c:choose>
-    <c:if test="${page != pagesCount}">
-        ,
-    </c:if>
+    <c:if test="${page != pagesCount}">,</c:if>
 </c:forEach>

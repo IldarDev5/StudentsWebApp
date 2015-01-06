@@ -3,13 +3,18 @@ package ru.ildar.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.*;
 import ru.ildar.database.repositories.CityDAO;
 import ru.ildar.database.repositories.FacultyDAO;
 import ru.ildar.database.repositories.UniversityDAO;
+import ru.ildar.services.CityService;
+import ru.ildar.services.FacultyService;
 import ru.ildar.services.PersonService;
+import ru.ildar.services.UniversityService;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
@@ -24,11 +29,11 @@ public class AuthController
     @Autowired
     private PersonService personService;
     @Autowired
-    private CityDAO cityDAO;
+    private CityService cityService;
     @Autowired
-    private UniversityDAO universityDAO;
+    private UniversityService universityService;
     @Autowired
-    private FacultyDAO facultyDAO;
+    private FacultyService facultyService;
 
     @RequestMapping(value = "/auth/info", method = RequestMethod.GET)
     public ModelAndView userInfo(@RequestParam(value = "username", required = false) String username,
@@ -130,6 +135,20 @@ public class AuthController
         return "true";
     }
 
+    @RequestMapping(value = "/auth/avatar", method = RequestMethod.POST)
+    public String uploadNewAvatar(@RequestParam("avatar")MultipartFile avatar, Principal principal)
+            throws IOException
+    {
+        String username = principal.getName();
+        if(!avatar.isEmpty())
+        {
+            byte[] image = avatar.getBytes();
+            personService.setImage(username, image);
+        }
+
+        return "redirect:/auth/info";
+    }
+
     public static class IdVal
     {
         private long id;
@@ -155,7 +174,7 @@ public class AuthController
     @ResponseBody
     public List<IdVal> cities()
     {
-        Iterable<City> cities = cityDAO.findAll();
+        Iterable<City> cities = cityService.getAllCities();
         List<IdVal> result = new ArrayList<>();
         for(City city : cities)
             result.add(new IdVal(city.getId(), city.getCityName()));
@@ -164,9 +183,9 @@ public class AuthController
 
     @RequestMapping(value = "/auth/universities", method = RequestMethod.GET)
     @ResponseBody
-    public List<IdVal> universities()
+    public List<IdVal> universities(@RequestParam("cityId") int cityId)
     {
-        Iterable<University> universities = universityDAO.findAll();
+        Iterable<University> universities = universityService.getUniversitiesByCity(cityId);
         List<IdVal> result = new ArrayList<>();
         for(University university : universities)
             result.add(new IdVal(university.getUnId(), university.getUnName()));
@@ -175,9 +194,9 @@ public class AuthController
 
     @RequestMapping(value = "/auth/faculties", method = RequestMethod.GET)
     @ResponseBody
-    public List<IdVal> faculties()
+    public List<IdVal> faculties(@RequestParam("universityId") int universityId)
     {
-        Iterable<Faculty> faculties = facultyDAO.findAll();
+        Iterable<Faculty> faculties = facultyService.getFacultiesByUniversity(universityId);
         List<IdVal> result = new ArrayList<>();
         for(Faculty faculty : faculties)
             result.add(new IdVal(faculty.getFacultyId(), faculty.getFacultyName()));

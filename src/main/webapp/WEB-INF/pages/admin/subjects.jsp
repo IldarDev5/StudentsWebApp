@@ -13,13 +13,11 @@
     <tr>
         <th>Subject name</th>
         <th>Subject type</th>
-        <th>Learning students</th>
     </tr>
-    <c:forEach items="subjects" var="subject">
+    <c:forEach items="${subjects}" var="subject">
         <tr>
             <td>${subject.subjectName}</td>
             <td>${subject.subjectType}</td>
-            <td>${subject.studentsCount}</td>
             <td><a href="/admin/teachers?subject=${subject.subjectName}">Teachers of the subject</a></td>
             <td><a href="javascript:removeSubject('${subject.subjectName}');">Remove</a></td>
         </tr>

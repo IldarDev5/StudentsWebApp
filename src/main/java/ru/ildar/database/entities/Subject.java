@@ -13,9 +13,15 @@ import javax.persistence.Table;
 public class Subject
 {
     private String subjectName;
+    private int studentsCount;
+    private String subjectType;
 
     public Subject() { }
-    public Subject(String subjName) { this.subjectName = subjName; }
+    public Subject(String subjName, SubjectType subjectType)
+    {
+        this.subjectName = subjName;
+        this.subjectType = subjectType.getSubjectType();
+    }
 
     @Id
     @Column(name = "SUBJECT_NAME")
@@ -27,6 +33,28 @@ public class Subject
     public void setSubjectName(String subjectName)
     {
         this.subjectName = subjectName;
+    }
+
+    @Column(name = "STUDENTS_COUNT")
+    public int getStudentsCount()
+    {
+        return studentsCount;
+    }
+
+    public void setStudentsCount(int studentsCount)
+    {
+        this.studentsCount = studentsCount;
+    }
+
+    @Column(name = "SUBJECT_TYPE")
+    public String getSubjectType()
+    {
+        return subjectType;
+    }
+
+    public void setSubjectType(String subjectType)
+    {
+        this.subjectType = subjectType;
     }
 
     @Override

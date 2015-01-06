@@ -23,6 +23,8 @@ create table students_app.faculties(
   faculty_id int primary key,
   un_id int not null,
   faculty_name varchar2(150) not null,
+  students_count int default 0,
+  teachers_count int default 0,
 
   constraint fk_un foreign key(un_id)
     references students_app.universities(un_id)
@@ -57,9 +59,15 @@ create table students_app.people_details(
   references students_app.faculties(faculty_id)
 );
 
+create table students_app.subject_types(
+  subject_type varchar2(50) primary key
+);
 
 create table students_app.subjects(
-  subject_name varchar2(100) primary key
+  subject_name varchar2(100) primary key,
+  subject_type varchar2(50),
+  constraint fk_subject_type foreign key (subject_type)
+  references students_app.subject_types(subject_type)
 );
 
 create table students_app.grades(
@@ -83,3 +91,40 @@ create table students_app.grades(
 insert into students_app.roles(role_name) values ('ROLE_STUDENT');
 insert into students_app.roles(role_name) values ('ROLE_TEACHER');
 insert into students_app.roles(role_name) values ('ROLE_ADMIN');
+
+create or replace trigger students_app.faculty_person
+before update of faculty_id on students_app.people_details
+for each row
+  declare
+    person_role varchar2(50);
+  begin
+    select p.role_name into person_role
+    from students_app.people p
+    where p.username = :NEW.username;
+
+    if person_role = 'ROLE_TEACHER' then
+      begin
+        if :OLD.faculty_id is not null then
+          update students_app.faculties
+          set teachers_count = teachers_count - 1
+          where faculty_id = :OLD.faculty_id;
+        end if;
+
+        update students_app.faculties
+        set teachers_count = teachers_count + 1
+        where faculty_id = :NEW.faculty_id;
+      end;
+    elsif person_role = 'ROLE_STUDENT' then
+      begin
+        if :OLD.faculty_id is not null then
+          update students_app.faculties
+          set students_count = students_count - 1
+          where faculty_id = :OLD.faculty_id;
+        end if;
+
+        update students_app.faculties
+        set students_count = students_count + 1
+        where faculty_id = :NEW.faculty_id;
+      end;
+    end if;
+  end;
