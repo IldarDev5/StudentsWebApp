@@ -18,7 +18,7 @@
         <tr>
             <td>${subject.subjectName}</td>
             <td>${subject.subjectType}</td>
-            <td><a href="/admin/teachers?subject=${subject.subjectName}">Teachers of the subject</a></td>
+            <td><a href="/admin/subjectTeachers?subject=${subject.subjectName}">Teachers of the subject</a></td>
             <td><a href="javascript:removeSubject('${subject.subjectName}');">Remove</a></td>
         </tr>
     </c:forEach>

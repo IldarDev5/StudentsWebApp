@@ -18,14 +18,28 @@
         <put-attribute name="title" value="Login page" />
         <put-attribute name="body" value="/WEB-INF/pages/auth/login.jsp" />
     </definition>
-    <definition name="registerPage" extends="base.definition">
+
+    <definition name="registerTeacher" extends="base.definition">
         <put-attribute name="title" value="Register page" />
-        <put-attribute name="body" value="/WEB-INF/pages/auth/register.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/teacher/teacherRegistration.jsp" />
+    </definition>
+    <definition name="registerStudent" extends="base.definition">
+        <put-attribute name="title" value="Register page" />
+        <put-attribute name="body" value="/WEB-INF/pages/student/studRegistration.jsp" />
     </definition>
 
-    <definition name="info" extends="base.definition">
+    <definition name="groupStudents" extends="base.definition">
+        <put-attribute name="title" value="Group students" />
+        <put-attribute name="body" value="/WEB-INF/pages/student/group.jsp" />
+    </definition>
+
+    <definition name="studInfo" extends="base.definition">
         <put-attribute name="title" value="Student information" />
-        <put-attribute name="body" value="/WEB-INF/pages/info.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/student/info.jsp" />
+    </definition>
+    <definition name="teacherInfo" extends="base.definition">
+        <put-attribute name="title" value="Teacher information" />
+        <put-attribute name="body" value="/WEB-INF/pages/teacher/info.jsp" />
     </definition>
 
     <definition name="grades" extends="base.definition">

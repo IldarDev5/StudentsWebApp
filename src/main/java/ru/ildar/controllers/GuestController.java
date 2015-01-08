@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.ildar.config.UserRegisterPojo;
+import ru.ildar.config.TeacherRegisterPojo;
 import ru.ildar.database.entities.Person;
-import ru.ildar.database.entities.PersonDetails;
 import ru.ildar.services.PersonService;
 
 import java.util.Arrays;
@@ -43,7 +42,7 @@ public class GuestController
     @RequestMapping(value = "/registerPage", method = RequestMethod.GET)
     public ModelAndView registerPage(@RequestParam("reg") String regType)
     {
-        UserRegisterPojo user = new UserRegisterPojo();
+        TeacherRegisterPojo user = new TeacherRegisterPojo();
         if(regType.equals("stud"))
             user.setRole("ROLE_STUDENT");
         else if(regType.equals("teach"))
@@ -54,7 +53,7 @@ public class GuestController
     }
 
     @RequestMapping(value = "/registerPage", method = RequestMethod.POST)
-    public ModelAndView registerPage(@ModelAttribute("user") UserRegisterPojo user)
+    public ModelAndView registerPage(@ModelAttribute("user") TeacherRegisterPojo user)
     {
         if(!user.getPassword().equals(user.getRepeatPassword()))
             return regError("passNotEqual", user);
@@ -72,18 +71,13 @@ public class GuestController
                 null, authUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        PersonDetails details = new PersonDetails(user.getUsername());
-        return new ModelAndView("info", "user", details);
+        if(user.getRole().equals("ROLE_TEACHER"))
+            return new ModelAndView("redirect:/teachers/info?username=" + user.getUsername());
+        else
+            return new ModelAndView("redirect:/students/info?username=" + user.getUsername());
     }
 
-    @RequestMapping(value = "/userDetails", method = RequestMethod.POST)
-    public String userDetails(@ModelAttribute("user") PersonDetails details)
-    {
-        personService.saveOrUpdatePersonDetails(details);
-        return "redirect:/startPage";
-    }
-
-    private ModelAndView regError(String attr, UserRegisterPojo user)
+    private ModelAndView regError(String attr, TeacherRegisterPojo user)
     {
         ModelMap model = new ModelMap();
         model.addAttribute("user", user);

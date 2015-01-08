@@ -9,12 +9,12 @@ public class Grade
     private long gradeId;
     private long gradeValue;
     private long semester;
-    private Person teacher;
-    private Person student;
+    private Teacher teacher;
+    private Student student;
     private String subject;
 
     public Grade() { }
-    public Grade(long gradeValue, long semester, Person teacher, Person student, String subject)
+    public Grade(long gradeValue, long semester, Teacher teacher, Student student, String subject)
     {
         this.gradeValue = gradeValue;
         this.semester = semester;
@@ -88,24 +88,24 @@ public class Grade
 
     @ManyToOne
     @JoinColumn(name = "TEACHER_USERNAME", referencedColumnName = "USERNAME", nullable = false)
-    public Person getTeacher()
+    public Teacher getTeacher()
     {
         return teacher;
     }
 
-    public void setTeacher(Person teacher)
+    public void setTeacher(Teacher teacher)
     {
         this.teacher = teacher;
     }
 
     @ManyToOne
     @JoinColumn(name = "STUD_USERNAME", referencedColumnName = "USERNAME", nullable = false)
-    public Person getStudent()
+    public Student getStudent()
     {
         return student;
     }
 
-    public void setStudent(Person student)
+    public void setStudent(Student student)
     {
         this.student = student;
     }

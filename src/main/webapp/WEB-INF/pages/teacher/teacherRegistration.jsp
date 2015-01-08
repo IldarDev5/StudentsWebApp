@@ -9,7 +9,7 @@
         Such username already exists. Please choose another.
     </c:if>
 </span>
-<form:form method="post" action="/registerPage" commandName="user">
+<form:form method="post" action="/teacher/registerPage" commandName="user">
     <table>
         <tr>
             <td><form:label path="username">Enter the username:</form:label></td>

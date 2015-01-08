@@ -1,6 +1,7 @@
 package ru.ildar.database.entities;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "PEOPLE", schema = "STUDENTS_APP", catalog = "")
@@ -9,7 +10,6 @@ public class Person implements Comparable<Person>
     private String username;
     private String password;
     private String role;
-    private PersonDetails details;
 
     public Person() { }
     public Person(String username, String password, String role)
@@ -70,17 +70,6 @@ public class Person implements Comparable<Person>
     public int hashCode()
     {
         return username.hashCode();
-    }
-
-    @OneToOne(mappedBy = "person", cascade = CascadeType.REMOVE)
-    public PersonDetails getDetails()
-    {
-        return details;
-    }
-
-    public void setDetails(PersonDetails details)
-    {
-        this.details = details;
     }
 
     @Override

@@ -5,8 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.ildar.database.entities.PersonDetails;
-import ru.ildar.services.PersonService;
+import ru.ildar.services.PictureService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,14 +14,14 @@ import java.io.IOException;
 public class PictureController
 {
     @Autowired
-    private PersonService personService;
+    private PictureService pictureService;
 
     @RequestMapping(value = "/pictures/avatar", method = RequestMethod.GET)
     public void showAvatar(@RequestParam("username") String username,
                            HttpServletResponse servletResponse)
             throws IOException
     {
-        byte[] avatar = personService.getByUserName(username).getDetails().getPersonPhoto();
+        byte[] avatar = pictureService.getPicture(username);
 
         if(avatar != null)
         {

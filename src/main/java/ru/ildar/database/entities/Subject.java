@@ -13,7 +13,6 @@ import javax.persistence.Table;
 public class Subject
 {
     private String subjectName;
-    private int studentsCount;
     private String subjectType;
 
     public Subject() { }
@@ -35,17 +34,6 @@ public class Subject
         this.subjectName = subjectName;
     }
 
-    @Column(name = "STUDENTS_COUNT")
-    public int getStudentsCount()
-    {
-        return studentsCount;
-    }
-
-    public void setStudentsCount(int studentsCount)
-    {
-        this.studentsCount = studentsCount;
-    }
-
     @Column(name = "SUBJECT_TYPE")
     public String getSubjectType()
     {
@@ -64,7 +52,6 @@ public class Subject
         if (o == null || getClass() != o.getClass()) return false;
 
         Subject subject = (Subject) o;
-
         return subjectName.equals(subject.subjectName);
     }
 

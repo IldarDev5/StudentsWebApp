@@ -17,11 +17,10 @@ $(function() {
         var firstName = $('#firstName').val();
         var lastName = $('#lastName').val();
         var email = $('#email').val();
-        var title = $('#title') ? $('#title').val() : null;
-        var enrollment = $('#enrollment').val();
+        var title = $('#title').val();
+        var workStart = $('#workStart').val();
         var city = $('#citySelect').val();
         var university = $('#universitySelect').val();
-        var facultyId = $('#facultySelect').val();
 
         $.ajax({
             contentType : 'application/json',
@@ -31,8 +30,8 @@ $(function() {
                 lastName : lastName,
                 email : email,
                 title : title,
-                enrollment : enrollment,
-                facultyId : facultyId
+                workStart : workStart,
+                unId : university
             }),
             type : 'post',
             beforeSend : function(xhr) {
@@ -41,17 +40,14 @@ $(function() {
             success : function(data) {
                     university = $('#universitySelect').text();
                     city = $('#citySelect').text();
-                    var faculty = $('#facultySelect').text();
 
                     if(data) {
                     $('#firstNameTd').html(firstName);
                     $('#lastNameTd').html(lastName);
                     $('#emailTd').html(email);
-                    if($('#titleTd'))
                     $('#titleTd').html(title);
-                    $('#enrollmentTd').html(enrollment);
+                    $('#workStartTd').html(workStart);
                     $('#universityTd').html(university + ", " + city);
-                    $('#facultyTd').html(faculty);
 
                     $('#updateSpan').html('Data is successfully updated.');
                 }
@@ -63,11 +59,9 @@ $(function() {
 
     loadDataForSelect('/auth/cities', '#citySelect', "");
     loadDataForSelect('/auth/universities', '#universitySelect', "?cityId=" + cityId);
-    loadDataForSelect('/auth/faculties', '#facultySelect', "?universityId=" + universityId);
 
     var citySelect = $('#citySelect');
     var uniSelect = $('#universitySelect');
-    var facultySelect = $('#facultySelect');
 
     //facultySelect.val(facultyId);
     //uniSelect.val(universityId);
@@ -75,21 +69,13 @@ $(function() {
 
     citySelect.change(function() {
             var cityId = $(this).val();
-            loadDataForSelect('/auth/universities', '#universitySelect', "?cityId=" + cityId,
-                function() {
-                    var firstUniId = uniSelect.find("option:first").val();
-                    loadDataForSelect('/auth/faculties',
-                    '#facultySelect', "?universityId=" + firstUniId);
-                });
+            loadDataForSelect('/auth/universities', '#universitySelect', "?cityId=" + cityId);
 
             uniSelect.val(uniSelect.find("option:first").val());
-            facultySelect.val(facultySelect.find("option:first").val());
     });
 
     uniSelect.change(function() {
         var uniId = $(this).val();
         loadDataForSelect('/auth/faculties', '#facultySelect', "?universityId=" + uniId);
-
-        facultySelect.val(facultySelect.find("option:first").val());
     });
 });

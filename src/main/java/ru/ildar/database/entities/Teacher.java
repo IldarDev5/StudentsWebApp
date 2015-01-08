@@ -1,43 +1,39 @@
 package ru.ildar.database.entities;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 
+/**
+ * Created by Ildar on 07.01.15.
+ */
 @Entity
-@Table(name = "PEOPLE_DETAILS", schema = "STUDENTS_APP", catalog = "")
-public class PersonDetails
+@Table(name = "TEACHERS", schema = "STUDENTS_APP", catalog = "")
+public class Teacher
 {
     private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String title;
-    private Date enrollment;
-    private Faculty faculty;
+    private University university;
+    private Date workStart;
     private byte[] personPhoto;
-    private Person person;
 
-    public PersonDetails() { }
-    public PersonDetails(String username) { this.username = username; }
-    public PersonDetails(String username, String firstName, String lastName,
-                         String email, String title, Date enrollment, Faculty faculty, byte[] personPhoto)
+    public Teacher() { }
+    public Teacher(String username, String firstName, String lastName, String email,
+                   String title, byte[] personPhoto, Date workStart, University university)
     {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.title = title;
-        this.enrollment = enrollment;
+        this.university = university;
+        this.workStart = workStart;
         this.personPhoto = personPhoto;
-    }
-
-    public String enrollmentDateAsString()
-    {
-        if(enrollment == null)
-            return "";
-        return new SimpleDateFormat("dd/MM/yyyy").format(enrollment);
     }
 
     @Id
@@ -101,15 +97,15 @@ public class PersonDetails
     }
 
     @Basic
-    @Column(name = "ENROLLMENT")
-    public Date getEnrollment()
+    @Column(name = "WORK_START")
+    public Date getWorkStart()
     {
-        return enrollment;
+        return workStart;
     }
 
-    public void setEnrollment(Date enrollment)
+    public void setWorkStart(Date workStart)
     {
-        this.enrollment = enrollment;
+        this.workStart = workStart;
     }
 
     @Basic
@@ -124,15 +120,19 @@ public class PersonDetails
         this.personPhoto = personPhoto;
     }
 
+    public String workStartDateAsString()
+    {
+        return new SimpleDateFormat("dd/MM/yyyy").format(workStart);
+    }
+
     @Override
     public boolean equals(Object o)
     {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PersonDetails that = (PersonDetails) o;
-
-        return username.equals(that.getUsername());
+        Teacher teacher = (Teacher) o;
+        return this.username.equals(teacher.getUsername());
     }
 
     @Override
@@ -141,21 +141,15 @@ public class PersonDetails
         return username.hashCode();
     }
 
-    @OneToOne
-    @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME", nullable = false)
-    public Person getPerson()
-    {
-        return person;
-    }
-
-    public void setPerson(Person person)
-    {
-        this.person = person;
-    }
-
     @ManyToOne
-    @JoinColumn(name = "FACULTY_ID", referencedColumnName = "FACULTY_ID", nullable = false)
-    public Faculty getFaculty() { return faculty; }
+    @JoinColumn(name = "UNIVERSITY_ID", referencedColumnName = "UN_ID", nullable = false)
+    public University getUniversity()
+    {
+        return university;
+    }
 
-    public void setFaculty(Faculty faculty) { this.faculty = faculty; }
+    public void setUniversity(University university)
+    {
+        this.university = university;
+    }
 }

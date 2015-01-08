@@ -13,7 +13,12 @@
         <sec:authorize access="isFullyAuthenticated()">
             <div style="position: absolute; top: 10px; left: 10px;">
                 <h3 style="display: inline">
-                    <a href="/auth/info"><c:out value="${pageContext.request.userPrincipal.name}" /></a>
+                    <sec:authorize access="hasRole('ROLE_TEACHER')">
+                        <a href="/teacher/info"><c:out value="${pageContext.request.userPrincipal.name}" /></a>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_STUDENT')">
+                        <a href="/stud/info"><c:out value="${pageContext.request.userPrincipal.name}" /></a>
+                    </sec:authorize>
                 </h3>
                 <h3 style="display: inline">
                     <a href="javascript:$('#logoutForm').submit();">Log Out</a>
@@ -49,8 +54,8 @@
 
                 <sec:authorize access="isAnonymous()">
                     <li class="current"><a href="/loginPage">Log In</a></li>
-                    <li class="current"><a href="/registerPage?reg=stud">Register as a student</a></li>
-                    <li class="current"><a href="/registerPage?reg=teach">Register as a teacher</a></li>
+                    <li class="current"><a href="/stud/registerPage">Register as a student</a></li>
+                    <li class="current"><a href="/teacher/registerPage">Register as a teacher</a></li>
                 </sec:authorize>
             </ul>
         </div><!--close menubar-->

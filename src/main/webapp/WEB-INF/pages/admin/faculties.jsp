@@ -6,7 +6,6 @@
         $.ajax({
             url : '/admin/faculties/remove?facultyId=' + facultyId,
             type : 'post',
-//            data : JSON.stringify({ facultyId : facultyId }),
             contentType : "application/json",
             beforeSend : function(xhr) {
                 xhr.setRequestHeader('X-CSRF-TOKEN', '${_csrf.token}');

@@ -10,25 +10,25 @@
     </c:otherwise>
 </c:choose>
 
-<%--@elvariable id="teachers" type="java.util.List<ru.ildar.database.entities.Person>"--%>
+<%--@elvariable id="teachers" type="java.util.List<ru.ildar.database.entities.Teacher>"--%>
 <table>
     <tr>
         <th>Username</th>
         <th>Real name</th>
         <th>E-Mail</th>
         <th>Title</th>
-        <th>Faculty, University</th>
+        <th>University</th>
         <th>Work start date</th>
         <th>Photo</th>
     </tr>
     <c:forEach items="${teachers}" var="teacher">
         <tr>
             <td>${teacher.username}</td>
-            <td>${teacher.details.firstName} ${teacher.details.lastName}</td>
-            <td>${teacher.details.email}</td>
-            <td>${teacher.details.title}</td>
-            <td>${teacher.details.faculty.facultyName}, ${teacher.details.faculty.university.unName}</td>
-            <td>${teacher.details.enrollmentDateAsString()}</td>
+            <td>${teacher.firstName} ${teacher.lastName}</td>
+            <td>${teacher.email}</td>
+            <td>${teacher.title}</td>
+            <td>${teacher.university.unName}</td>
+            <td>${teacher.workStartDateAsString()}</td>
             <td><img src="/pictures/avatar?username=${teacher.username}" height="100"></td>
         </tr>
     </c:forEach>
@@ -43,7 +43,7 @@
                 <b>${page}</b>
             </c:when>
             <c:otherwise>
-                <a href="/admin/subjects/${page}">${page}</a>
+                <a href="/admin/teachers/${page}">${page}</a>
             </c:otherwise>
         </c:choose>
         <c:if test="${page != pagesCount}">,</c:if>

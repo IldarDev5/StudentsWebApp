@@ -1,14 +1,14 @@
 package ru.ildar.config;
 
-public class UserRegisterPojo
+public class TeacherRegisterPojo
 {
     private String username;
     private String password;
     private String repeatPassword;
     private String role;
 
-    public UserRegisterPojo() { }
-    public UserRegisterPojo(String username, String password, String repeatPassword, String role)
+    public TeacherRegisterPojo() { }
+    public TeacherRegisterPojo(String username, String password, String repeatPassword, String role)
     {
         this.username = username;
         this.password = password;

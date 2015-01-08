@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.ildar.database.entities.Person;
-import ru.ildar.services.PersonService;
+import ru.ildar.database.entities.Teacher;
+import ru.ildar.services.TeacherService;
 
 import java.util.List;
 import java.util.Set;
@@ -18,7 +18,7 @@ import java.util.Set;
 public class TeachersController
 {
     @Autowired
-    private PersonService personService;
+    private TeacherService teacherService;
 
     @RequestMapping(value = "/admin/teachers", method = RequestMethod.GET)
     public ModelAndView teachers(ModelMap model)
@@ -30,17 +30,17 @@ public class TeachersController
     public ModelAndView teachers(@PathVariable("pageNumber") int pageNumber, ModelMap model)
     {
         int TEACHERS_PER_PAGE = 25;
-        List<Person> teachers = personService.getTeachers(pageNumber - 1, TEACHERS_PER_PAGE);
+        List<Teacher> teachers = teacherService.getTeachers(pageNumber - 1, TEACHERS_PER_PAGE);
         model.addAttribute("teachers", teachers);
         model.addAttribute("pageNumber", pageNumber);
-        model.addAttribute("pagesCount", personService.getTeachersPagesCount(TEACHERS_PER_PAGE));
+        model.addAttribute("pagesCount", teacherService.getTeachersPagesCount(TEACHERS_PER_PAGE));
         return new ModelAndView("teachers");
     }
 
     @RequestMapping(value = "/admin/subjectTeachers", method = RequestMethod.GET)
     public ModelAndView subjectTeachers(@RequestParam("subject") String subjectName, ModelMap model)
     {
-        Set<Person> subjTeachers = personService.getTeachersBySubject(subjectName);
+        Set<Teacher> subjTeachers = teacherService.getTeachersBySubject(subjectName);
         model.addAttribute("teachers", subjTeachers);
         model.addAttribute("subject", subjectName);
         return new ModelAndView("teachers");
