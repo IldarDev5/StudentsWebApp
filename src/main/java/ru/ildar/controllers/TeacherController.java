@@ -132,13 +132,15 @@ public class TeacherController
         return "true";
     }
 
-    @RequestMapping(value = "/teacher/registerPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/register/teacher", method = RequestMethod.GET)
     public ModelAndView registerPage()
     {
-        return new ModelAndView("registerTeacher", "teacher", new TeacherRegisterPojo());
+        TeacherRegisterPojo teacherRegisterPojo = new TeacherRegisterPojo();
+        teacherRegisterPojo.setRole("ROLE_TEACHER");
+        return new ModelAndView("registerTeacher", "teacher", teacherRegisterPojo);
     }
 
-    @RequestMapping(value = "/teacher/registerPage", method = RequestMethod.POST)
+    @RequestMapping(value = "/register/teacher", method = RequestMethod.POST)
     public ModelAndView registerPage(@ModelAttribute TeacherRegisterPojo teacherReg)
     {
         if(!teacherReg.getPassword().equals(teacherReg.getRepeatPassword()))
@@ -149,6 +151,10 @@ public class TeacherController
         teacherReg.setPassword(new Md5PasswordEncoder().encodePassword(teacherReg.getPassword(), null));
         Person person = new Person(teacherReg.getUsername(), teacherReg.getPassword(), teacherReg.getRole());
         personService.addPerson(person);
+
+        Teacher teacher = new Teacher();
+        teacher.setUsername(teacherReg.getUsername());
+        teacherService.setUniversityAndAddTeacher(teacher, teacherReg.getUniId());
 
         //authenticate user
         UserDetails authUser = new User(teacherReg.getUsername(), teacherReg.getPassword(),
@@ -165,6 +171,6 @@ public class TeacherController
         ModelMap model = new ModelMap();
         model.addAttribute("user", user);
         model.addAttribute(attr, true);
-        return new ModelAndView("registerPage", model);
+        return new ModelAndView("registerTeacher", model);
     }
 }

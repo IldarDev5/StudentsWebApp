@@ -12,8 +12,56 @@
 
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
 <script type="text/javascript" src="/scripts/register_stud.js"></script>
+<script type="text/javascript">
+    $(function() {
+        function loadCities() {
+            loadDataForSelect('/auth/cities', '#city', "",
+                    function() {
+                        var cityId = $('#city').val();
+                        if(cityId)
+                            loadUnis("?cityId=" + cityId);
+                    });
+        }
 
-<form:form method="post" action="/stud/registerPage" commandName="user">
+        function loadUnis(param) {
+            loadDataForSelect('/auth/universities', '#university', param,
+                    function() {
+                        var uniId = $('#university').val();
+                        if(uniId)
+                            loadFaculties("?uniId=" + uniId);
+                    });
+        }
+
+        function loadFaculties(param) {
+            loadDataForSelect('/auth/faculties', '#faculty', param,
+                    function() {
+                        var facId = $('#faculty').val();
+                        if(facId)
+                            loadGroups("?facId=" + facId);
+                    });
+        }
+
+        function loadGroups(param) {
+            loadDataForSelect('/auth/groups', '#groupId', param);
+        }
+
+        loadCities();
+
+        $('#city').change(function() {
+            loadUnis("?cityId=" + $(this).val());
+        });
+
+        $('#university').change(function() {
+            loadFaculties("?uniId=" + $(this).val());
+        });
+
+        $('#faculty').change(function() {
+            loadGroups("?facId=" + $(this).val());
+        });
+    });
+</script>
+
+<form:form method="post" action="/register/student" commandName="student">
     <table>
         <tr>
             <td><form:label path="username">Enter the username:</form:label></td>
@@ -29,22 +77,22 @@
         </tr>
         <tr>
             <td><form:label path="city">Choose the city:</form:label></td>
-            <td><form:input path="city" /></td>
+            <td><form:select path="city" /></td>
         </tr>
         <tr>
-            <td><form:label path="uni">Choose the university:</form:label></td>
-            <td><form:select path="uni" /></td>
+            <td><form:label path="university">Choose the university:</form:label></td>
+            <td><form:select path="university" /></td>
         </tr>
         <tr>
             <td><form:label path="faculty">Choose the faculty:</form:label></td>
             <td><form:select path="faculty" /></td>
         </tr>
         <tr>
-            <td><form:label path="group">Choose the group:</form:label></td>
-            <td><form:select path="group" /></td>
+            <td><form:label path="groupId">Choose the group:</form:label></td>
+            <td><form:select path="groupId" /></td>
         </tr>
     </table>
-    <input type="hidden" name="role" value="${user.role}">
+    <input type="hidden" name="role" value="${student.role}">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     <input type="submit" value="Register">
 </form:form>

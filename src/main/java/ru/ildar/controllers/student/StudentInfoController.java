@@ -26,7 +26,7 @@ public class StudentInfoController
             username = principal.getName();
 
         Student student = studentService.getByUsername(username);
-        return new ModelAndView("studInfo", "student", student);
+        return new ModelAndView("studInfo", "stud", student);
     }
 
     public static class JsonPersonDetails
@@ -77,7 +77,7 @@ public class StudentInfoController
         }
     }
 
-    @RequestMapping(value = "/auth/info", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/stud/info", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public String userInfo(@RequestBody JsonPersonDetails pd, Principal principal)
             throws ParseException

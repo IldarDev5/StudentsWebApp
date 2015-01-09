@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.config.StudentRegisterPojo;
 import ru.ildar.database.entities.Person;
+import ru.ildar.database.entities.Student;
 import ru.ildar.services.PersonService;
 import ru.ildar.services.StudentService;
 
@@ -29,13 +30,15 @@ public class StudentRegisterController
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value = "/stud/registerPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/register/student", method = RequestMethod.GET)
     public ModelAndView registerPage()
     {
-        return new ModelAndView("registerStudent", "student", new StudentRegisterPojo());
+        StudentRegisterPojo pojo = new StudentRegisterPojo();
+        pojo.setRole("ROLE_STUDENT");
+        return new ModelAndView("registerStudent", "student", pojo);
     }
 
-    @RequestMapping(value = "/stud/registerPage", method = RequestMethod.POST)
+    @RequestMapping(value = "/register/student", method = RequestMethod.POST)
     public ModelAndView registerPage(@ModelAttribute("student") StudentRegisterPojo stud)
     {
         if(!stud.getPassword().equals(stud.getRepeatPassword()))
@@ -46,6 +49,10 @@ public class StudentRegisterController
         stud.setPassword(new Md5PasswordEncoder().encodePassword(stud.getPassword(), null));
         Person person = new Person(stud.getUsername(), stud.getPassword(), stud.getRole());
         personService.addPerson(person);
+
+        Student student = new Student();
+        student.setUsername(stud.getUsername());
+        studentService.setGroupAndAddStudent(student, stud.getGroupId());
 
         //authenticate user
         UserDetails authUser = new User(stud.getUsername(), stud.getPassword(),
@@ -62,6 +69,6 @@ public class StudentRegisterController
         ModelMap model = new ModelMap();
         model.addAttribute("user", user);
         model.addAttribute(attr, true);
-        return new ModelAndView("registerPage", model);
+        return new ModelAndView("registerStudent", model);
     }
 }

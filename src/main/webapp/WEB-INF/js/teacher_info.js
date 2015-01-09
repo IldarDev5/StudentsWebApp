@@ -69,9 +69,10 @@ $(function() {
 
     citySelect.change(function() {
             var cityId = $(this).val();
-            loadDataForSelect('/auth/universities', '#universitySelect', "?cityId=" + cityId);
-
-            uniSelect.val(uniSelect.find("option:first").val());
+            loadDataForSelect('/auth/universities', '#universitySelect', "?cityId=" + cityId,
+                function() {
+                    uniSelect.val(uniSelect.find("option:first").val());
+                });
     });
 
     uniSelect.change(function() {

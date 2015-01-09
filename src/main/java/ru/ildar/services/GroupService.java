@@ -18,4 +18,9 @@ public class GroupService
         Hibernate.initialize(group.getStudents());
         return group;
     }
+
+    public Iterable<Group> getGroupsByFaculty(int facultyId)
+    {
+        return groupDAO.findByFaculty_FacultyId(facultyId);
+    }
 }

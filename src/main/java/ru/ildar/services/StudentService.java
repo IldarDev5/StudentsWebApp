@@ -38,4 +38,11 @@ public class StudentService
     {
         return studentDAO.findOne(username);
     }
+
+    public void setGroupAndAddStudent(Student student, String groupId)
+    {
+        Group group = groupDAO.findOne(groupId);
+        student.setGroup(group);
+        studentDAO.save(student);
+    }
 }

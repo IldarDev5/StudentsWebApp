@@ -9,10 +9,7 @@ import ru.ildar.database.entities.*;
 import ru.ildar.database.repositories.CityDAO;
 import ru.ildar.database.repositories.FacultyDAO;
 import ru.ildar.database.repositories.UniversityDAO;
-import ru.ildar.services.CityService;
-import ru.ildar.services.FacultyService;
-import ru.ildar.services.PersonService;
-import ru.ildar.services.UniversityService;
+import ru.ildar.services.*;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -27,7 +24,7 @@ import java.util.Map;
 public class AuthController
 {
     @Autowired
-    private PersonService personService;
+    private GroupService groupService;
     @Autowired
     private CityService cityService;
     @Autowired
@@ -35,18 +32,18 @@ public class AuthController
     @Autowired
     private FacultyService facultyService;
 
-    public static class IdVal
+    public static class IdVal<I>
     {
-        private long id;
+        private I id;
         private String value;
 
-        public IdVal(long id, String value)
+        public IdVal(I id, String value)
         {
             this.id = id;
             this.value = value;
         }
 
-        public long getId()
+        public I getId()
         {
             return id;
         }
@@ -63,7 +60,7 @@ public class AuthController
         Iterable<City> cities = cityService.getAllCities();
         List<IdVal> result = new ArrayList<>();
         for(City city : cities)
-            result.add(new IdVal(city.getId(), city.getCityName()));
+            result.add(new IdVal<>(city.getId(), city.getCityName()));
         return result;
     }
 
@@ -74,18 +71,29 @@ public class AuthController
         Iterable<University> universities = universityService.getUniversitiesByCity(cityId);
         List<IdVal> result = new ArrayList<>();
         for(University university : universities)
-            result.add(new IdVal(university.getUnId(), university.getUnName()));
+            result.add(new IdVal<>(university.getUnId(), university.getUnName()));
         return result;
     }
 
     @RequestMapping(value = "/auth/faculties", method = RequestMethod.GET)
     @ResponseBody
-    public List<IdVal> faculties(@RequestParam("universityId") int universityId)
+    public List<IdVal> faculties(@RequestParam("uniId") int universityId)
     {
         Iterable<Faculty> faculties = facultyService.getFacultiesByUniversity(universityId);
         List<IdVal> result = new ArrayList<>();
         for(Faculty faculty : faculties)
-            result.add(new IdVal(faculty.getFacultyId(), faculty.getFacultyName()));
+            result.add(new IdVal<>(faculty.getFacultyId(), faculty.getFacultyName()));
+        return result;
+    }
+
+    @RequestMapping(value = "/auth/groups", method = RequestMethod.GET)
+    @ResponseBody
+    public List<IdVal> groups(@RequestParam("facId") int facultyId)
+    {
+        Iterable<Group> groups = groupService.getGroupsByFaculty(facultyId);
+        List<IdVal> result = new ArrayList<>();
+        for(Group group : groups)
+            result.add(new IdVal<>(group.getGroupId(), group.getGroupId()));
         return result;
     }
 }

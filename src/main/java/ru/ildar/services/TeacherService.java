@@ -81,4 +81,11 @@ public class TeacherService
 
         teacherDAO.save(details);
     }
+
+    public void setUniversityAndAddTeacher(Teacher teacher, long uniId)
+    {
+        University university = universityDAO.findOne(uniId);
+        teacher.setUniversity(university);
+        teacherDAO.save(teacher);
+    }
 }

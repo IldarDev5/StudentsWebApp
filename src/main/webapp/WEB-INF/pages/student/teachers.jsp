@@ -16,7 +16,7 @@
             <td><c:out value="${teacher.key.lastName}" /></td>
             <td><c:out value="${teacher.value}" /></td>
             <td>
-                <a href="/auth/info?username=${teacher.key.username}">More info</a>
+                <a href="/teacher/info?username=${teacher.key.username}">More info</a>
             </td>
         </tr>
     </c:forEach>

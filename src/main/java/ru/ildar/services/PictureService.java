@@ -24,4 +24,13 @@ public class PictureService
         else
             return null;
     }
+
+    public void setPhoto(byte[] bytes, String name)
+    {
+        Person person = personService.getByUserName(name);
+        if(person.getRoleName().equals("ROLE_TEACHER"))
+            teacherService.getByUserName(name).setPersonPhoto(bytes);
+        else if(person.getRoleName().equals("ROLE_STUDENT"))
+            studentService.getByUserName(name).setPersonPhoto(bytes);
+    }
 }

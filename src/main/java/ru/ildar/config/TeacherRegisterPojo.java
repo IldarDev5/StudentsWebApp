@@ -6,15 +6,10 @@ public class TeacherRegisterPojo
     private String password;
     private String repeatPassword;
     private String role;
+    private int uniId;
+    private int city;
 
     public TeacherRegisterPojo() { }
-    public TeacherRegisterPojo(String username, String password, String repeatPassword, String role)
-    {
-        this.username = username;
-        this.password = password;
-        this.repeatPassword = repeatPassword;
-        this.role = role;
-    }
 
     public String getUsername()
     {
@@ -54,5 +49,25 @@ public class TeacherRegisterPojo
     public void setRole(String role)
     {
         this.role = role;
+    }
+
+    public int getUniId()
+    {
+        return uniId;
+    }
+
+    public void setUniId(int uniId)
+    {
+        this.uniId = uniId;
+    }
+
+    public int getCity()
+    {
+        return city;
+    }
+
+    public void setCity(int city)
+    {
+        this.city = city;
     }
 }

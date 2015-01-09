@@ -46,7 +46,7 @@ public class StudentController
     public List<Grade> semesterGrades(@RequestParam("sem") long semester, Principal principal)
     {
         List<Grade> grades = gradeService.getStudentGradesInSemester(principal.getName(), semester);
-        grades.stream().forEach((g) -> { g.setStudent(null); });
+        grades.stream().forEach((g) -> { g.setStudent(null); g.getTeacher().setUniversity(null); });
         return grades;
     }
 

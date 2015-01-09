@@ -54,8 +54,8 @@
 
                 <sec:authorize access="isAnonymous()">
                     <li class="current"><a href="/loginPage">Log In</a></li>
-                    <li class="current"><a href="/stud/registerPage">Register as a student</a></li>
-                    <li class="current"><a href="/teacher/registerPage">Register as a teacher</a></li>
+                    <li class="current"><a href="/register/student">Register as a student</a></li>
+                    <li class="current"><a href="/register/teacher">Register as a teacher</a></li>
                 </sec:authorize>
             </ul>
         </div><!--close menubar-->

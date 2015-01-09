@@ -6,17 +6,10 @@ public class StudentRegisterPojo
     private String password;
     private String repeatPassword;
     private String role;
+    private String city;
+    private String university;
+    private String faculty;
     private String groupId;
-
-    public StudentRegisterPojo() { }
-    public StudentRegisterPojo(String username, String password, String repeatPassword, String role, String groupId)
-    {
-        this.username = username;
-        this.password = password;
-        this.repeatPassword = repeatPassword;
-        this.role = role;
-        this.groupId = groupId;
-    }
 
     public String getUsername()
     {
@@ -56,6 +49,36 @@ public class StudentRegisterPojo
     public void setRole(String role)
     {
         this.role = role;
+    }
+
+    public String getCity()
+    {
+        return city;
+    }
+
+    public void setCity(String city)
+    {
+        this.city = city;
+    }
+
+    public String getUniversity()
+    {
+        return university;
+    }
+
+    public void setUniversity(String university)
+    {
+        this.university = university;
+    }
+
+    public String getFaculty()
+    {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty)
+    {
+        this.faculty = faculty;
     }
 
     public String getGroupId()

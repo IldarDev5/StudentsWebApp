@@ -11,7 +11,7 @@ import java.util.Arrays;
  */
 @Entity
 @Table(name = "TEACHERS", schema = "STUDENTS_APP", catalog = "")
-public class Teacher
+public class Teacher implements Comparable<Teacher>
 {
     private String username;
     private String firstName;
@@ -122,6 +122,9 @@ public class Teacher
 
     public String workStartDateAsString()
     {
+        if(workStart == null)
+            return "";
+
         return new SimpleDateFormat("dd/MM/yyyy").format(workStart);
     }
 
@@ -151,5 +154,11 @@ public class Teacher
     public void setUniversity(University university)
     {
         this.university = university;
+    }
+
+    @Override
+    public int compareTo(Teacher o)
+    {
+        return this.username.compareTo(o.getUsername());
     }
 }
