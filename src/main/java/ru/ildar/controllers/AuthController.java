@@ -25,75 +25,11 @@ public class AuthController
 {
     @Autowired
     private GroupService groupService;
-    @Autowired
-    private CityService cityService;
-    @Autowired
-    private UniversityService universityService;
-    @Autowired
-    private FacultyService facultyService;
 
-    public static class IdVal<I>
+    @RequestMapping(value = "/auth/studentGroup", method = RequestMethod.GET)
+    public ModelAndView studentGroup(@RequestParam("groupId") String groupId)
     {
-        private I id;
-        private String value;
-
-        public IdVal(I id, String value)
-        {
-            this.id = id;
-            this.value = value;
-        }
-
-        public I getId()
-        {
-            return id;
-        }
-        public String getValue()
-        {
-            return value;
-        }
-    }
-
-    @RequestMapping(value = "/auth/cities", method = RequestMethod.GET)
-    @ResponseBody
-    public List<IdVal> cities()
-    {
-        Iterable<City> cities = cityService.getAllCities();
-        List<IdVal> result = new ArrayList<>();
-        for(City city : cities)
-            result.add(new IdVal<>(city.getId(), city.getCityName()));
-        return result;
-    }
-
-    @RequestMapping(value = "/auth/universities", method = RequestMethod.GET)
-    @ResponseBody
-    public List<IdVal> universities(@RequestParam("cityId") int cityId)
-    {
-        Iterable<University> universities = universityService.getUniversitiesByCity(cityId);
-        List<IdVal> result = new ArrayList<>();
-        for(University university : universities)
-            result.add(new IdVal<>(university.getUnId(), university.getUnName()));
-        return result;
-    }
-
-    @RequestMapping(value = "/auth/faculties", method = RequestMethod.GET)
-    @ResponseBody
-    public List<IdVal> faculties(@RequestParam("uniId") int universityId)
-    {
-        Iterable<Faculty> faculties = facultyService.getFacultiesByUniversity(universityId);
-        List<IdVal> result = new ArrayList<>();
-        for(Faculty faculty : faculties)
-            result.add(new IdVal<>(faculty.getFacultyId(), faculty.getFacultyName()));
-        return result;
-    }
-
-    @RequestMapping(value = "/auth/groups", method = RequestMethod.GET)
-    @ResponseBody
-    public List<IdVal> groups(@RequestParam("facId") int facultyId)
-    {
-        Iterable<Group> groups = groupService.getGroupsByFaculty(facultyId);
-        List<IdVal> result = new ArrayList<>();
-        for(Group group : groups)
-            result.add(new IdVal<>(group.getGroupId(), group.getGroupId()));
-        return result;
+        Group group = groupService.getGroupWithStudents(groupId);
+        return new ModelAndView("groupStudents", "group", group);
     }
 }

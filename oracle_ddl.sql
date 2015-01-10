@@ -134,6 +134,13 @@ insert into students_app.roles(role_name) values ('ROLE_STUDENT');
 insert into students_app.roles(role_name) values ('ROLE_TEACHER');
 insert into students_app.roles(role_name) values ('ROLE_ADMIN');
 
+insert into students_app.subject_types values('Physical');
+insert into students_app.subject_types values('Natural');
+insert into students_app.subject_types values('Formal');
+insert into students_app.subject_types values('Social');
+insert into students_app.subject_types values('IT, Computer Science');
+insert into students_app.subject_types values('Other');
+
 create or replace trigger students_app.faculty_person
 before update of group_id on students_app.students
 for each row

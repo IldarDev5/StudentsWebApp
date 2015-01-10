@@ -6,10 +6,10 @@ public class StudentRegisterPojo
     private String password;
     private String repeatPassword;
     private String role;
-    private String city;
-    private String university;
-    private String faculty;
-    private String groupId;
+    private String citySelect;
+    private String uniSelect;
+    private String facSelect;
+    private String groupSelect;
 
     public String getUsername()
     {
@@ -51,43 +51,43 @@ public class StudentRegisterPojo
         this.role = role;
     }
 
-    public String getCity()
+    public String getCitySelect()
     {
-        return city;
+        return citySelect;
     }
 
-    public void setCity(String city)
+    public void setCitySelect(String citySelect)
     {
-        this.city = city;
+        this.citySelect = citySelect;
     }
 
-    public String getUniversity()
+    public String getUniSelect()
     {
-        return university;
+        return uniSelect;
     }
 
-    public void setUniversity(String university)
+    public void setUniSelect(String uniSelect)
     {
-        this.university = university;
+        this.uniSelect = uniSelect;
     }
 
-    public String getFaculty()
+    public String getFacSelect()
     {
-        return faculty;
+        return facSelect;
     }
 
-    public void setFaculty(String faculty)
+    public void setFacSelect(String facSelect)
     {
-        this.faculty = faculty;
+        this.facSelect = facSelect;
     }
 
-    public String getGroupId()
+    public String getGroupSelect()
     {
-        return groupId;
+        return groupSelect;
     }
 
-    public void setGroupId(String groupId)
+    public void setGroupSelect(String groupSelect)
     {
-        this.groupId = groupId;
+        this.groupSelect = groupSelect;
     }
 }

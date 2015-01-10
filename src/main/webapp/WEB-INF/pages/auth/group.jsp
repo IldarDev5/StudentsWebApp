@@ -13,7 +13,7 @@
         <tr>
             <td>${student.username}</td>
             <td>${student.firstName} ${student.lastName}</td>
-            <td><a href="/stud/info?username=${student.username}">More information</a></td>
+            <td><a href="/info/student?username=${student.username}">More information</a></td>
         </tr>
     </c:forEach>
 </table>

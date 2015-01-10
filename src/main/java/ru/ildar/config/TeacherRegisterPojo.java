@@ -6,8 +6,8 @@ public class TeacherRegisterPojo
     private String password;
     private String repeatPassword;
     private String role;
-    private int uniId;
-    private int city;
+    private int uniSelect;
+    private int citySelect;
 
     public TeacherRegisterPojo() { }
 
@@ -51,23 +51,23 @@ public class TeacherRegisterPojo
         this.role = role;
     }
 
-    public int getUniId()
+    public int getUniSelect()
     {
-        return uniId;
+        return uniSelect;
     }
 
-    public void setUniId(int uniId)
+    public void setUniSelect(int uniSelect)
     {
-        this.uniId = uniId;
+        this.uniSelect = uniSelect;
     }
 
-    public int getCity()
+    public int getCitySelect()
     {
-        return city;
+        return citySelect;
     }
 
-    public void setCity(int city)
+    public void setCitySelect(int citySelect)
     {
-        this.city = city;
+        this.citySelect = citySelect;
     }
 }

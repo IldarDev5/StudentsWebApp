@@ -52,7 +52,7 @@ public class StudentRegisterController
 
         Student student = new Student();
         student.setUsername(stud.getUsername());
-        studentService.setGroupAndAddStudent(student, stud.getGroupId());
+        studentService.setGroupAndAddStudent(student, stud.getGroupSelect());
 
         //authenticate user
         UserDetails authUser = new User(stud.getUsername(), stud.getPassword(),

@@ -3,7 +3,21 @@
 
 <script type="text/javascript">
     function removeSubject(subjectName) {
+        var choice = confirm('Removal of subject will incur removals of grades and data ' +
+                'that depends on this subject. Do you really want to delete it?');
+        if(choice == false)
+            return;
 
+        $.ajax({
+            type: 'post',
+            url: '/admin/subjects/remove?subjectName=' + subjectName,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', '${_csrf.token}');
+            },
+            success: function(data) {
+                $('#' + subjectName + 'Tr').remove();
+            }
+        });
     }
 </script>
 
@@ -15,7 +29,7 @@
         <th>Subject type</th>
     </tr>
     <c:forEach items="${subjects}" var="subject">
-        <tr>
+        <tr id="${subject.subjectName}Tr">
             <td>${subject.subjectName}</td>
             <td>${subject.subjectType}</td>
             <td><a href="/admin/subjectTeachers?subject=${subject.subjectName}">Teachers of the subject</a></td>

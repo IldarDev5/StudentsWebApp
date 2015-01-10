@@ -30,7 +30,7 @@
 
     <definition name="groupStudents" extends="base.definition">
         <put-attribute name="title" value="Group students" />
-        <put-attribute name="body" value="/WEB-INF/pages/student/group.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/auth/group.jsp" />
     </definition>
 
     <definition name="studInfo" extends="base.definition">
@@ -54,6 +54,10 @@
     <definition name="unis" extends="base.definition">
         <put-attribute name="title" value="Universities and Faculties" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/unis.jsp" />
+    </definition>
+    <definition name="groups" extends="base.definition">
+        <put-attribute name="title" value="Groups" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/groups.jsp" />
     </definition>
     <definition name="subjects" extends="base.definition">
         <put-attribute name="title" value="Subjects" />

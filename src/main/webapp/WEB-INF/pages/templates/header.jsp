@@ -14,10 +14,13 @@
             <div style="position: absolute; top: 10px; left: 10px;">
                 <h3 style="display: inline">
                     <sec:authorize access="hasRole('ROLE_TEACHER')">
-                        <a href="/teacher/info"><c:out value="${pageContext.request.userPrincipal.name}" /></a>
+                        <a href="/info/teacher"><c:out value="${pageContext.request.userPrincipal.name}" /></a>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ROLE_STUDENT')">
-                        <a href="/stud/info"><c:out value="${pageContext.request.userPrincipal.name}" /></a>
+                        <a href="/info/student"><c:out value="${pageContext.request.userPrincipal.name}" /></a>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                        <a>Admin</a>
                     </sec:authorize>
                 </h3>
                 <h3 style="display: inline">
@@ -44,6 +47,7 @@
                     <li class="current"><a href="/admin/unis">Universities and Faculties</a></li>
                     <li class="current"><a href="/admin/subjects">Subjects</a></li>
                     <li class="current"><a href="/admin/teachers">Teachers</a></li>
+                    <li class="current"><a href="/admin/groups">Groups</a></li>
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('ROLE_TEACHER')">

@@ -13,19 +13,7 @@
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
 <script type="text/javascript">
     $(function() {
-        function loadCities() {
-            loadDataForSelect('/auth/cities', '#city', "",
-                    function() {
-                        var cityId = $('#city').val();
-                        if(cityId)
-                            loadUnis("?cityId=" + cityId);
-                    });
-        }
-
-        function loadUnis(param) {
-            loadDataForSelect('/auth/universities', '#uniId', param);
-        }
-
+        setLoad(true, true, false);
         loadCities();
 
         $('#city').change(function() {
@@ -49,12 +37,12 @@
             <td><form:password path="repeatPassword" /></td>
         </tr>
         <tr>
-            <td><form:label path="city">Choose the city:</form:label></td>
-            <td><form:select path="city" /></td>
+            <td><form:label path="citySelect">Choose the city:</form:label></td>
+            <td><form:select path="citySelect" /></td>
         </tr>
         <tr>
-            <td><form:label path="uniId">Choose the university:</form:label></td>
-            <td><form:select path="uniId" /></td>
+            <td><form:label path="uniSelect">Choose the university:</form:label></td>
+            <td><form:select path="uniSelect" /></td>
         </tr>
     </table>
     <input type="hidden" name="role" value="${teacher.role}">

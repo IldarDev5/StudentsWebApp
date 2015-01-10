@@ -57,4 +57,12 @@ public class SubjectsController
         boolean exists = subjectService.subjectNameExists(subjectName);
         return exists ? "{exists:true}" : "{exists:false}";
     }
+
+    @RequestMapping(value = "/admin/subjects/remove", method = RequestMethod.POST)
+    @ResponseBody
+    public String removeSubject(@RequestParam("subjectName") String subjectName)
+    {
+        System.out.println("Kinda removed");
+        return "true";
+    }
 }

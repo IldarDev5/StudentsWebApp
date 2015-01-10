@@ -25,7 +25,7 @@
     <tr>
         <td>Group:</td>
         <td id="groupTd">
-            <a href="/stud/group?groupId=${student.group.groupId}">
+            <a href="/auth/studentGroup?groupId=${stud.group.groupId}">
                 ${stud.group.groupId}
             </a>
         </td>

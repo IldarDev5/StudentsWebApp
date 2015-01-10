@@ -14,37 +14,7 @@
 <script type="text/javascript" src="/scripts/register_stud.js"></script>
 <script type="text/javascript">
     $(function() {
-        function loadCities() {
-            loadDataForSelect('/auth/cities', '#city', "",
-                    function() {
-                        var cityId = $('#city').val();
-                        if(cityId)
-                            loadUnis("?cityId=" + cityId);
-                    });
-        }
-
-        function loadUnis(param) {
-            loadDataForSelect('/auth/universities', '#university', param,
-                    function() {
-                        var uniId = $('#university').val();
-                        if(uniId)
-                            loadFaculties("?uniId=" + uniId);
-                    });
-        }
-
-        function loadFaculties(param) {
-            loadDataForSelect('/auth/faculties', '#faculty', param,
-                    function() {
-                        var facId = $('#faculty').val();
-                        if(facId)
-                            loadGroups("?facId=" + facId);
-                    });
-        }
-
-        function loadGroups(param) {
-            loadDataForSelect('/auth/groups', '#groupId', param);
-        }
-
+        setLoad(true, true, true);
         loadCities();
 
         $('#city').change(function() {
@@ -76,20 +46,20 @@
             <td><form:password path="repeatPassword" /></td>
         </tr>
         <tr>
-            <td><form:label path="city">Choose the city:</form:label></td>
-            <td><form:select path="city" /></td>
+            <td><form:label path="citySelect">Choose the city:</form:label></td>
+            <td><form:select path="citySelect" /></td>
         </tr>
         <tr>
-            <td><form:label path="university">Choose the university:</form:label></td>
-            <td><form:select path="university" /></td>
+            <td><form:label path="uniSelect">Choose the university:</form:label></td>
+            <td><form:select path="uniSelect" /></td>
         </tr>
         <tr>
-            <td><form:label path="faculty">Choose the faculty:</form:label></td>
-            <td><form:select path="faculty" /></td>
+            <td><form:label path="facSelect">Choose the faculty:</form:label></td>
+            <td><form:select path="facSelect" /></td>
         </tr>
         <tr>
-            <td><form:label path="groupId">Choose the group:</form:label></td>
-            <td><form:select path="groupId" /></td>
+            <td><form:label path="groupSelect">Choose the group:</form:label></td>
+            <td><form:select path="groupSelect" /></td>
         </tr>
     </table>
     <input type="hidden" name="role" value="${student.role}">

@@ -32,7 +32,7 @@ public class TeacherController
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value = "/teacher/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/info/teacher", method = RequestMethod.GET)
     public ModelAndView userInfo(@RequestParam(value = "username", required = false) String username,
                                  Principal principal)
     {
@@ -113,7 +113,7 @@ public class TeacherController
         }
     }
 
-    @RequestMapping(value = "/teacher/info", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/info/teacher", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public String userInfo(@RequestBody JsonPersonDetails pd, Principal principal)
             throws ParseException
@@ -154,7 +154,7 @@ public class TeacherController
 
         Teacher teacher = new Teacher();
         teacher.setUsername(teacherReg.getUsername());
-        teacherService.setUniversityAndAddTeacher(teacher, teacherReg.getUniId());
+        teacherService.setUniversityAndAddTeacher(teacher, teacherReg.getUniSelect());
 
         //authenticate user
         UserDetails authUser = new User(teacherReg.getUsername(), teacherReg.getPassword(),

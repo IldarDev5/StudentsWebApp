@@ -69,14 +69,9 @@ $(function() {
 
     citySelect.change(function() {
             var cityId = $(this).val();
-            loadDataForSelect('/auth/universities', '#universitySelect', "?cityId=" + cityId,
+            loadDataForSelect('/ajax/universities', '#universitySelect', "?cityId=" + cityId,
                 function() {
                     uniSelect.val(uniSelect.find("option:first").val());
                 });
-    });
-
-    uniSelect.change(function() {
-        var uniId = $(this).val();
-        loadDataForSelect('/auth/faculties', '#facultySelect', "?universityId=" + uniId);
     });
 });

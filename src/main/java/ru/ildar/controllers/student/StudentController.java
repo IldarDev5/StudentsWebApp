@@ -50,13 +50,6 @@ public class StudentController
         return grades;
     }
 
-    @RequestMapping(value = "/stud/group", method = RequestMethod.GET)
-    public ModelAndView studentGroup(@RequestParam("groupId") String groupId)
-    {
-        Group group = groupService.getGroupWithStudents(groupId);
-        return new ModelAndView("groupStudents", "group", group);
-    }
-
     @RequestMapping(value = "stud/studTeachers", method = RequestMethod.GET)
     public ModelAndView studTeachers(Principal principal)
     {
