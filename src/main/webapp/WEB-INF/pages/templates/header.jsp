@@ -51,9 +51,8 @@
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('ROLE_TEACHER')">
-                    <li class="current"><a href=""></a></li>
-                    <li class="current"><a href=""></a></li>
-
+                    <li class="current"><a href="/teacher/groups">Teacher groups</a></li>
+                    <li class="current"><a href="/teacher/grades">Student grades</a></li>
                 </sec:authorize>
 
                 <sec:authorize access="isAnonymous()">

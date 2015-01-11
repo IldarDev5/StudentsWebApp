@@ -47,3 +47,5 @@
     </c:choose>
     <c:if test="${page != pagesCount}">,</c:if>
 </c:forEach>
+
+<a href="/admin/unis/add">Add new university</a>

@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import ru.ildar.database.entities.City;
 import ru.ildar.database.entities.University;
+import ru.ildar.database.repositories.CityDAO;
 import ru.ildar.database.repositories.UniversityDAO;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class UniversityService
 {
     @Autowired
     private UniversityDAO universityDAO;
+    @Autowired
+    private CityDAO cityDAO;
 
     public void addUniversity(University un)
     {
@@ -52,5 +56,13 @@ public class UniversityService
     public Iterable<University> getUniversitiesByCity(int cityId)
     {
         return universityDAO.findByCity_Id(cityId);
+    }
+
+    public void setCityAndAddUniversity(University university, int cityId)
+    {
+        City city = cityDAO.findOne(cityId);
+        university.setCity(city);
+
+        universityDAO.save(university);
     }
 }

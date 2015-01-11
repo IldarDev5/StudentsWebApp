@@ -7,6 +7,8 @@ import ru.ildar.database.entities.Student;
 import ru.ildar.database.repositories.GroupDAO;
 import ru.ildar.database.repositories.StudentDAO;
 
+import java.util.List;
+
 @Service
 public class StudentService
 {
@@ -44,5 +46,10 @@ public class StudentService
         Group group = groupDAO.findOne(groupId);
         student.setGroup(group);
         studentDAO.save(student);
+    }
+
+    public List<Student> getByGroup(String groupId)
+    {
+        return studentDAO.getByGroup_GroupId(groupId);
     }
 }

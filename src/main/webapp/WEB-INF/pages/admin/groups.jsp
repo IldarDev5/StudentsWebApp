@@ -6,11 +6,14 @@
 <script type="text/javascript">
     function loadGroups() {
         var facId = $('#facSelect').val();
+        var groupsTable = $('#groupsTable');
+
         $.getJSON('/admin/groupsOfFaculty?facId=' + facId, function(data) {
-            $('#groupsTable').append("<tr><th>Group ID</th><th>Students Count</th><th>Faculty name</th></tr>");
+            groupsTable.empty();
+            groupsTable.append("<tr><th>Group ID</th><th>Students Count</th><th>Faculty name</th></tr>");
             $.each(data, function(idx, group) {
                 var href = "href=\"/auth/studentGroup?groupId=" + group.groupId + "\"";
-                $('#groupsTable').append("<tr>" +
+                groupsTable.append("<tr>" +
                         "<td><a " + href + ">" + group.groupId + "</a></td>" +
                         "<td>" + group.studentsCount + "</td>" +
                         "<td>" + group.faculty.facultyName +"</td>" +

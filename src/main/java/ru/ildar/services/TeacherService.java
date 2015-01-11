@@ -2,6 +2,7 @@ package ru.ildar.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.*;
 import ru.ildar.database.repositories.StudentDAO;
@@ -87,5 +88,24 @@ public class TeacherService
         University university = universityDAO.findOne(uniId);
         teacher.setUniversity(university);
         teacherDAO.save(teacher);
+    }
+
+    public List<TeachersGroups> getTeachersGroups(String name)
+    {
+        Sort sort = new Sort(Sort.Direction.ASC, "group_GroupId");
+        sort = sort.and(new Sort(Sort.Direction.ASC, "semester"));
+        return teachersGroupsDAO.findByTeacher_Username(name, sort);
+    }
+
+    public TeachersGroups getTeachersGroupsById(int id)
+    {
+        return teachersGroupsDAO.findOne(id);
+    }
+
+    public TeachersGroups getTeachersGroupsBySubjectSemesterAndGroupStudent(String subject,
+                                                        int semester, String studentSelect)
+    {
+        Student student = studentDAO.findOne(studentSelect);
+        return teachersGroupsDAO.findBySubjectNameAndSemesterAndGroup(subject, semester, student.getGroup());
     }
 }
