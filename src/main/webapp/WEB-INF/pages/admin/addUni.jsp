@@ -8,7 +8,7 @@
     <table>
         <tr>
             <td><form:label path="citySelect">City:</form:label></td>
-            <td><form:select path="citySelect" items="${cities}" /></td>
+            <td><form:select path="citySelect" items="${cities}" itemValue="id" /></td>
         </tr>
         <tr>
             <td><form:label path="unName">University name:</form:label></td>
@@ -19,5 +19,6 @@
             <td><form:input path="unAddress" /></td>
         </tr>
     </table>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     <input type="submit" value="Submit">
 </form:form>

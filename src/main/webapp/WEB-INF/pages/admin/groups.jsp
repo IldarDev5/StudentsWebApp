@@ -27,11 +27,43 @@
         loadCities();
 
         $('#citySelect').change(function() {
-            loadUnis();
+            loadUnis("?cityId=" + $(this).val());
         });
 
         $('#uniSelect').change(function() {
-            loadFaculties();
+            loadFaculties("?uniId=" + $(this).val());
+        });
+
+        $('#createGroup').click(function() {
+            $('#createGroupDiv').toggle();
+        });
+
+        $('#createGroupBtn').click(function() {
+            var facSelect = $('#facSelect');
+            var groupId = $('#groupNameText').val();
+            var facName = facSelect.text();
+            $.ajax({
+                url: '/admin/groups/add',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    facId: facSelect.val(),
+                    groupId: groupId
+                }),
+                beforeSend: function() {
+                    xhr.setRequestHeader("X-CSRF-TOKEN", '${_csrf.token}');
+                },
+                success: function(ok) {
+                    if(ok) {
+                        $('#groupsTable').append("<tr>" +
+                                "<td><a " + href + ">" + groupId + "</a></td>" +
+                                "<td>0</td>" +
+                                "<td>" + facName +"</td>" +
+                                "</tr>");
+                    }
+                }
+            });
+            $('#createGroupDiv').toggle();
         });
     });
 </script>
@@ -56,4 +88,9 @@
 
 </table>
 
+<input type="button" id="createGroup" value="Create new group">
+<div id="createGroupDiv" style="visibility: hidden;">
+    Enter the group ID: <input type="text" id="groupNameText">
+    <input type="button" value="Create" id="createGroupBtn">
+</div>
 

@@ -24,14 +24,12 @@
         <th>Faculty name</th>
         <th>Foundation date</th>
         <th>Students count</th>
-        <th>Teachers count</th>
     </tr>
     <c:forEach items="${uni.faculties}" var="faculty">
         <tr id="faculty${faculty.facultyId}">
             <td>${faculty.facultyName}</td>
             <td>${faculty.foundDateAsString()}</td>
             <td>${faculty.studentsCount}</td>
-            <td>${faculty.teachersCount}</td>
             <td><a href="javascript:removeFaculty(${faculty.facultyId});">Remove</a></td>
         </tr>
     </c:forEach>

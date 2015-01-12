@@ -3,15 +3,14 @@ package ru.ildar.controllers.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.University;
 import ru.ildar.services.CityService;
 import ru.ildar.services.UniversityService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -58,5 +57,30 @@ public class UniversitiesController
         universityService.setCityAndAddUniversity(university, uni.getCitySelect());
 
         return new ModelAndView("redirect:/admin/unis");
+    }
+
+    @RequestMapping(value = "/admin/unis/remove", method = RequestMethod.POST)
+    public ModelAndView removeUniversity(@RequestParam("unId") int unId)
+    {
+        universityService.removeUniversity(unId);
+        return new ModelAndView("redirect:/admin/unis");
+    }
+
+    @RequestMapping(value = "/admin/unis/image", method = RequestMethod.GET)
+    public void universityImage(@RequestParam("unId") int unId, HttpServletResponse response)
+            throws IOException
+    {
+        University university = universityService.getById(unId);
+        byte[] image = university.getUnImage();
+
+        if(image != null)
+        {
+            response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+            response.getOutputStream().write(image);
+        }
+        else
+            response.sendRedirect("/images/no_uni_image.png");
+
+        response.getOutputStream().close();
     }
 }

@@ -1,5 +1,7 @@
 package ru.ildar.database.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -25,6 +27,8 @@ public class Grade
 
     @Id
     @Column(name = "GRADE_ID")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(generator = "increment")
     public long getGradeId()
     {
         return gradeId;

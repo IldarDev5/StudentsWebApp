@@ -19,6 +19,12 @@ public class City
         this.country = country;
     }
 
+    @Override
+    public String toString()
+    {
+        return cityName + ", " + country;
+    }
+
     @Id
     @Column(name = "ID")
     @GenericGenerator(name = "increment", strategy = "increment")

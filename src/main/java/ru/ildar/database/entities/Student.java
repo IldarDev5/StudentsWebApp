@@ -2,9 +2,7 @@ package ru.ildar.database.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 
 /**
  * Created by Ildar on 07.01.15.

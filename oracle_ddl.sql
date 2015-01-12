@@ -14,6 +14,7 @@ create table students_app.universities(
   un_name varchar2(150) not null,
   un_city_id int not null,
   un_image blob,
+  teachers_count int default 0,
 
   constraint fk_city foreign key(un_city_id)
   references students_app.cities(id)
@@ -24,7 +25,6 @@ create table students_app.faculties(
   un_id int not null,
   faculty_name varchar2(150) not null,
   students_count int default 0,
-  teachers_count int default 0,
 
   constraint fk_un foreign key(un_id)
   references students_app.universities(un_id)
@@ -69,7 +69,7 @@ create table students_app.students(
   first_name varchar2(100),
   last_name varchar2(100),
   email varchar2(100),
-  group_id varchar2(20) not null,
+  group_id varchar2(20),
   enrollment date,
   person_photo blob,
 
@@ -85,7 +85,7 @@ create table students_app.teachers(
   last_name varchar2(100),
   email varchar2(100),
   title varchar2(150),
-  university_id int not null,
+  university_id int,
   work_start date,
   person_photo blob,
 
@@ -98,7 +98,7 @@ create table students_app.teachers(
 create table students_app.teachers_groups(
   id int primary key,
   teacher_username varchar2(70) not null,
-  group_id varchar2(20) not null,
+  group_id varchar2(20),
   subject_name varchar2(100) not null,
   semester int not null check (semester between 1 and 8),
 
@@ -142,13 +142,65 @@ insert into students_app.subject_types values('IT, Computer Science');
 insert into students_app.subject_types values('Other');
 
 create or replace trigger students_app.faculty_person
-before update of group_id on students_app.students
+before insert or update of group_id on students_app.students
 for each row
   begin
-    update students_app.groups
-    set students_count = students_count - 1
-    where group_id = :OLD.group_id;
+    case
+      when updating then
+        update students_app.groups
+        set students_count = students_count - 1
+        where group_id = :OLD.group_id;
+
+      update students_app.faculties
+      set students_count = students_count - 1
+      where faculty_id = (select faculty_id
+                          from students_app.groups
+                          where group_id = :OLD.group_id);
+    end case;
+
     update students_app.groups
     set students_count = students_count + 1
     where group_id = :NEW.group_id;
+
+    update students_app.faculties
+    set students_count = students_count + 1
+    where faculty_id = (select faculty_id
+                        from students_app.groups
+                        where group_id = :NEW.group_id);
+  end;
+
+create or replace trigger students_app.university_teacher
+before insert or update of university_id on students_app.teachers
+for each row
+  begin
+    case
+      when updating then
+        update students_app.universities
+          set teachers_count = teachers_count - 1
+          where un_id = :OLD.university_id;
+    end case;
+    update students_app.universities
+      set teachers_count = teachers_count + 1
+      where un_id = :NEW.university_id;
+  end;
+
+create or replace trigger students_app.remove_university
+before delete on students_app.universities
+for each row
+  begin
+    update students_app.teachers
+      set university_id = null
+      where university_id = :OLD.un_id;
+  end;
+
+create or replace trigger students_app.remove_group
+before delete on students_app.groups
+for each row
+  begin
+    update students_app.teachers_groups
+      set group_id = null
+      where group_id = :OLD.group_id;
+    update students_app.students
+      set group_id = null
+      where group_id = :OLD.group_id;
   end;

@@ -35,4 +35,13 @@ public class GroupsController
 
         return result;
     }
+
+    @RequestMapping(value = "/admin/groups/add", method = RequestMethod.POST)
+    @ResponseBody
+    public String addGroup(@RequestParam("facId") int facultyId,
+                           @RequestParam("groupId") String groupId)
+    {
+        groupService.addGroupToFaculty(new Group(groupId), facultyId);
+        return "ok";
+    }
 }

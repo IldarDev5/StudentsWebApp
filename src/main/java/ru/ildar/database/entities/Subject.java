@@ -1,9 +1,6 @@
 package ru.ildar.database.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Ildar on 29.12.14.

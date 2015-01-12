@@ -1,5 +1,7 @@
 package ru.ildar.database.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -13,6 +15,7 @@ public class University
     private byte[] unImage;
     private Collection<Faculty> faculties;
     private City city;
+    private int teachersCount;
 
     public University() { }
     public University(String unName, String unAddress, City city, byte[] unImage)
@@ -25,6 +28,8 @@ public class University
 
     @Id
     @Column(name = "UN_ID")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(generator = "increment")
     public long getUnId()
     {
         return unId;
@@ -45,6 +50,17 @@ public class University
     public void setCity(City city)
     {
         this.city = city;
+    }
+
+    @Column(name = "TEACHERS_COUNT")
+    public int getTeachersCount()
+    {
+        return teachersCount;
+    }
+
+    public void setTeachersCount(int teachersCount)
+    {
+        this.teachersCount = teachersCount;
     }
 
     @Basic
@@ -100,7 +116,7 @@ public class University
         return (int) (unId ^ (unId >>> 32));
     }
 
-    @OneToMany(mappedBy = "university")
+    @OneToMany(mappedBy = "university", cascade = CascadeType.REMOVE)
     public Collection<Faculty> getFaculties()
     {
         return faculties;

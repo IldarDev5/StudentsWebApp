@@ -3,9 +3,6 @@ package ru.ildar.database.entities;
 import javax.persistence.*;
 import java.util.Collection;
 
-/**
- * Created by Ildar on 07.01.15.
- */
 @Entity
 @Table(name = "GROUPS", schema = "STUDENTS_APP", catalog = "")
 public class Group
@@ -14,6 +11,9 @@ public class Group
     private Long studentsCount;
     private Collection<Student> students;
     private Faculty faculty;
+
+    public Group() { }
+    public Group(String groupId) { this.groupId = groupId; }
 
     @Id
     @Column(name = "GROUP_ID")

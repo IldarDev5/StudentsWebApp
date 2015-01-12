@@ -65,4 +65,9 @@ public class UniversityService
 
         universityDAO.save(university);
     }
+
+    public void removeUniversity(long unId)
+    {
+        universityDAO.delete(unId);
+    }
 }

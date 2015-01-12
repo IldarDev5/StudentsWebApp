@@ -13,22 +13,26 @@
 <%--@elvariable id="universities" type="java.util.List<ru.ildar.database.entities.University>"--%>
 <table>
     <tr>
+        <th>City</th>
         <th>Name</th>
         <th>Address</th>
         <th>Image</th>
+        <th>Teachers count</th>
     </tr>
     <c:forEach items="${universities}" var="un">
         <tr>
+            <td><c:out value="${un.city.cityName}" /></td>
             <td><c:out value="${un.unName}" /></td>
             <td><c:out value="${un.unAddress}" /></td>
-            <td><c:out value="Here must be an image" /></td>
+            <td><img src="/admin/unis/image?unId=${un.unId}" width="100"></td>
+            <td><c:out value="${un.teachersCount}" /></td>
             <td><a href="/admin/faculties?un_id=${un.unId}">Faculties</a></td>
             <td><a href="javascript:removeUn(${un.unId});">Remove university</a></td>
         </tr>
     </c:forEach>
 </table>
-<form hidden="hidden" id="removeUnForm" method="post" action="/admin/removeUn">
-    <input type="hidden" id="unIdHidden">
+<form hidden="hidden" id="removeUnForm" method="post" action="/admin/unis/remove">
+    <input type="hidden" id="unIdHidden" name="unId">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 </form>
 
@@ -48,4 +52,5 @@
     <c:if test="${page != pagesCount}">,</c:if>
 </c:forEach>
 
+<br />
 <a href="/admin/unis/add">Add new university</a>

@@ -1,7 +1,6 @@
 package ru.ildar.database.entities;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "PEOPLE", schema = "STUDENTS_APP", catalog = "")

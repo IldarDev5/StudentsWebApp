@@ -1,5 +1,7 @@
 package ru.ildar.database.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 /**
@@ -17,6 +19,8 @@ public class TeachersGroups
 
     @Id
     @Column(name = "ID")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(generator = "increment")
     public int getId()
     {
         return id;

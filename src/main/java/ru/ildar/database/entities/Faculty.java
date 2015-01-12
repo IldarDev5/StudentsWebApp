@@ -1,5 +1,7 @@
 package ru.ildar.database.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -12,7 +14,6 @@ public class Faculty
     private String facultyName;
     private Date foundDate;
     private int studentsCount;
-    private int teachersCount;
     private University university;
 
     public Faculty() { }
@@ -25,6 +26,8 @@ public class Faculty
 
     @Id
     @Column(name = "FACULTY_ID")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(generator = "increment")
     public long getFacultyId()
     {
         return facultyId;
@@ -58,12 +61,6 @@ public class Faculty
     {
         this.studentsCount = studentsCount;
     }
-
-    @Basic
-    @Column(name = "TEACHERS_COUNT")
-    public int getTeachersCount() { return teachersCount; }
-
-    public void setTeachersCount(int teachersCount) { this.teachersCount = teachersCount; }
 
     @Basic
     @Column(name = "FOUND_DATE")
