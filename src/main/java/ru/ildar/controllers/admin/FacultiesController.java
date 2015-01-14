@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @Controller
+@RequestMapping("/admin")
 public class FacultiesController
 {
     @Autowired
@@ -27,27 +28,27 @@ public class FacultiesController
     @Autowired
     private FacultyService facultyService;
 
-    @RequestMapping(value = "/admin/faculties", method = RequestMethod.GET)
+    @RequestMapping(value = "/faculties", method = RequestMethod.GET)
     public ModelAndView faculties(@RequestParam("un_id") int unId)
     {
         University u = universityService.getByIdWithFaculties(unId);
         return new ModelAndView("faculties", "uni", u);
     }
 
-    @RequestMapping(value = "/admin/faculties/remove", method = RequestMethod.POST)
+    @RequestMapping(value = "/faculties/remove", method = RequestMethod.POST)
     public void removeFaculty(@RequestParam("facultyId") int facultyId)
     {
 
     }
 
-    @RequestMapping(value = "/admin/faculties/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/faculties/add", method = RequestMethod.GET)
     public ModelAndView addNewFaculty(@RequestParam("unId") int uniId)
     {
         University un = universityService.getById(uniId);
         return new ModelAndView("addFaculty", "university", un);
     }
 
-    @RequestMapping(value = "/admin/faculties/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/faculties/add", method = RequestMethod.POST)
     public ModelAndView addNewFaculty(@RequestParam("facultyName") String facultyName,
                                       @RequestParam("foundDate") String foundDate,
                                       @RequestParam("uni") String unId)

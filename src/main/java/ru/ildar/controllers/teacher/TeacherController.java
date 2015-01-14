@@ -169,7 +169,7 @@ public class TeacherController
                 null, authUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        return new ModelAndView("redirect:/teacher/info");
+        return new ModelAndView("redirect:/info/teacher");
     }
 
     private ModelAndView regError(String attr, TeacherRegisterPojo user)

@@ -55,6 +55,16 @@
         <put-attribute name="body" value="/WEB-INF/pages/teacher/addGrade.jsp" />
     </definition>
 
+    <definition name="teachersGroups" extends="base.definition">
+        <put-attribute name="title" value="Teachers groups and subjects" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/teachersGroups.jsp" />
+    </definition>
+    <definition name="addTeachersGroups" extends="base.definition">
+        <put-attribute name="title" value="Add teachers groups and subjects" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/addTeachersGroups.jsp" />
+    </definition>
+
+
     <definition name="grades" extends="base.definition">
         <put-attribute name="title" value="Student grades" />
         <put-attribute name="body" value="/WEB-INF/pages/student/grades.jsp" />
@@ -80,7 +90,7 @@
         <put-attribute name="title" value="Subjects" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/subjects.jsp" />
     </definition>
-    <definition name="teachers" extends="base.definition">
+    <definition name="adminTeachers" extends="base.definition">
         <put-attribute name="title" value="Teachers" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/teachers.jsp" />
     </definition>

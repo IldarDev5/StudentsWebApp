@@ -147,15 +147,18 @@ for each row
   begin
     case
       when updating then
+      begin
         update students_app.groups
         set students_count = students_count - 1
         where group_id = :OLD.group_id;
 
-      update students_app.faculties
-      set students_count = students_count - 1
-      where faculty_id = (select faculty_id
-                          from students_app.groups
-                          where group_id = :OLD.group_id);
+        update students_app.faculties
+        set students_count = students_count - 1
+        where faculty_id = (select faculty_id
+                            from students_app.groups
+                            where group_id = :OLD.group_id);
+      end;
+    else dbms_output.put_line('');
     end case;
 
     update students_app.groups
@@ -178,7 +181,10 @@ for each row
         update students_app.universities
           set teachers_count = teachers_count - 1
           where un_id = :OLD.university_id;
+      else
+        dbms_output.put_line('');
     end case;
+
     update students_app.universities
       set teachers_count = teachers_count + 1
       where un_id = :NEW.university_id;

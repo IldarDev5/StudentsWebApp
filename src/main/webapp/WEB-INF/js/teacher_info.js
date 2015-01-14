@@ -57,8 +57,8 @@ $(function() {
         return false;
     });
 
-    loadDataForSelect('/auth/cities', '#citySelect', "");
-    loadDataForSelect('/auth/universities', '#universitySelect', "?cityId=" + cityId);
+    loadDataForSelect('/ajax/cities', '#citySelect', "");
+    loadDataForSelect('/ajax/universities', '#universitySelect', "?cityId=" + cityId);
 
     var citySelect = $('#citySelect');
     var uniSelect = $('#universitySelect');

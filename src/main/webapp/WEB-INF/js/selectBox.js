@@ -6,6 +6,8 @@ var loadUniversities = true;
 var loadFacs = true;
 var loadGrs = true;
 
+var triggerUniChange = false;
+
 function setLoad(unis, facs, groups) {
     loadUniversities = unis;
     loadFacs = facs;
@@ -26,6 +28,8 @@ function loadCities() {
 function loadUnis(param) {
     loadDataForSelect('/ajax/universities', '#uniSelect', param,
         function() {
+            if(triggerUniChange === true)
+                $('#uniSelect').trigger("change");
             if(loadFacs === true) {
                 var uniId = $('#uniSelect').val();
                 if(uniId)

@@ -61,7 +61,7 @@ public class StudentRegisterController
                 null, authUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        return new ModelAndView("redirect:/stud/info");
+        return new ModelAndView("redirect:/info/student");
     }
 
     private ModelAndView regError(String attr, StudentRegisterPojo user)

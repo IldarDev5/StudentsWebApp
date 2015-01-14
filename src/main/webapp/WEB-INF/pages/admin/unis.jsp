@@ -11,7 +11,7 @@
 
 <h1>Universities</h1>
 <%--@elvariable id="universities" type="java.util.List<ru.ildar.database.entities.University>"--%>
-<table>
+<table border="1">
     <tr>
         <th>City</th>
         <th>Name</th>

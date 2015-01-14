@@ -41,7 +41,7 @@
         $('#createGroupBtn').click(function() {
             var facSelect = $('#facSelect');
             var groupId = $('#groupNameText').val();
-            var facName = facSelect.text();
+            var facName = facSelect.find("option:selected").text();
             $.ajax({
                 url: '/admin/groups/add',
                 type: 'post',
@@ -50,11 +50,12 @@
                     facId: facSelect.val(),
                     groupId: groupId
                 }),
-                beforeSend: function() {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("X-CSRF-TOKEN", '${_csrf.token}');
                 },
                 success: function(ok) {
                     if(ok) {
+                        var href = "href=\"/auth/studentGroup?groupId=" + groupId + "\"";
                         $('#groupsTable').append("<tr>" +
                                 "<td><a " + href + ">" + groupId + "</a></td>" +
                                 "<td>0</td>" +
@@ -89,7 +90,7 @@
 </table>
 
 <input type="button" id="createGroup" value="Create new group">
-<div id="createGroupDiv" style="visibility: hidden;">
+<div id="createGroupDiv" style="display: none;">
     Enter the group ID: <input type="text" id="groupNameText">
     <input type="button" value="Create" id="createGroupBtn">
 </div>

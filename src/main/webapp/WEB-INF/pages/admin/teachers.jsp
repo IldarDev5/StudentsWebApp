@@ -1,17 +1,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <c:choose>
     <c:when test="${subject != null}">
         <h1>Teachers of the ${subject} subject</h1>
+        <a href="/admin/teachers/groups?subject=${subject}">Teachers' groups and subject ${subject}</a>
     </c:when>
     <c:otherwise>
         <h1>Teachers</h1>
+        <a href="/admin/teachers/groups">Teachers' groups and subjects</a>
     </c:otherwise>
 </c:choose>
 
 <%--@elvariable id="teachers" type="java.util.List<ru.ildar.database.entities.Teacher>"--%>
-<table>
+<table border="1">
     <tr>
         <th>Username</th>
         <th>Real name</th>

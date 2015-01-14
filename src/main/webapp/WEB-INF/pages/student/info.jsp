@@ -50,7 +50,7 @@
     <script type="text/javascript" src="/scripts/stud_info.js"></script>
 
     <a href="javascript:showUpdateForm();">Update Info</a>
-    <form method="post" action="/stud/info" hidden="hidden" id="updateForm">
+    <form method="post" action="/info/student" hidden="hidden" id="updateForm">
         <table>
             <tr>
                 <td><label for="firstName">First name:</label></td>

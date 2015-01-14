@@ -8,7 +8,7 @@ import java.util.Collection;
 public class Group
 {
     private String groupId;
-    private Long studentsCount;
+    private long studentsCount;
     private Collection<Student> students;
     private Faculty faculty;
 
@@ -25,6 +25,7 @@ public class Group
     public void setGroupId(String groupId)
     {
         this.groupId = groupId;
+        this.studentsCount = 0;
     }
 
     @Basic

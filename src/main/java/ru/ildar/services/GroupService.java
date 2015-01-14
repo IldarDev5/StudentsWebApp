@@ -34,4 +34,9 @@ public class GroupService
         group.setFaculty(faculty);
         groupDAO.save(group);
     }
+
+    public Object getGroupById(String groupId)
+    {
+        return groupDAO.findOne(groupId);
+    }
 }

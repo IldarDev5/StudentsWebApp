@@ -19,7 +19,7 @@
 
 <%--@elvariable id="uni" type="ru.ildar.database.entities.University"--%>
 <h1>Faculties of <c:out value="${uni.unName}" /></h1>
-<table>
+<table border="1">
     <tr>
         <th>Faculty name</th>
         <th>Foundation date</th>

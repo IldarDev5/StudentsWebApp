@@ -2,10 +2,7 @@ package ru.ildar.controllers.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.Group;
 import ru.ildar.services.GroupService;
@@ -14,18 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class GroupsController
 {
     @Autowired
     private GroupService groupService;
 
-    @RequestMapping(value = "/admin/groups", method = RequestMethod.GET)
+    @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public ModelAndView groups()
     {
         return new ModelAndView("groups");
     }
 
-    @RequestMapping(value = "/admin/groupsOfFaculty", method = RequestMethod.GET)
+    @RequestMapping(value = "/groupsOfFaculty", method = RequestMethod.GET)
     @ResponseBody
     public List<Group> groupsOfFaculty(@RequestParam("facId") int facId)
     {
@@ -36,12 +34,37 @@ public class GroupsController
         return result;
     }
 
-    @RequestMapping(value = "/admin/groups/add", method = RequestMethod.POST)
-    @ResponseBody
-    public String addGroup(@RequestParam("facId") int facultyId,
-                           @RequestParam("groupId") String groupId)
+    private static class CreatedGroup
     {
-        groupService.addGroupToFaculty(new Group(groupId), facultyId);
+        private int facId;
+        private String groupId;
+
+        public int getFacId()
+        {
+            return facId;
+        }
+
+        public void setFacId(int facId)
+        {
+            this.facId = facId;
+        }
+
+        public String getGroupId()
+        {
+            return groupId;
+        }
+
+        public void setGroupId(String groupId)
+        {
+            this.groupId = groupId;
+        }
+    }
+
+    @RequestMapping(value = "/groups/add", method = RequestMethod.POST)
+    @ResponseBody
+    public String addGroup(@RequestBody CreatedGroup group)
+    {
+        groupService.addGroupToFaculty(new Group(group.getGroupId()), group.getFacId());
         return "ok";
     }
 }

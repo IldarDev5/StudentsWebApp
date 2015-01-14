@@ -17,6 +17,15 @@ public class TeachersGroups
     private Group group;
     private Teacher teacher;
 
+    public TeachersGroups() { }
+    public TeachersGroups(String subjectName, long semester, Group group, Teacher teacher)
+    {
+        this.subjectName = subjectName;
+        this.semester = semester;
+        this.group = group;
+        this.teacher = teacher;
+    }
+
     @Id
     @Column(name = "ID")
     @GenericGenerator(name = "increment", strategy = "increment")

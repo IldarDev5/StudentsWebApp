@@ -19,6 +19,14 @@ public class SubjectService
     @Autowired
     private SubjectTypeDAO subjectTypeDAO;
 
+    public List<Subject> getAllSubjects()
+    {
+        Iterable<Subject> it = subjectDAO.findAll();
+        List<Subject> result = new ArrayList<>();
+        it.forEach(result::add);
+        return result;
+    }
+
     public List<Subject> getAllSubjects(int pageNumber, int subjectsPerPage)
     {
         Iterable<Subject> it = subjectDAO.findAll(new PageRequest(pageNumber, subjectsPerPage));
