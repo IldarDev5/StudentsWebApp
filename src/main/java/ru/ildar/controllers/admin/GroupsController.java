@@ -11,19 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/groups")
 public class GroupsController
 {
     @Autowired
     private GroupService groupService;
 
-    @RequestMapping(value = "/groups", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView groups()
     {
         return new ModelAndView("groups");
     }
 
-    @RequestMapping(value = "/groupsOfFaculty", method = RequestMethod.GET)
+    @RequestMapping(value = "OfFaculty", method = RequestMethod.GET)
     @ResponseBody
     public List<Group> groupsOfFaculty(@RequestParam("facId") int facId)
     {
@@ -60,7 +60,7 @@ public class GroupsController
         }
     }
 
-    @RequestMapping(value = "/groups/add", method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
     public String addGroup(@RequestBody CreatedGroup group)
     {

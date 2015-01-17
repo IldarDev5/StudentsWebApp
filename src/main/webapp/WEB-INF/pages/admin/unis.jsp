@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <script type="text/javascript">
@@ -13,11 +14,11 @@
 <%--@elvariable id="universities" type="java.util.List<ru.ildar.database.entities.University>"--%>
 <table border="1">
     <tr>
-        <th>City</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Image</th>
-        <th>Teachers count</th>
+        <th><spring:message code="uni.city" /></th>
+        <th><spring:message code="uni.name" /></th>
+        <th><spring:message code="uni.address" /></th>
+        <th><spring:message code="uni.image" /></th>
+        <th><spring:message code="uni.teachersCount" /></th>
     </tr>
     <c:forEach items="${universities}" var="un">
         <tr>
@@ -26,8 +27,16 @@
             <td><c:out value="${un.unAddress}" /></td>
             <td><img src="/admin/unis/image?unId=${un.unId}" width="100"></td>
             <td><c:out value="${un.teachersCount}" /></td>
-            <td><a href="/admin/faculties?un_id=${un.unId}">Faculties</a></td>
-            <td><a href="javascript:removeUn(${un.unId});">Remove university</a></td>
+            <td>
+                <a href="/admin/faculties?un_id=${un.unId}">
+                    <spring:message code="uni.faculties" />
+                </a>
+            </td>
+            <td>
+                <a href="javascript:removeUn(${un.unId});">
+                    <spring:message code="uni.remove" />
+                </a>
+            </td>
         </tr>
     </c:forEach>
 </table>

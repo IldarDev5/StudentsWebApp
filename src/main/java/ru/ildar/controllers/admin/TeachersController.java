@@ -3,39 +3,38 @@ package ru.ildar.controllers.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.ildar.controllers.pojos.TaughtGroup;
+import ru.ildar.controllers.pojos.TeachersGroupsPojo;
 import ru.ildar.database.entities.*;
 import ru.ildar.services.CityService;
 import ru.ildar.services.GroupService;
 import ru.ildar.services.SubjectService;
 import ru.ildar.services.TeacherService;
 
-import java.beans.PropertyEditorSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Controller
+@RequestMapping("/admin/teachers")
 public class TeachersController
 {
     @Autowired
     private TeacherService teacherService;
     @Autowired
-    private GroupService groupService;
-    @Autowired
     private SubjectService subjectService;
     @Autowired
     private CityService cityService;
 
-    @RequestMapping(value = "/admin/teachers", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView teachers(ModelMap model)
     {
         return teachers(1, model);
     }
 
-    @RequestMapping(value = "/admin/teachers/{pageNumber}", method = RequestMethod.GET)
+    @RequestMapping(value = "{pageNumber}", method = RequestMethod.GET)
     public ModelAndView teachers(@PathVariable("pageNumber") int pageNumber, ModelMap model)
     {
         int TEACHERS_PER_PAGE = 25;
@@ -46,7 +45,7 @@ public class TeachersController
         return new ModelAndView("adminTeachers");
     }
 
-    @RequestMapping(value = "/admin/subjectTeachers", method = RequestMethod.GET)
+    @RequestMapping(value = "bySubject", method = RequestMethod.GET)
     public ModelAndView subjectTeachers(@RequestParam("subject") String subjectName, ModelMap model)
     {
         Set<Teacher> subjTeachers = teacherService.getTeachersBySubject(subjectName);
@@ -67,7 +66,7 @@ public class TeachersController
         return new ModelAndView("teachersGroups", "taughtGroup", group == null ? new TaughtGroup() : group);
     }
 
-    @RequestMapping(value = "/admin/teachers/groups", method = RequestMethod.GET)
+    @RequestMapping(value = "groups", method = RequestMethod.GET)
     public ModelAndView teachersGroups(ModelMap model)
     {
         return teachersGroupsGeneric(model, null);
@@ -81,7 +80,7 @@ public class TeachersController
         return teachersGroupsGeneric(model, tGroup);
     }
 
-    @RequestMapping(value = "/admin/teachers/getTeachers", method = RequestMethod.GET)
+    @RequestMapping(value = "get", method = RequestMethod.GET)
     @ResponseBody
     public List<Teacher> getTeachers(@RequestParam("uniId") int uniId)
     {
@@ -91,7 +90,7 @@ public class TeachersController
     }
 
 
-    @RequestMapping(value = "/admin/teachers/groups/add", method = RequestMethod.GET)
+    @RequestMapping(value = "groups/add", method = RequestMethod.GET)
     public ModelAndView addTeachersGroups(ModelMap model)
     {
         List<Subject> subjects = subjectService.getAllSubjects();
@@ -102,7 +101,7 @@ public class TeachersController
         return new ModelAndView("addTeachersGroups", "tgroup", new TeachersGroupsPojo());
     }
 
-    @RequestMapping(value ="/admin/teachers/groups/add", method = RequestMethod.POST)
+    @RequestMapping(value ="groups/add", method = RequestMethod.POST)
     public ModelAndView addTeachersGroups(@ModelAttribute("tgroup") TeachersGroupsPojo tgroup)
     {
         TeachersGroups tg = new TeachersGroups(tgroup.getSubjectName(), tgroup.getSemester(), null, null);
@@ -110,7 +109,7 @@ public class TeachersController
         return new ModelAndView("redirect:/admin/teachers");
     }
 
-    @RequestMapping(value = "/admin/teachers/groups/add/{subject}", method = RequestMethod.GET)
+    @RequestMapping(value = "groups/add/{subject}", method = RequestMethod.GET)
     public ModelAndView addTeachersGroups(@PathVariable("subject") String subjectName)
     {
         TeachersGroupsPojo tg = new TeachersGroupsPojo();

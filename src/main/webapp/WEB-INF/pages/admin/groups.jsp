@@ -1,6 +1,7 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
-<h1>Groups</h1>
+<h1><spring:message code="group.groups" /></h1>
 
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
 <script type="text/javascript">
@@ -8,7 +9,7 @@
         var facId = $('#facSelect').val();
         var groupsTable = $('#groupsTable');
 
-        $.getJSON('/admin/groupsOfFaculty?facId=' + facId, function(data) {
+        $.getJSON('/admin/groups/OfFaculty?facId=' + facId, function(data) {
             groupsTable.empty();
             groupsTable.append("<tr><th>Group ID</th><th>Students Count</th><th>Faculty name</th></tr>");
             $.each(data, function(idx, group) {
@@ -71,27 +72,27 @@
 
 <table>
     <tr>
-        <td>Select the city:</td>
+        <td><spring:message code="group.selectCity" /></td>
         <td><select id="citySelect"></select></td>
     </tr>
     <tr>
-        <td>Select the university:</td>
+        <td><spring:message code="group.selectUni" /></td>
         <td><select id="uniSelect"></select></td>
     </tr>
     <tr>
-        <td>Select the faculty:</td>
+        <td><spring:message code="group.selectFac" /></td>
         <td><select id="facSelect"></select></td>
     </tr>
 </table>
-<input type="button" value="Load" onclick="javascript:loadGroups();">
+<input type="button" value="<spring:message code="group.load" />" onclick="javascript:loadGroups();">
 
 <table id="groupsTable" border="1">
 
 </table>
 
-<input type="button" id="createGroup" value="Create new group">
+<input type="button" id="createGroup" value="<spring:message code="group.create" />">
 <div id="createGroupDiv" style="display: none;">
-    Enter the group ID: <input type="text" id="groupNameText">
-    <input type="button" value="Create" id="createGroupBtn">
+    <spring:message code="group.enterID" /> <input type="text" id="groupNameText">
+    <input type="button" value="<spring:message code="group.submitCreate" />" id="createGroupBtn">
 </div>
 

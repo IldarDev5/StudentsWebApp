@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/ajax")
 public class AjaxLoadingController
 {
     @Autowired
@@ -52,7 +53,7 @@ public class AjaxLoadingController
         }
     }
 
-    @RequestMapping(value = "/ajax/cities", method = RequestMethod.GET)
+    @RequestMapping(value = "/cities", method = RequestMethod.GET)
     @ResponseBody
     public List<IdVal> cities()
     {
@@ -63,7 +64,7 @@ public class AjaxLoadingController
         return result;
     }
 
-    @RequestMapping(value = "/ajax/universities", method = RequestMethod.GET)
+    @RequestMapping(value = "/universities", method = RequestMethod.GET)
     @ResponseBody
     public List<IdVal> universities(@RequestParam("cityId") int cityId)
     {
@@ -74,7 +75,7 @@ public class AjaxLoadingController
         return result;
     }
 
-    @RequestMapping(value = "/ajax/faculties", method = RequestMethod.GET)
+    @RequestMapping(value = "/faculties", method = RequestMethod.GET)
     @ResponseBody
     public List<IdVal> faculties(@RequestParam("uniId") int universityId)
     {
@@ -85,7 +86,7 @@ public class AjaxLoadingController
         return result;
     }
 
-    @RequestMapping(value = "/ajax/groups", method = RequestMethod.GET)
+    @RequestMapping(value = "/groups", method = RequestMethod.GET)
     @ResponseBody
     public List<IdVal> groups(@RequestParam("facId") int facultyId)
     {

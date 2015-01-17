@@ -1,4 +1,4 @@
-package ru.ildar.controllers.admin;
+package ru.ildar.controllers.pojos;
 
 public class TaughtGroup
 {

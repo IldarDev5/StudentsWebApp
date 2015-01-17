@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
@@ -14,7 +15,7 @@
         uniSelect.change(function() {
             var uniId = $(this).val();
             var teacherSelect = $('#teacherSelect');
-            $.getJSON('/admin/teachers/getTeachers', { uniId : uniId }, function(data) {
+            $.getJSON('/admin/teachers/get', { uniId : uniId }, function(data) {
                 teacherSelect.empty();
                 $.each(data, function(index, val) {
                     teacherSelect.append("<option value=\"" + val.username + "\">"
@@ -31,26 +32,26 @@
     });
 </script>
 
-<h1>Teachers groups and taught subjects</h1>
+<h1><spring:message code="teacher.groupsAndSubjects" /></h1>
 
 <%--@elvariable id="cities" type="java.util.List<ru.ildar.database.entities.City>"--%>
 <form:form method="post" action="/admin/teachers/groups" commandName="taughtGroup">
     <table>
         <tr>
-            <td><form:label path="citySelect">City;</form:label></td>
+            <td><spring:message code="teacher.city" /></td>
             <td><form:select path="citySelect" items="${cities}" itemValue="id" /></td>
         </tr>
         <tr>
-            <td><form:label path="uniSelect">University:</form:label></td>
+            <td><spring:message code="teacher.uni" /></td>
             <td><form:select path="uniSelect" /></td>
         </tr>
         <tr>
-            <td><form:label path="teacherSelect">Teacher:</form:label></td>
+            <td><spring:message code="teacher.teacher" /></td>
             <td><form:select path="teacherSelect" /></td>
         </tr>
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <input type="submit" value="Find">
+    <input type="submit" value="<spring:message code="teacher.find" />">
 </form:form>
 
 <%--@elvariable id="tGroups" type="java.util.List<ru.ildar.database.entities.TeachersGroups>"--%>

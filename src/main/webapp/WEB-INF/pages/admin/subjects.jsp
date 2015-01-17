@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <script type="text/javascript">
@@ -25,18 +26,28 @@
 <%--@elvariable id="subjects" type="java.util.List<ru.ildar.database.entities.Subject>"--%>
 <table>
     <tr>
-        <th>Subject name</th>
-        <th>Subject type</th>
+        <th><spring:message code="sub.name" /></th>
+        <th><spring:message code="sub.type" /></th>
     </tr>
     <c:forEach items="${subjects}" var="subject">
         <tr id="${subject.subjectName}Tr">
             <td>${subject.subjectName}</td>
             <td>${subject.subjectType}</td>
-            <td><a href="/admin/subjectTeachers?subject=${subject.subjectName}">Teachers of the subject</a></td>
-            <td><a href="javascript:removeSubject('${subject.subjectName}');">Remove</a></td>
+            <td>
+                <a href="/admin/teachers/bySubject?subject=${subject.subjectName}">
+                    <spring:message code="sub.teachers" />
+                </a>
+            </td>
+            <td>
+                <a href="javascript:removeSubject('${subject.subjectName}');">
+                    <spring:message code="sub.remove" />
+                </a>
+            </td>
         </tr>
     </c:forEach>
-    <a href="/admin/subjects/add">Add new subject</a>
+    <a href="/admin/subjects/add">
+        <spring:message code="sub.add" />
+    </a>
 </table>
 
 <%--@elvariable id="pagesCount" type="java.lang.Integer"--%>

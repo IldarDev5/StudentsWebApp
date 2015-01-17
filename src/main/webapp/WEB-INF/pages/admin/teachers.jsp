@@ -1,27 +1,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <c:choose>
     <c:when test="${subject != null}">
-        <h1>Teachers of the ${subject} subject</h1>
-        <a href="/admin/teachers/groups?subject=${subject}">Teachers' groups and subject ${subject}</a>
+        <h1><spring:message code="teacher.subjTeachers" arguments="${subject}" /></h1>
+        <a href="/admin/teachers/groups?subject=${subject}">
+            <spring:message code="teacher.groupsAndSubject" />
+        </a>
     </c:when>
     <c:otherwise>
-        <h1>Teachers</h1>
-        <a href="/admin/teachers/groups">Teachers' groups and subjects</a>
+        <h1><spring:message code="teacher.teachers" /></h1>
+        <a href="/admin/teachers/groups">
+            <spring:message code="teacher.groupsAndSubjects" />
+        </a>
     </c:otherwise>
 </c:choose>
 
 <%--@elvariable id="teachers" type="java.util.List<ru.ildar.database.entities.Teacher>"--%>
 <table border="1">
     <tr>
-        <th>Username</th>
-        <th>Real name</th>
-        <th>E-Mail</th>
-        <th>Title</th>
-        <th>University</th>
-        <th>Work start date</th>
-        <th>Photo</th>
+        <th><spring:message code="teacher.username" /></th>
+        <th><spring:message code="teacher.realName" /></th>
+        <th><spring:message code="teacher.email" /></th>
+        <th><spring:message code="teacher.title" /></th>
+        <th><spring:message code="teacher.university" /></th>
+        <th><spring:message code="teacher.workStartDate" /></th>
+        <th><spring:message code="teacher.photo" /></th>
     </tr>
     <c:forEach items="${teachers}" var="teacher">
         <tr>

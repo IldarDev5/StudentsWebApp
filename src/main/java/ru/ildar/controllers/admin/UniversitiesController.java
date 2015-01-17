@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.ildar.controllers.pojos.UniversityPojo;
 import ru.ildar.database.entities.University;
 import ru.ildar.services.CityService;
 import ru.ildar.services.UniversityService;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin/unis")
 public class UniversitiesController
 {
     @Autowired
@@ -21,13 +23,13 @@ public class UniversitiesController
     @Autowired
     private CityService cityService;
 
-    @RequestMapping(value = "/admin/unis", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView getUniversities(ModelMap model)
     {
         return universities(1, model);
     }
 
-    @RequestMapping(value = "/admin/unis/{page_n}", method = RequestMethod.GET)
+    @RequestMapping(value = "{page_n}", method = RequestMethod.GET)
     public ModelAndView universities(@PathVariable("page_n") int pageNumber, ModelMap model)
     {
         int UNIS_PER_PAGE = 25;
@@ -41,7 +43,7 @@ public class UniversitiesController
         return new ModelAndView("unis");
     }
 
-    @RequestMapping(value = "/admin/unis/add", method = RequestMethod.GET)
+    @RequestMapping(value = "add", method = RequestMethod.GET)
     public ModelAndView addUniversity(ModelMap model)
     {
         model.addAttribute("uni", new UniversityPojo());
@@ -50,7 +52,7 @@ public class UniversitiesController
         return new ModelAndView("addUniversity", "uni", new UniversityPojo());
     }
 
-    @RequestMapping(value = "/admin/unis/add", method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public ModelAndView addUniversity(@ModelAttribute("uni") UniversityPojo uni)
     {
         University university = new University(uni.getUnName(), uni.getUnAddress(), null, null);
@@ -59,14 +61,14 @@ public class UniversitiesController
         return new ModelAndView("redirect:/admin/unis");
     }
 
-    @RequestMapping(value = "/admin/unis/remove", method = RequestMethod.POST)
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
     public ModelAndView removeUniversity(@RequestParam("unId") int unId)
     {
         universityService.removeUniversity(unId);
         return new ModelAndView("redirect:/admin/unis");
     }
 
-    @RequestMapping(value = "/admin/unis/image", method = RequestMethod.GET)
+    @RequestMapping(value = "image", method = RequestMethod.GET)
     public void universityImage(@RequestParam("unId") int unId, HttpServletResponse response)
             throws IOException
     {

@@ -11,19 +11,19 @@ import ru.ildar.services.SubjectService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/subjects")
 public class SubjectsController
 {
     @Autowired
     private SubjectService subjectService;
 
-    @RequestMapping(value = "/subjects", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView subjects(ModelMap model)
     {
         return subjects(1, model);
     }
 
-    @RequestMapping(value = "/subjects/{pageNumber}", method = RequestMethod.GET)
+    @RequestMapping(value = "{pageNumber}", method = RequestMethod.GET)
     public ModelAndView subjects(@PathVariable("pageNumber") int pageNumber, ModelMap model)
     {
         int SUBJECTS_PER_PAGE = 25;
@@ -35,7 +35,7 @@ public class SubjectsController
         return new ModelAndView("subjects");
     }
 
-    @RequestMapping(value = "/subjects/add", method = RequestMethod.GET)
+    @RequestMapping(value = "add", method = RequestMethod.GET)
     public ModelAndView addNewSubject(ModelMap model)
     {
         model.addAttribute("subject", new Subject());
@@ -43,14 +43,14 @@ public class SubjectsController
         return new ModelAndView("addSubject");
     }
 
-    @RequestMapping(value = "/subjects/add", method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public ModelAndView addNewSubject(@ModelAttribute("subject") Subject subject)
     {
         subjectService.addSubject(subject);
         return new ModelAndView("redirect:/admin/subjects");
     }
 
-    @RequestMapping(value = "/subjects/checkName", method = RequestMethod.GET,
+    @RequestMapping(value = "checkName", method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody
     public String checkSubjectName(@RequestParam("name") String subjectName)
@@ -59,7 +59,7 @@ public class SubjectsController
         return exists ? "{exists:true}" : "{exists:false}";
     }
 
-    @RequestMapping(value = "/subjects/remove", method = RequestMethod.POST)
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
     @ResponseBody
     public String removeSubject(@RequestParam("subjectName") String subjectName)
     {

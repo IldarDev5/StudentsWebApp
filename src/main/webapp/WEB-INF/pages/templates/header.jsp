@@ -2,6 +2,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <form hidden="hidden" action="/logout" method="post" id="logoutForm">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -9,6 +10,11 @@
 
 <header>
     <div id="strapline">
+
+        <h4 style="display: inline">
+            <a href="?lang=en">English</a>
+            <a href="?lang=ru">Russian</a>
+        </h4>
 
         <sec:authorize access="isFullyAuthenticated()">
             <div style="position: absolute; top: 10px; left: 10px;">
@@ -20,44 +26,71 @@
                         <a href="/info/student"><c:out value="${pageContext.request.userPrincipal.name}" /></a>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
-                        <a>Admin</a>
+                        <a><spring:message code="header.admin" /></a>
                     </sec:authorize>
                 </h3>
                 <h3 style="display: inline">
-                    <a href="javascript:$('#logoutForm').submit();">Log Out</a>
+                    <a href="javascript:$('#logoutForm').submit();">
+                        <spring:message code="header.logout" />
+                    </a>
                 </h3>
             </div>
         </sec:authorize>
 
         <div id="welcome_slogan">
-            <h3><span>Students And Teachers</span> Web Application</h3>
+            <h3>
+                <span><spring:message code="header.appName" /></span>
+                <spring:message code="header.webApp" />
+            </h3>
         </div><!--close welcome_slogan-->
     </div><!--close strapline-->
     <nav>
         <div id="menubar">
             <ul id="nav">
-                <li class="current"><a href="/startPage">Main Page</a></li>
+                <li class="current">
+                    <a href="/startPage"><spring:message code="header.mainPage" /></a>
+                </li>
 
                 <sec:authorize access="hasRole('ROLE_STUDENT')">
-                    <li class="current"><a href="/stud/grades">Grades</a></li>
-                    <li class="current"><a href="/stud/studTeachers">Teachers</a></li>
+                    <li class="current">
+                        <a href="/stud/grades"><spring:message code="header.grades" /></a>
+                    </li>
+                    <li class="current">
+                        <a href="/stud/studTeachers"><spring:message code="header.teachers" /></a>
+                    </li>
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <li class="current"><a href="/admin/unis">Universities and Faculties</a></li>
-                    <li class="current"><a href="/admin/subjects">Subjects</a></li>
-                    <li class="current"><a href="/admin/teachers">Teachers</a></li>
-                    <li class="current"><a href="/admin/groups">Groups</a></li>
+                    <li class="current">
+                        <a href="/admin/unis"><spring:message code="header.unisAndFacs" /></a>
+                    </li>
+                    <li class="current">
+                        <a href="/admin/subjects"><spring:message code="header.subjects" /></a>
+                    </li>
+                    <li class="current">
+                        <a href="/admin/teachers"><spring:message code="header.teachers" /></a>
+                    </li>
+                    <li class="current">
+                        <a href="/admin/groups"><spring:message code="header.groups" /></a>
+                    </li>
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('ROLE_TEACHER')">
-                    <li class="current"><a href="/teacher/groups">Teacher groups</a></li>
+                    <li class="current">
+                        <a href="/teacher/groups"><spring:message code="header.teacherGroups" /></a>
+                    </li>
                 </sec:authorize>
 
                 <sec:authorize access="isAnonymous()">
-                    <li class="current"><a href="/loginPage">Log In</a></li>
-                    <li class="current"><a href="/register/student">Register as a student</a></li>
-                    <li class="current"><a href="/register/teacher">Register as a teacher</a></li>
+                    <li class="current">
+                        <a href="/loginPage"><spring:message code="header.login" /></a>
+                    </li>
+                    <li class="current">
+                        <a href="/register/student"><spring:message code="header.regAsStud" /></a>
+                    </li>
+                    <li class="current">
+                        <a href="/register/teacher"><spring:message code="header.regAsTeacher" /></a>
+                    </li>
                 </sec:authorize>
             </ul>
         </div><!--close menubar-->

@@ -1,4 +1,4 @@
-package ru.ildar.config;
+package ru.ildar.controllers.pojos;
 
 public class TeacherRegisterPojo
 {

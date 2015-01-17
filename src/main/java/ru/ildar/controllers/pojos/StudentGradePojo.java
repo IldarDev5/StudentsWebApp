@@ -1,4 +1,4 @@
-package ru.ildar.controllers.teacher;
+package ru.ildar.controllers.pojos;
 
 public class StudentGradePojo
 {

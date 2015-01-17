@@ -1,12 +1,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h1>Register</h1>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<h1><spring:message code="teach.register" /></h1>
 <span style="color: red">
     <c:if test="${passNotEqual != null}">
-        Please enter equal passwords.
+        <spring:message code="teach.passNotEqual" />
     </c:if>
     <c:if test="${hasUsername != null}">
-        Such username already exists. Please choose another.
+        <spring:message code="teach.usernameExists" />
     </c:if>
 </span>
 
@@ -25,27 +26,47 @@
 <form:form method="post" action="/register/teacher" commandName="teacher">
     <table>
         <tr>
-            <td><form:label path="username">Enter the username:</form:label></td>
+            <td>
+                <form:label path="username">
+                    <spring:message code="teach.reg.username" />
+                </form:label>
+            </td>
             <td><form:input path="username" /></td>
         </tr>
         <tr>
-            <td><form:label path="password">Enter the password:</form:label></td>
+            <td>
+                <form:label path="password">
+                    <spring:message code="teach.reg.password" />
+                </form:label>
+            </td>
             <td><form:password path="password" /></td>
         </tr>
         <tr>
-            <td><form:label path="repeatPassword">Repeat the password:</form:label></td>
+            <td>
+                <form:label path="repeatPassword">
+                    <spring:message code="teach.reg.repeatPassword" />
+                </form:label>
+            </td>
             <td><form:password path="repeatPassword" /></td>
         </tr>
         <tr>
-            <td><form:label path="citySelect">Choose the city:</form:label></td>
+            <td>
+                <form:label path="citySelect">
+                    <spring:message code="teach.reg.city" />
+                </form:label>
+            </td>
             <td><form:select path="citySelect" /></td>
         </tr>
         <tr>
-            <td><form:label path="uniSelect">Choose the university:</form:label></td>
+            <td>
+                <form:label path="uniSelect">
+                    <spring:message code="teach.reg.university" />
+                </form:label>
+            </td>
             <td><form:select path="uniSelect" /></td>
         </tr>
     </table>
     <input type="hidden" name="role" value="${teacher.role}">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <input type="submit" value="Register">
+    <input type="submit" value="<spring:message code="teach.reg.register" />">
 </form:form>

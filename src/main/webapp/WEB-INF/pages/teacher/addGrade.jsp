@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
-<h1>Add a grade to a student</h1>
+<h1><spring:message code="teach.addGrade" /></h1>
 
 <%--@elvariable id="groupId" type="java.lang.String"--%>
 <%--@elvariable id="subject" type="java.lang.String"--%>
@@ -49,19 +50,23 @@
 <form method="post" action="/teacher/grades/add" id="addForm">
     <table>
         <tr>
-            <td>Group:</td>
+            <td><spring:message code="teach.group" /></td>
             <td><span><c:out value="${groupId}" /></span></td>
         </tr>
         <tr>
-            <td>Subject:</td>
+            <td><spring:message code="teach.subject" /></td>
             <td><span><c:out value="${subject}" /></span></td>
         </tr>
         <tr>
-            <td>Semester:</td>
+            <td><spring:message code="teach.semester" />:</td>
             <td><span><c:out value="${semester}" /></span></td>
         </tr>
         <tr>
-            <td>Student:</td>
+            <td>
+                <label for="studentSelect">
+                    <spring:message code="teach.student" />:
+                </label>
+            </td>
             <td>
                 <select id="studentSelect" name="studentSelect">
                     <c:forEach items="${students}" var="stud">
@@ -74,7 +79,9 @@
             <td><span id="warningSpan" style="color: red;"></span></td>
         </tr>
         <tr>
-            <td>Grade(from 0 to 100):</td>
+            <td><label for="gradeValue">
+                <spring:message code="teach.gradeValue" />
+            </label></td>
             <td><input type="text" name="gradeValue" id="gradeValue" value="0"></td>
         </tr>
     </table>
@@ -82,5 +89,5 @@
     <input type="hidden" name="subject" value="${subject}">
     <input type="hidden" name="semester" value="${semester}">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <input type="submit" value="Set grade">
+    <input type="submit" value="<spring:message code="teach.setGrade" />">
 </form>

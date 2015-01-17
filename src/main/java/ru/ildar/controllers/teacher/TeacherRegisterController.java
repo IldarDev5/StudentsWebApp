@@ -1,4 +1,4 @@
-package ru.ildar.controllers.student;
+package ru.ildar.controllers.teacher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,62 +14,62 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.ildar.controllers.pojos.StudentRegisterPojo;
+import ru.ildar.controllers.pojos.TeacherRegisterPojo;
 import ru.ildar.database.entities.Person;
-import ru.ildar.database.entities.Student;
+import ru.ildar.database.entities.Teacher;
 import ru.ildar.services.PersonService;
-import ru.ildar.services.StudentService;
+import ru.ildar.services.TeacherService;
 
 import java.util.Arrays;
 
 @Controller
-@RequestMapping("/register/student")
-public class StudentRegisterController
+@RequestMapping("/register/teacher")
+public class TeacherRegisterController
 {
     @Autowired
-    private StudentService studentService;
+    private TeacherService teacherService;
     @Autowired
     private PersonService personService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView registerPage()
     {
-        StudentRegisterPojo pojo = new StudentRegisterPojo();
-        pojo.setRole("ROLE_STUDENT");
-        return new ModelAndView("registerStudent", "student", pojo);
+        TeacherRegisterPojo teacherRegisterPojo = new TeacherRegisterPojo();
+        teacherRegisterPojo.setRole("ROLE_TEACHER");
+        return new ModelAndView("registerTeacher", "teacher", teacherRegisterPojo);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ModelAndView registerPage(@ModelAttribute("student") StudentRegisterPojo stud)
+    public ModelAndView registerPage(@ModelAttribute TeacherRegisterPojo teacherReg)
     {
-        if(!stud.getPassword().equals(stud.getRepeatPassword()))
-            return regError("passNotEqual", stud);
-        if(studentService.getByUserName(stud.getUsername()) != null)
-            return regError("hasUsername", stud);
+        if(!teacherReg.getPassword().equals(teacherReg.getRepeatPassword()))
+            return regError("passNotEqual", teacherReg);
+        if(teacherService.getByUserName(teacherReg.getUsername()) != null)
+            return regError("hasUsername", teacherReg);
 
-        stud.setPassword(new Md5PasswordEncoder().encodePassword(stud.getPassword(), null));
-        Person person = new Person(stud.getUsername(), stud.getPassword(), stud.getRole());
+        teacherReg.setPassword(new Md5PasswordEncoder().encodePassword(teacherReg.getPassword(), null));
+        Person person = new Person(teacherReg.getUsername(), teacherReg.getPassword(), teacherReg.getRole());
         personService.addPerson(person);
 
-        Student student = new Student();
-        student.setUsername(stud.getUsername());
-        studentService.setGroupAndAddStudent(student, stud.getGroupSelect());
+        Teacher teacher = new Teacher();
+        teacher.setUsername(teacherReg.getUsername());
+        teacherService.setUniversityAndAddTeacher(teacher, teacherReg.getUniSelect());
 
         //authenticate user
-        UserDetails authUser = new User(stud.getUsername(), stud.getPassword(),
-                true, true, true, true, Arrays.asList(new SimpleGrantedAuthority(stud.getRole())));
+        UserDetails authUser = new User(teacherReg.getUsername(), teacherReg.getPassword(),
+                true, true, true, true, Arrays.asList(new SimpleGrantedAuthority(teacherReg.getRole())));
         Authentication auth = new UsernamePasswordAuthenticationToken(authUser,
                 null, authUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        return new ModelAndView("redirect:/info/student");
+        return new ModelAndView("redirect:/info/teacher");
     }
 
-    private ModelAndView regError(String attr, StudentRegisterPojo user)
+    private ModelAndView regError(String attr, TeacherRegisterPojo user)
     {
         ModelMap model = new ModelMap();
         model.addAttribute("user", user);
         model.addAttribute(attr, true);
-        return new ModelAndView("registerStudent", model);
+        return new ModelAndView("registerTeacher", model);
     }
 }

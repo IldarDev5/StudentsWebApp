@@ -15,12 +15,13 @@ import java.io.IOException;
 import java.security.Principal;
 
 @Controller
+@RequestMapping("/pictures")
 public class PictureController
 {
     @Autowired
     private PictureService pictureService;
 
-    @RequestMapping(value = "/pictures/avatar", method = RequestMethod.GET)
+    @RequestMapping(value = "/avatar", method = RequestMethod.GET)
     public void showAvatar(@RequestParam(value = "username", required = false) String username,
                            HttpServletResponse servletResponse, Principal principal)
             throws IOException
@@ -49,7 +50,7 @@ public class PictureController
         servletResponse.getOutputStream().close();
     }
 
-    @RequestMapping(value = "/pictures/avatar", method = RequestMethod.POST,
+    @RequestMapping(value = "/avatar", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ModelAndView uploadAvatar(@RequestParam("avatar") MultipartFile file, Principal principal)
             throws IOException

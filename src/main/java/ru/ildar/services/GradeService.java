@@ -3,7 +3,6 @@ package ru.ildar.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.ildar.controllers.teacher.StudentGradePojo;
 import ru.ildar.database.entities.Grade;
 import ru.ildar.database.entities.Student;
 import ru.ildar.database.entities.Teacher;
