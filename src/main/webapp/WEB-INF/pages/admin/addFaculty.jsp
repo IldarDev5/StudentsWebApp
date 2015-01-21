@@ -12,11 +12,11 @@
 <form method="post" action="/admin/faculties/add">
     <table>
         <tr>
-            <td><spring:message code="fac.name" /></td>
+            <td><spring:message code="fac.name" />:</td>
             <td><input type="text" id="facultyName" name="facultyName"></td>
         </tr>
         <tr>
-            <td><spring:message code="fac.date" /></td>
+            <td><spring:message code="fac.date" />:</td>
             <td><input type="text" id="foundDate" name="foundDate"></td>
         </tr>
     </table>

@@ -4,6 +4,14 @@
 <%--@elvariable id="tGroup" type="ru.ildar.database.entities.TeachersGroups"--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
+<script type="text/javascript">
+    function removeGrade(gradeId) {
+        $('#gradeId').val(gradeId);
+        $('#tGroupsId').val(${tGroup.id});
+        $('#removeGradeForm').submit();
+    }
+</script>
+
 <h2>
     <spring:message code="teach.studGrades">
         <spring:argument value="${tGroup.teacher.firstName}" />
@@ -28,10 +36,21 @@
             <td>${grade.subjectName}</td>
             <td>${grade.gradeValue}</td>
             <td><a><spring:message code="teach.updateGrade" /></a></td>
-            <td><a><spring:message code="teach.remove" /></a></td>
+            <td>
+                <a href="javascript:removeGrade(${grade.gradeId});">
+                    <spring:message code="teach.remove" />
+                </a>
+            </td>
         </tr>
     </c:forEach>
 </table>
+
+<form hidden="hidden" id="removeGradeForm" method="post" action="/teacher/grades/remove">
+    <input type="hidden" name="gradeId" id="gradeId">
+    <input type="hidden" name="tGroupsId" id="tGroupsId">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+</form>
+
 <a href="/teacher/grades/add?subject=${tGroup.subjectName}
 &groupId=${tGroup.group.groupId}&semester=${tGroup.semester}">
     <spring:message code="teach.addGradeToStud" />

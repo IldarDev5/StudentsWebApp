@@ -20,6 +20,20 @@ create table students_app.universities(
   references students_app.cities(id)
 );
 
+create table STUDENTS_APP.Un_Description(
+  id int PRIMARY KEY,
+  un_id int not null,
+  description CLOB NOT NULL,
+  last_change_date TIMESTAMP NOT NULL,
+  last_change_person_username varchar(70) NOT NULL,
+  language varchar(10) not null,
+
+  CONSTRAINT fk_university FOREIGN KEY(un_id)
+  REFERENCES STUDENTS_APP.UNIVERSITIES(un_id),
+  CONSTRAINT fk_change_person FOREIGN KEY(last_change_person_username)
+  REFERENCES STUDENTS_APP.PEOPLE(USERNAME)
+);
+
 create table students_app.faculties(
   faculty_id int primary key,
   un_id int not null,

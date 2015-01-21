@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import ru.ildar.services.PersonService;
 import ru.ildar.services.PictureService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ public class PictureController
     @Autowired
     private PictureService pictureService;
 
-    @RequestMapping(value = "/avatar", method = RequestMethod.GET)
+    @RequestMapping(value = "avatar", method = RequestMethod.GET)
     public void showAvatar(@RequestParam(value = "username", required = false) String username,
                            HttpServletResponse servletResponse, Principal principal)
             throws IOException
@@ -50,9 +51,9 @@ public class PictureController
         servletResponse.getOutputStream().close();
     }
 
-    @RequestMapping(value = "/avatar", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ModelAndView uploadAvatar(@RequestParam("avatar") MultipartFile file, Principal principal)
+    @RequestMapping(value = "avatar", method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String uploadAvatar(@RequestParam("avatar") MultipartFile file, Principal principal)
             throws IOException
     {
         if(!file.isEmpty())
@@ -61,6 +62,6 @@ public class PictureController
             pictureService.setPhoto(bytes, principal.getName());
         }
 
-        return new ModelAndView("redirect:/startPage");
+        return "redirect:/info";
     }
 }

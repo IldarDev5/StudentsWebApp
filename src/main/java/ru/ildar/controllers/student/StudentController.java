@@ -32,14 +32,14 @@ public class StudentController
     @Autowired
     private TeacherService teacherService;
 
-    @RequestMapping(value = "/grades", method = RequestMethod.GET)
+    @RequestMapping(value = "grades", method = RequestMethod.GET)
     public ModelAndView studGrades(Principal principal)
     {
         Set<Long> semesters = gradeService.getStudentSemesters(principal.getName());
         return new ModelAndView("grades", "semesters", semesters);
     }
 
-    @RequestMapping(value = "/semesterGrades", method = RequestMethod.GET,
+    @RequestMapping(value = "semesterGrades", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Grade> semesterGrades(@RequestParam("sem") long semester, Principal principal)
@@ -49,7 +49,7 @@ public class StudentController
         return grades;
     }
 
-    @RequestMapping(value = "/studTeachers", method = RequestMethod.GET)
+    @RequestMapping(value = "studTeachers", method = RequestMethod.GET)
     public ModelAndView studTeachers(Principal principal)
     {
         String studName = principal.getName();

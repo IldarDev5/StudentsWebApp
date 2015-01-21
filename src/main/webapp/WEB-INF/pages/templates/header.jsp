@@ -8,12 +8,19 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 </form>
 
+<script type="text/javascript">
+    $(function() {
+        if(currId)
+            $('#' + currId).addClass('current');
+    });
+</script>
+
 <header>
     <div id="strapline">
 
-        <h4 style="display: inline">
-            <a href="?lang=en">English</a>
-            <a href="?lang=ru">Russian</a>
+        <h4 style="display: inline; position: absolute; right: 10px; top: 10px;">
+            <a href="?lang=en"><img height="25" src="/images/US.png" title="English language"></a>
+            <a href="?lang=ru"><img height="25" src="/images/RU.png" tabindex="Russian language"></a>
         </h4>
 
         <sec:authorize access="isFullyAuthenticated()">
@@ -26,7 +33,7 @@
                         <a href="/info/student"><c:out value="${pageContext.request.userPrincipal.name}" /></a>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
-                        <a><spring:message code="header.admin" /></a>
+                        <a><c:out value="${pageContext.request.userPrincipal.name}" /></a>
                     </sec:authorize>
                 </h3>
                 <h3 style="display: inline">
@@ -47,48 +54,48 @@
     <nav>
         <div id="menubar">
             <ul id="nav">
-                <li class="current">
+                <li id="startPageLi">
                     <a href="/startPage"><spring:message code="header.mainPage" /></a>
                 </li>
 
                 <sec:authorize access="hasRole('ROLE_STUDENT')">
-                    <li class="current">
+                    <li id="studGradesLi">
                         <a href="/stud/grades"><spring:message code="header.grades" /></a>
                     </li>
-                    <li class="current">
+                    <li id="studTeachersLi">
                         <a href="/stud/studTeachers"><spring:message code="header.teachers" /></a>
                     </li>
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <li class="current">
+                    <li id="adminUnisLi">
                         <a href="/admin/unis"><spring:message code="header.unisAndFacs" /></a>
                     </li>
-                    <li class="current">
+                    <li id="adminSubjectsLi">
                         <a href="/admin/subjects"><spring:message code="header.subjects" /></a>
                     </li>
-                    <li class="current">
+                    <li id="adminTeachersLi">
                         <a href="/admin/teachers"><spring:message code="header.teachers" /></a>
                     </li>
-                    <li class="current">
+                    <li id="adminGroupsLi">
                         <a href="/admin/groups"><spring:message code="header.groups" /></a>
                     </li>
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('ROLE_TEACHER')">
-                    <li class="current">
+                    <li id="teacherGroupsLi">
                         <a href="/teacher/groups"><spring:message code="header.teacherGroups" /></a>
                     </li>
                 </sec:authorize>
 
                 <sec:authorize access="isAnonymous()">
-                    <li class="current">
+                    <li id="loginPageLi">
                         <a href="/loginPage"><spring:message code="header.login" /></a>
                     </li>
-                    <li class="current">
+                    <li id="registerStudentLi">
                         <a href="/register/student"><spring:message code="header.regAsStud" /></a>
                     </li>
-                    <li class="current">
+                    <li id="registerTeacherLi">
                         <a href="/register/teacher"><spring:message code="header.regAsTeacher" /></a>
                     </li>
                 </sec:authorize>

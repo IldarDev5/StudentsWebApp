@@ -15,7 +15,7 @@
         var studentSelect = $('#studentSelect');
         studentSelect.change(function() {
             var username = $(this).val();
-            $.getJSON('/teacher/checkStudentGrade',
+            $.getJSON('/teacher/grades/checkStudentGrade',
                     {
                         subject: "${subject}",
                         semester: ${semester},

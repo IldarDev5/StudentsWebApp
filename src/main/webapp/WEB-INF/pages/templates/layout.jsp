@@ -12,6 +12,10 @@
     <script type="text/javascript" src="/scripts/modernizr-1.5.min.js"></script>
 </head>
 
+<script type="text/javascript">
+    var currId = '<tiles:insertAttribute name="currentId" />';
+</script>
+
 <body>
 <div id="main">
 

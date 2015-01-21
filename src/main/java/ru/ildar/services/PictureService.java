@@ -17,20 +17,33 @@ public class PictureService
     public byte[] getPicture(String username)
     {
         Person person = personService.getByUserName(username);
-        if(person.getRoleName().equals("ROLE_TEACHER"))
-            return teacherService.getTeacherPhoto(username);
-        else if(person.getRoleName().equals("ROLE_STUDENT"))
-            return studentService.getStudentPhoto(username);
-        else
-            return null;
+        switch (person.getRoleName())
+        {
+            case "ROLE_TEACHER":
+                return teacherService.getTeacherPhoto(username);
+            case "ROLE_STUDENT":
+                return studentService.getStudentPhoto(username);
+            default:
+                return null;
+        }
     }
 
     public void setPhoto(byte[] bytes, String name)
     {
         Person person = personService.getByUserName(name);
-        if(person.getRoleName().equals("ROLE_TEACHER"))
-            teacherService.getByUserName(name).setPersonPhoto(bytes);
-        else if(person.getRoleName().equals("ROLE_STUDENT"))
-            studentService.getByUserName(name).setPersonPhoto(bytes);
+        switch (person.getRoleName())
+        {
+            case "ROLE_TEACHER":
+                teacherService.getByUserName(name).setPersonPhoto(bytes);
+                break;
+            case "ROLE_STUDENT":
+                studentService.getByUserName(name).setPersonPhoto(bytes);
+                break;
+        }
+    }
+
+    public void removeAvatar(String username)
+    {
+        setPhoto(null, username);
     }
 }

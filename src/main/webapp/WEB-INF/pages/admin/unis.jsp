@@ -4,11 +4,32 @@
 
 <script type="text/javascript">
     function removeUn(unId) {
-        alert(unId);
         $("#unIdHidden").val(unId);
         $('#removeUnForm').submit();
     }
+
+    var universityId;
+    function uploadImageForUni(unId) {
+        universityId = unId;
+        $('#uniPic').click();
+    }
+
+    $(function() {
+        $('#uniPic').change(function() {
+            $('#uploadUnId').val(universityId);
+            $('#uploadUniPicForm').submit();
+        });
+    });
 </script>
+
+<form method="post" action="/admin/unis/image?${_csrf.parameterName}=${_csrf.token}"
+      id="uploadUniPicForm" enctype="multipart/form-data">
+    <input type="hidden" id="uploadUnId" name="uploadUnId">
+    <input type="file" style="display: none;" id="uniPic" name="uniPic">
+    <input type="hidden" name="pageNumber" value="${pageNumber}">
+    <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">--%>
+</form>
+
 
 <h1>Universities</h1>
 <%--@elvariable id="universities" type="java.util.List<ru.ildar.database.entities.University>"--%>
@@ -25,7 +46,11 @@
             <td><c:out value="${un.city.cityName}" /></td>
             <td><c:out value="${un.unName}" /></td>
             <td><c:out value="${un.unAddress}" /></td>
-            <td><img src="/admin/unis/image?unId=${un.unId}" width="100"></td>
+            <td>
+                <a href="javascript:uploadImageForUni(${un.unId});">
+                    <img src="/admin/unis/image?unId=${un.unId}" width="100">
+                </a>
+            </td>
             <td><c:out value="${un.teachersCount}" /></td>
             <td>
                 <a href="/admin/faculties?un_id=${un.unId}">
@@ -35,6 +60,11 @@
             <td>
                 <a href="javascript:removeUn(${un.unId});">
                     <spring:message code="uni.remove" />
+                </a>
+            </td>
+            <td>
+                <a href="/admin/unis/description?unId=${un.unId}">
+                    <spring:message code="uni.description" />
                 </a>
             </td>
         </tr>

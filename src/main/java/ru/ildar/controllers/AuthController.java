@@ -21,12 +21,15 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping(value = "/auth")
 public class AuthController
 {
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private PersonService personService;
 
-    @RequestMapping(value = "/auth/studentGroup", method = RequestMethod.GET)
+    @RequestMapping(value = "studentGroup", method = RequestMethod.GET)
     public ModelAndView studentGroup(@RequestParam("groupId") String groupId)
     {
         Group group = groupService.getGroupWithStudents(groupId);

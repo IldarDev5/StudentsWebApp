@@ -79,6 +79,13 @@
     <a href="javascript:showUploadAvatarForm();">
         <spring:message code="stud.uploadAvatar" />
     </a>
+    <a href="javascript:removeAvatar();">
+        <spring:message code="stud.removeAvatar" />
+    </a>
+    <form hidden="hidden" id="removeAvatarForm" method="post" action="/info/removePic">
+        <input type="hidden" name="username" value="${stud.username}">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+    </form>
     <form hidden="hidden" id="avatarForm" method="post"
             action="/pictures/avatar?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
         <spring:message code="stud.uploadImage" /> <input type="file" name="avatar"> <br />

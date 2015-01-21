@@ -7,7 +7,9 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.City;
 import ru.ildar.database.entities.University;
+import ru.ildar.database.entities.UniversityDescription;
 import ru.ildar.database.repositories.CityDAO;
+import ru.ildar.database.repositories.UniDescriptionDAO;
 import ru.ildar.database.repositories.UniversityDAO;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class UniversityService
     private UniversityDAO universityDAO;
     @Autowired
     private CityDAO cityDAO;
+    @Autowired
+    private UniDescriptionDAO uniDescriptionDAO;
 
     public void addUniversity(University un)
     {
@@ -69,5 +73,16 @@ public class UniversityService
     public void removeUniversity(long unId)
     {
         universityDAO.delete(unId);
+    }
+
+    public void setImage(long unId, byte[] bytes)
+    {
+        University university = universityDAO.findOne(unId);
+        university.setUnImage(bytes);
+    }
+
+    public UniversityDescription getDescription(long unId, String lang)
+    {
+        return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang);
     }
 }

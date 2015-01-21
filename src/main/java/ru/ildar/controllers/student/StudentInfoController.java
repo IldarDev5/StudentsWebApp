@@ -20,7 +20,7 @@ public class StudentInfoController
     @Autowired
     private StudentService studentService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView userInfo(@RequestParam(value = "username", required = false) String username,
                                  Principal principal)
     {
@@ -31,7 +31,7 @@ public class StudentInfoController
         return new ModelAndView("studInfo", "stud", student);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public String userInfo(@RequestBody JsonStudentDetails pd, Principal principal)
             throws ParseException

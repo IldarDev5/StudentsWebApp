@@ -13,98 +13,125 @@
     <definition name="startPage" extends="base.definition">
         <put-attribute name="title" value="Students and Teachers Web App - Start Page" />
         <put-attribute name="body" value="/WEB-INF/pages/startPage.jsp" />
+        <put-attribute name="currentId" value="startPageLi" />
     </definition>
     <definition name="loginPage" extends="base.definition">
         <put-attribute name="title" value="Login page" />
         <put-attribute name="body" value="/WEB-INF/pages/auth/login.jsp" />
+        <put-attribute name="currentId" value="loginPageLi" />
     </definition>
 
     <definition name="registerTeacher" extends="base.definition">
         <put-attribute name="title" value="Register page" />
         <put-attribute name="body" value="/WEB-INF/pages/teacher/teacherRegistration.jsp" />
+        <put-attribute name="currentId" value="registerTeacherLi" />
     </definition>
     <definition name="registerStudent" extends="base.definition">
         <put-attribute name="title" value="Register page" />
         <put-attribute name="body" value="/WEB-INF/pages/student/studRegistration.jsp" />
+        <put-attribute name="currentId" value="registerStudentLi" />
     </definition>
 
     <definition name="groupStudents" extends="base.definition">
         <put-attribute name="title" value="Group students" />
         <put-attribute name="body" value="/WEB-INF/pages/auth/group.jsp" />
+        <put-attribute name="currentId" value="startPageLi" />
     </definition>
 
     <definition name="studInfo" extends="base.definition">
         <put-attribute name="title" value="Student information" />
         <put-attribute name="body" value="/WEB-INF/pages/student/info.jsp" />
+        <put-attribute name="currentId" value="startPageLi" />
     </definition>
     <definition name="teacherInfo" extends="base.definition">
         <put-attribute name="title" value="Teacher information" />
         <put-attribute name="body" value="/WEB-INF/pages/teacher/info.jsp" />
+        <put-attribute name="currentId" value="startPageLi" />
     </definition>
 
     <definition name="teacherGroups" extends="base.definition">
         <put-attribute name="title" value="Academic groups of teacher" />
         <put-attribute name="body" value="/WEB-INF/pages/teacher/groups.jsp" />
+        <put-attribute name="currentId" value="teacherGroupsLi" />
     </definition>
     <definition name="studentsGrades" extends="base.definition">
         <put-attribute name="title" value="Students grades" />
         <put-attribute name="body" value="/WEB-INF/pages/teacher/studsGrades.jsp" />
+        <put-attribute name="currentId" value="teacherGroupsLi" />
     </definition>
     <definition name="addGrade" extends="base.definition">
         <put-attribute name="title" value="Add grade to a student" />
         <put-attribute name="body" value="/WEB-INF/pages/teacher/addGrade.jsp" />
+        <put-attribute name="currentId" value="teacherGroupsLi" />
     </definition>
 
     <definition name="teachersGroups" extends="base.definition">
         <put-attribute name="title" value="Teachers groups and subjects" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/teachersGroups.jsp" />
+        <!--<put-attribute name="currentId" value="" />-->
     </definition>
     <definition name="addTeachersGroups" extends="base.definition">
         <put-attribute name="title" value="Add teachers groups and subjects" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/addTeachersGroups.jsp" />
+        <!--<put-attribute name="currentId" value="" />-->
     </definition>
 
 
     <definition name="grades" extends="base.definition">
         <put-attribute name="title" value="Student grades" />
         <put-attribute name="body" value="/WEB-INF/pages/student/grades.jsp" />
+        <put-attribute name="currentId" value="studGradesLi" />
     </definition>
     <definition name="studTeachers" extends="base.definition">
         <put-attribute name="title" value="Student teachers" />
         <put-attribute name="body" value="/WEB-INF/pages/student/teachers.jsp" />
+        <put-attribute name="currentId" value="studTeachersLi" />
     </definition>
 
     <definition name="unis" extends="base.definition">
         <put-attribute name="title" value="Universities and Faculties" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/unis.jsp" />
+        <put-attribute name="currentId" value="adminUnisLi" />
+    </definition>
+    <definition name="uniDescription" extends="base.definition">
+        <put-attribute name="title" value="University Description" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/uniDescription.jsp" />
+        <put-attribute name="currentId" value="adminUnisLi" />
     </definition>
     <definition name="addUniversity" extends="base.definition">
         <put-attribute name="title" value="Add new university" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/addUni.jsp" />
+        <put-attribute name="currentId" value="adminUnisLi" />
     </definition>
     <definition name="groups" extends="base.definition">
         <put-attribute name="title" value="Groups" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/groups.jsp" />
+        <put-attribute name="currentId" value="adminGroupsLi" />
     </definition>
     <definition name="subjects" extends="base.definition">
         <put-attribute name="title" value="Subjects" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/subjects.jsp" />
+        <put-attribute name="currentId" value="adminSubjectsLi" />
     </definition>
     <definition name="adminTeachers" extends="base.definition">
         <put-attribute name="title" value="Teachers" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/teachers.jsp" />
+        <put-attribute name="currentId" value="adminTeachersLi" />
     </definition>
     <definition name="faculties" extends="base.definition">
         <put-attribute name="title" value="Faculties" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/faculties.jsp" />
+        <put-attribute name="currentId" value="adminUnisLi" />
     </definition>
     <definition name="addFaculty" extends="base.definition">
         <put-attribute name="title" value="Add new faculty" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/addFaculty.jsp" />
+        <put-attribute name="currentId" value="adminUnisLi" />
     </definition>
     <definition name="addSubject" extends="base.definition">
         <put-attribute name="title" value="Add new subject" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/addSubject.jsp" />
+        <put-attribute name="currentId" value="adminSubjectsLi" />
     </definition>
 
 </tiles-definitions>

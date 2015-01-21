@@ -76,4 +76,9 @@ public class GradeService
 
         gradeDAO.save(grade);
     }
+
+    public void removeGrade(long gradeId)
+    {
+        gradeDAO.delete(gradeId);
+    }
 }

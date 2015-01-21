@@ -31,7 +31,7 @@ public class TeacherRegisterController
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView registerPage()
     {
         TeacherRegisterPojo teacherRegisterPojo = new TeacherRegisterPojo();
@@ -39,7 +39,7 @@ public class TeacherRegisterController
         return new ModelAndView("registerTeacher", "teacher", teacherRegisterPojo);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ModelAndView registerPage(@ModelAttribute TeacherRegisterPojo teacherReg)
     {
         if(!teacherReg.getPassword().equals(teacherReg.getRepeatPassword()))

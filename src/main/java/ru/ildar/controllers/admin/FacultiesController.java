@@ -3,10 +3,7 @@ package ru.ildar.controllers.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.Faculty;
 import ru.ildar.database.entities.University;
@@ -36,9 +33,11 @@ public class FacultiesController
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public void removeFaculty(@RequestParam("facultyId") int facultyId)
+    @ResponseBody
+    public String removeFaculty(@RequestParam("facultyId") int facultyId)
     {
-
+        facultyService.removeFaculty(facultyId);
+        return "ok";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)

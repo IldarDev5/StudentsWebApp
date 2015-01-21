@@ -10,6 +10,10 @@ function showUploadAvatarForm() {
     $('#avatarForm').toggle();
 }
 
+function removeAvatar() {
+    $('#removeAvatarForm').submit();
+}
+
 $(function() {
     var updForm = $('#updateForm');
 

@@ -20,4 +20,9 @@ public class FacultyService
     {
         return facultyDAO.findByUniversity_UnId(universityId);
     }
+
+    public void removeFaculty(long facultyId)
+    {
+        facultyDAO.delete(facultyId);
+    }
 }
