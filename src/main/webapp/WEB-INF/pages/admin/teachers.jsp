@@ -5,15 +5,9 @@
 <c:choose>
     <c:when test="${subject != null}">
         <h1><spring:message code="teacher.subjTeachers" arguments="${subject}" /></h1>
-        <a href="/admin/teachers/groups?subject=${subject}">
-            <spring:message code="teacher.groupsAndSubject" />
-        </a>
     </c:when>
     <c:otherwise>
         <h1><spring:message code="teacher.teachers" /></h1>
-        <a href="/admin/teachers/groups">
-            <spring:message code="teacher.groupsAndSubjects" />
-        </a>
     </c:otherwise>
 </c:choose>
 

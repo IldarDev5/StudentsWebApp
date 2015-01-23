@@ -29,7 +29,13 @@ public class GroupsController
     {
         Iterable<Group> groups = groupService.getGroupsByFaculty(facId);
         List<Group> result = new ArrayList<>();
-        groups.forEach((g) -> { g.setStudents(null); g.getFaculty().setUniversity(null); result.add(g); });
+//        groups.forEach((g) -> { g.setStudents(null); g.getFaculty().setUniversity(null); result.add(g); });
+        for(Group group : groups)
+        {
+            group.setStudents(null);
+            group.getFaculty().setUniversity(null);
+            result.add(group);
+        }
 
         return result;
     }

@@ -23,7 +23,8 @@ public class SubjectService
     {
         Iterable<Subject> it = subjectDAO.findAll();
         List<Subject> result = new ArrayList<>();
-        it.forEach(result::add);
+        for(Subject subj : it)
+            result.add(subj);
         return result;
     }
 
@@ -31,7 +32,8 @@ public class SubjectService
     {
         Iterable<Subject> it = subjectDAO.findAll(new PageRequest(pageNumber, subjectsPerPage));
         List<Subject> result = new ArrayList<>();
-        it.forEach(result::add);
+        for(Subject subj : it)
+            result.add(subj);
         return result;
     }
 
@@ -43,7 +45,8 @@ public class SubjectService
     public List<String> getSubjectTypes()
     {
         List<String> types = new ArrayList<>();
-        subjectTypeDAO.findAll().forEach((t) -> types.add(t.getSubjectType()));
+        for(SubjectType type : subjectTypeDAO.findAll())
+            types.add(type.getSubjectType());
         return types;
     }
 

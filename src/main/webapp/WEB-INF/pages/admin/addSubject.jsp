@@ -38,12 +38,12 @@
 <form:form id="addForm" method="post" action="/admin/subjects/add" commandName="subject">
     <table>
         <tr>
-            <td><spring:message code="sub.name" />/td>
+            <td><spring:message code="sub.name" />:</td>
             <td><form:input path="subjectName" /></td>
             <td><span id="subjectNameErrSpan" style="color: red;"></span></td>
         </tr>
         <tr>
-            <td><spring:message code="sub.type" /></td>
+            <td><spring:message code="sub.type" />:</td>
             <td><form:select path="subjectType" items="${subjectTypes}" /></td>
         </tr>
     </table>

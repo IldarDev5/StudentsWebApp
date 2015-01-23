@@ -68,12 +68,12 @@
     <definition name="teachersGroups" extends="base.definition">
         <put-attribute name="title" value="Teachers groups and subjects" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/teachersGroups.jsp" />
-        <!--<put-attribute name="currentId" value="" />-->
+        <put-attribute name="currentId" value="teachersGroupsLi" />
     </definition>
     <definition name="addTeachersGroups" extends="base.definition">
         <put-attribute name="title" value="Add teachers groups and subjects" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/addTeachersGroups.jsp" />
-        <!--<put-attribute name="currentId" value="" />-->
+        <put-attribute name="currentId" value="teachersGroupsLi" />
     </definition>
 
 

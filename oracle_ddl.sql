@@ -9,6 +9,11 @@ create table students_app.cities(
   constraint uk_city_country unique(city_name, country)
 );
 
+create table STUDENTS_APP.languages(
+  language varchar2(25) PRIMARY KEY,
+  lang_abbrev varchar(5) not null unique
+);
+
 create table students_app.universities(
   un_id int primary key,
   un_name varchar2(150) not null,
@@ -26,12 +31,14 @@ create table STUDENTS_APP.Un_Description(
   description CLOB NOT NULL,
   last_change_date TIMESTAMP NOT NULL,
   last_change_person_username varchar(70) NOT NULL,
-  language varchar(10) not null,
+  language varchar2(25) not null,
 
   CONSTRAINT fk_university FOREIGN KEY(un_id)
   REFERENCES STUDENTS_APP.UNIVERSITIES(un_id),
   CONSTRAINT fk_change_person FOREIGN KEY(last_change_person_username)
-  REFERENCES STUDENTS_APP.PEOPLE(USERNAME)
+  REFERENCES STUDENTS_APP.PEOPLE(USERNAME),
+  CONSTRAINT fk_descr_language FOREIGN KEY(language)
+  REFERENCES STUDENTS_APP.languages(language)
 );
 
 create table students_app.faculties(
@@ -144,16 +151,6 @@ create table students_app.grades(
   references students_app.subjects(subject_name)
 );
 
-insert into students_app.roles(role_name) values ('ROLE_STUDENT');
-insert into students_app.roles(role_name) values ('ROLE_TEACHER');
-insert into students_app.roles(role_name) values ('ROLE_ADMIN');
-
-insert into students_app.subject_types values('Physical');
-insert into students_app.subject_types values('Natural');
-insert into students_app.subject_types values('Formal');
-insert into students_app.subject_types values('Social');
-insert into students_app.subject_types values('IT, Computer Science');
-insert into students_app.subject_types values('Other');
 
 create or replace trigger students_app.faculty_person
 before insert or update of group_id on students_app.students

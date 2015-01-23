@@ -27,7 +27,9 @@ public class TeacherService
     {
         List<TeachersGroups> lst = teachersGroupsDAO.findBySubjectName(subjectName);
         Set<Teacher> teachers = new TreeSet<>();
-        lst.forEach((tg) -> teachers.add(tg.getTeacher()));
+//        lst.forEach((tg) -> teachers.add(tg.getTeacher()));
+        for(TeachersGroups tg : lst)
+            teachers.add(tg.getTeacher());
         return teachers;
     }
 
@@ -45,9 +47,12 @@ public class TeacherService
         for(TeachersGroups tg : tgs)
         {
             Set<String> subjs = new TreeSet<>();
-            tgs.stream().filter((tgr) -> tgr.getGroup().equals(group) &&
-                    tgr.getTeacher().equals(tg.getTeacher()))
-                    .forEach((tgr) -> subjs.add(tgr.getSubjectName()));
+//            tgs.stream().filter((tgr) -> tgr.getGroup().equals(group) &&
+//                    tgr.getTeacher().equals(tg.getTeacher()))
+//                    .forEach((tgr) -> subjs.add(tgr.getSubjectName()));
+            for(TeachersGroups tgr : tgs)
+                if(tgr.getGroup().equals(group) && tgr.getTeacher().equals(tg.getTeacher()))
+                    subjs.add(tgr.getSubjectName());
             result.put(tg.getTeacher(), subjs);
         }
 
@@ -58,7 +63,9 @@ public class TeacherService
     {
         Iterable<Teacher> teachers = teacherDAO.findAll(new PageRequest(pageNumber, teachersPerPage));
         List<Teacher> result = new ArrayList<>();
-        teachers.forEach(result::add);
+//        teachers.forEach(result::add);
+        for(Teacher teacher : teachers)
+            result.add(teacher);
         return result;
     }
 

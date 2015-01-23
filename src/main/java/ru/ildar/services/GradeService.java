@@ -35,7 +35,9 @@ public class GradeService
     {
         List<Grade> grades = gradeDAO.findByStudent_Username(studUsername);
         Set<Long> results = new TreeSet<>();
-        grades.stream().map(Grade::getSemester).forEach(results::add);
+//        grades.stream().map(Grade::getSemester).forEach(results::add);
+        for(Grade grade : grades)
+            results.add(grade.getSemester());
 
         return results;
     }

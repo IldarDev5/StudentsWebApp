@@ -22,9 +22,9 @@
     }
 </script>
 
-<h1>Subjects</h1>
+<h1><spring:message code="sub.subjects" /></h1>
 <%--@elvariable id="subjects" type="java.util.List<ru.ildar.database.entities.Subject>"--%>
-<table>
+<table border="1">
     <tr>
         <th><spring:message code="sub.name" /></th>
         <th><spring:message code="sub.type" /></th>

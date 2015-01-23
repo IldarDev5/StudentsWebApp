@@ -6,9 +6,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.City;
+import ru.ildar.database.entities.Person;
 import ru.ildar.database.entities.University;
 import ru.ildar.database.entities.UniversityDescription;
 import ru.ildar.database.repositories.CityDAO;
+import ru.ildar.database.repositories.PersonDAO;
 import ru.ildar.database.repositories.UniDescriptionDAO;
 import ru.ildar.database.repositories.UniversityDAO;
 
@@ -18,6 +20,8 @@ import java.util.List;
 @Service
 public class UniversityService
 {
+    @Autowired
+    private PersonDAO personDAO;
     @Autowired
     private UniversityDAO universityDAO;
     @Autowired
@@ -84,5 +88,12 @@ public class UniversityService
     public UniversityDescription getDescription(long unId, String lang)
     {
         return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang);
+    }
+
+    public void setUniversityDescription(UniversityDescription descr, String name)
+    {
+        Person changeAuthor = personDAO.findOne(name);
+        descr.setLastChangePerson(changeAuthor);
+        uniDescriptionDAO.save(descr);
     }
 }

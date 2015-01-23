@@ -1,9 +1,13 @@
 package ru.ildar.controllers.admin;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.MediaType;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,12 +15,22 @@ import ru.ildar.controllers.pojos.UniversityPojo;
 import ru.ildar.database.entities.University;
 import ru.ildar.database.entities.UniversityDescription;
 import ru.ildar.services.CityService;
+import ru.ildar.services.LanguageService;
 import ru.ildar.services.UniversityService;
 
 import javax.servlet.http.HttpServletResponse;
+import java.beans.PropertyEditorSupport;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.security.Principal;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/unis")
@@ -26,6 +40,8 @@ public class UniversitiesController
     private UniversityService universityService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private LanguageService languageService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView getUniversities(ModelMap model)
@@ -108,13 +124,16 @@ public class UniversitiesController
     }
 
     @RequestMapping(value = "description", method = RequestMethod.GET)
-    public ModelAndView viewDescription(@RequestParam("unId") int unId, Locale locale)
+    public ModelAndView viewDescription(@RequestParam("unId") int unId, Locale locale, ModelMap model)
     {
-        return viewDescription(unId, locale.getLanguage());
+        String lang = languageService.getLanguageByAbbreviation(locale.getLanguage());
+        return viewDescription(unId, lang, model);
     }
 
     @RequestMapping(value = "description/{lang}", method = RequestMethod.GET)
-    public ModelAndView viewDescription(@RequestParam("unId") int unId, String lang)
+    public ModelAndView viewDescription(@RequestParam("unId") int unId,
+                                        @PathVariable("lang") String lang,
+                                        ModelMap model)
     {
         UniversityDescription descr = universityService.getDescription(unId, lang);
         if(descr == null)
@@ -123,12 +142,45 @@ public class UniversitiesController
             descr = new UniversityDescription("", null, lang, null, uni);
         }
 
+        model.addAttribute("languages", languageService.getAllLanguages());
         return new ModelAndView("uniDescription", "description", descr);
     }
 
-    @RequestMapping(value = "description", method = RequestMethod.POST)
-    public ModelAndView setDescription(@RequestParam("description") UniversityDescription descr)
+    @InitBinder
+    public void initBinder(WebDataBinder binder)
     {
+        binder.registerCustomEditor(University.class, new PropertyEditorSupport()
+        {
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException
+            {
+                int id = Integer.parseInt(text);
+                setValue(universityService.getById(id));
+            }
+        });
+    }
 
+    @RequestMapping(value = "description", method = RequestMethod.POST)
+    public String setDescription(@ModelAttribute("description") UniversityDescription descr,
+                                       Principal principal)
+            throws UnsupportedEncodingException
+    {
+        descr.setLastChangeDate(new Timestamp(new Date().getTime()));
+        try
+        {
+            universityService.setUniversityDescription(descr, principal.getName());
+        }
+        catch(JpaSystemException exc)
+        {
+            if(exc.getCause().getCause() instanceof SQLIntegrityConstraintViolationException)
+                //Attempt was made to insert a row in UN_DESCRIPTION the language field
+                //of which was distorted due to encoding conversions
+            {
+                descr.setLanguage(new String(descr.getLanguage().getBytes("ISO-8859-1"), "UTF-8"));
+                descr.setDescription(new String(descr.getDescription().getBytes("ISO-8859-1"), "UTF-8"));
+                universityService.setUniversityDescription(descr, principal.getName());
+            }
+        }
+        return "redirect:/admin/unis";
     }
 }

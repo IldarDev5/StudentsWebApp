@@ -59,9 +59,11 @@ public class TeachersController
     {
         Iterable<City> cities = cityService.getAllCities();
         List<City> citiesList = new ArrayList<>();
-        cities.forEach(citiesList::add);
+//        cities.forEach(citiesList::add);
+        for(City city : cities)
+            citiesList.add(city);
 
-        model.addAttribute("cities", cities);
+        model.addAttribute("cities", citiesList);
 
         return new ModelAndView("teachersGroups", "taughtGroup", group == null ? new TaughtGroup() : group);
     }
@@ -72,7 +74,7 @@ public class TeachersController
         return teachersGroupsGeneric(model, null);
     }
 
-    @RequestMapping(value = "/admin/teachers/groups", method = RequestMethod.POST)
+    @RequestMapping(value = "groups", method = RequestMethod.POST)
     public ModelAndView teachersGroups(ModelMap model, @ModelAttribute("taughtGroup") TaughtGroup tGroup)
     {
         List<TeachersGroups> tGroups = teacherService.getTeachersGroups(tGroup.getTeacherSelect());
@@ -85,7 +87,9 @@ public class TeachersController
     public List<Teacher> getTeachers(@RequestParam("uniId") int uniId)
     {
         List<Teacher> teachers = teacherService.getTeachersByUniversity(uniId);
-        teachers.forEach((t) -> t.setUniversity(null));
+//        teachers.forEach((t) -> t.setUniversity(null));
+        for(Teacher teacher : teachers)
+            teacher.setUniversity(null);
         return teachers;
     }
 
@@ -95,7 +99,9 @@ public class TeachersController
     {
         List<Subject> subjects = subjectService.getAllSubjects();
         List<String> subjectsStr = new ArrayList<>();
-        subjects.stream().map(Subject::getSubjectName).forEach(subjectsStr::add);
+//        subjects.stream().map(Subject::getSubjectName).forEach(subjectsStr::add);
+        for(Subject subject : subjects)
+            subjectsStr.add(subject.getSubjectName());
 
         model.addAttribute("subjects", subjectsStr);
         return new ModelAndView("addTeachersGroups", "tgroup", new TeachersGroupsPojo());

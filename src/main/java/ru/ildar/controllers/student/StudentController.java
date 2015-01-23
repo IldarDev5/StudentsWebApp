@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BinaryOperator;
 
 @Controller
 @RequestMapping("/stud")
@@ -45,7 +44,12 @@ public class StudentController
     public List<Grade> semesterGrades(@RequestParam("sem") long semester, Principal principal)
     {
         List<Grade> grades = gradeService.getStudentGradesInSemester(principal.getName(), semester);
-        grades.stream().forEach((g) -> { g.setStudent(null); g.getTeacher().setUniversity(null); });
+//        grades.stream().forEach((g) -> { g.setStudent(null); g.getTeacher().setUniversity(null); });
+        for(Grade grade : grades)
+        {
+            grade.setStudent(null);
+            grade.getTeacher().setUniversity(null);
+        }
         return grades;
     }
 
@@ -56,10 +60,12 @@ public class StudentController
         Map<Teacher, Set<String>> teachers = teacherService.getStudentTeachers(studName);
 
         Map<Teacher, String> teachersSubjs = new HashMap<>();
-        teachers.entrySet().stream().forEach((t) ->
-        {
-            teachersSubjs.put(t.getKey(), t.getValue().stream().reduce((s, s2) -> s + ", " + s2).get());
-        });
+//        teachers.entrySet().stream().forEach((t) ->
+//        {
+//            teachersSubjs.put(t.getKey(), t.getValue().stream().reduce((s, s2) -> s + ", " + s2).get());
+//        });
+        for(Map.Entry<Teacher, Set<String>> teacher : teachers.entrySet())
+            teachersSubjs.put(teacher.getKey(), teacher.getValue().toString());
 
         return new ModelAndView("studTeachers", "teachers", teachersSubjs);
     }

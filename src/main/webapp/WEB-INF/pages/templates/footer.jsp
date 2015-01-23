@@ -1,4 +1,17 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <footer>
-    <a href="index.html">Home</a> | <a href="ourwork.html">Our Work</a> | <a href="testimonials.html">Testimonials</a> | <a href="projects.html">Projects</a> | <a href="contact.html">Contact</a><br/><br/>
-    <a href="http://fotogrph.com">Images</a> |  <a href="http://www.heartinternet.co.uk/vps/">Virtual Server</a>  | website template by <a href="http://www.freehtml5templates.co.uk">Free HTML5 Templates</a>
+    <a href="/startPage">
+        <spring:message code="footer.home" />
+    </a> |
+    <a href="http://www.github.com/IldarS1995">
+        <spring:message code="footer.meGithub" />
+    </a> |
+    <a href="http://vk.com/ildars95">
+        <spring:message code="footer.meVK" />
+    </a> |
+    <a href="http://www.heartinternet.co.uk/vps/">
+        <spring:message code="footer.virtualServer" />
+    </a> |
+    <spring:message code="footer.websiteTemplateBy" />
+        <a href="http://www.freehtml5templates.co.uk">Free HTML5 Templates</a>
 </footer>
