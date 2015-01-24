@@ -9,6 +9,7 @@
 <script type="text/javascript">
     $(function() {
         setLoad(true, true, true);
+        triggerUniChange = true;
 
         loadCities();
 
@@ -18,8 +19,17 @@
         });
 
         $('#uniSelect').change(function() {
-            var uni = $(this).val();
-            loadFacs("?uniId=" + uni);
+            var uniId = $(this).val();
+            loadFaculties("?uniId=" + uniId);
+
+            var teacher = $('#teacherSelect');
+            $.getJSON('/admin/teachers/get', { uniId : uniId }, function(data) {
+                teacher.empty();
+                $.each(data, function(index, val) {
+                    teacher.append("<option value=\"" + val.username + "\">"
+                    + val.firstName + ", " + val.lastName + " (" + val.username + ")" + "</option>");
+                });
+            });
         });
 
         $('#facSelect').change(function() {
@@ -30,41 +40,47 @@
 </script>
 
 <%--@elvariable id="subjects" type="java.util.List<java.lang.String>"--%>
-<form:form method="post" action="/admin/teachers/groups" commandName="tgroup">
+<form:form method="post" action="/admin/teachers/groups/add" commandName="tgroup">
     <table>
         <tr>
-            <td><spring:message code="sub.name" /></td>
-            <c:if test="${tgroup.subjectName != null}">
-                <td><c:out value="${tgroup.subjectName}" /></td>
-            </c:if>
-            <c:if test="${tgroup.subjectName == null}">
-                <td><form:select path="subjectName" items="${subjects}" /></td>
-            </c:if>
+            <td><spring:message code="sub.name" />:</td>
+            <c:choose>
+                <c:when test="${tgroup.subjectName != null}">
+                    <td>
+                        <c:out value="${tgroup.subjectName}" />
+                        <form:hidden path="subjectName" />
+                    </td>
+                </c:when>
+                <c:otherwise>
+                    <td><form:select path="subjectName" items="${subjects}" /></td>
+                </c:otherwise>
+            </c:choose>
         </tr>
         <tr>
-            <td><spring:message code="teacher.teacher" /></td>
-            <td><form:input path="teacher" /></td>
+            <td><spring:message code="teacher.teacher" />:</td>
+            <td><form:select path="teacherSelect" /></td>
         </tr>
         <tr>
-            <td><spring:message code="teacher.semester" /></td>
+            <td><spring:message code="teacher.semester" />:</td>
             <td><form:input path="semester" /></td>
         </tr>
         <tr>
-            <td><spring:message code="teacher.city" /></td>
+            <td><spring:message code="teacher.city" />:</td>
             <td><form:select path="citySelect" /></td>
         </tr>
         <tr>
-            <td><spring:message code="teacher.uni" /></td>
+            <td><spring:message code="teacher.uni" />:</td>
             <td><form:select path="uniSelect" /></td>
         </tr>
         <tr>
-            <td><spring:message code="teacher.fac" /></td>
+            <td><spring:message code="teacher.fac" />:</td>
             <td><form:select path="facSelect" /></td>
         </tr>
         <tr>
-            <td><spring:message code="teacher.group" /></td>
+            <td><spring:message code="teacher.group" />:</td>
             <td><form:select path="groupSelect" /></td>
         </tr>
     </table>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     <input type="submit" value="<spring:message code="teacher.submit" />">
 </form:form>

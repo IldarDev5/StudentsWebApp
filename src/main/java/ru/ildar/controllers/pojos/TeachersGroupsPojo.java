@@ -8,16 +8,16 @@ public class TeachersGroupsPojo
     private String uniSelect;
     private String facSelect;
     private String groupSelect;
-    private String teacher;
+    private String teacherSelect;
 
-    public String getTeacher()
+    public String getTeacherSelect()
     {
-        return teacher;
+        return teacherSelect;
     }
 
-    public void setTeacher(String teacher)
+    public void setTeacherSelect(String teacherSelect)
     {
-        this.teacher = teacher;
+        this.teacherSelect = teacherSelect;
     }
 
     public String getSubjectName()

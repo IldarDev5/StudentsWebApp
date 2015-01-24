@@ -65,18 +65,6 @@
         <put-attribute name="currentId" value="teacherGroupsLi" />
     </definition>
 
-    <definition name="teachersGroups" extends="base.definition">
-        <put-attribute name="title" value="Teachers groups and subjects" />
-        <put-attribute name="body" value="/WEB-INF/pages/admin/teachersGroups.jsp" />
-        <put-attribute name="currentId" value="teachersGroupsLi" />
-    </definition>
-    <definition name="addTeachersGroups" extends="base.definition">
-        <put-attribute name="title" value="Add teachers groups and subjects" />
-        <put-attribute name="body" value="/WEB-INF/pages/admin/addTeachersGroups.jsp" />
-        <put-attribute name="currentId" value="teachersGroupsLi" />
-    </definition>
-
-
     <definition name="grades" extends="base.definition">
         <put-attribute name="title" value="Student grades" />
         <put-attribute name="body" value="/WEB-INF/pages/student/grades.jsp" />
@@ -88,6 +76,17 @@
         <put-attribute name="currentId" value="studTeachersLi" />
     </definition>
 
+
+    <definition name="teachersGroups" extends="base.definition">
+        <put-attribute name="title" value="Teachers groups and subjects" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/teachersGroups.jsp" />
+        <put-attribute name="currentId" value="adminTeachersLi" />
+    </definition>
+    <definition name="addTeachersGroups" extends="base.definition">
+        <put-attribute name="title" value="Add teachers groups and subjects" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/addTeachersGroups.jsp" />
+        <put-attribute name="currentId" value="adminTeachersLi" />
+    </definition>
     <definition name="unis" extends="base.definition">
         <put-attribute name="title" value="Universities and Faculties" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/unis.jsp" />

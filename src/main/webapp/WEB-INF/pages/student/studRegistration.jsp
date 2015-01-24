@@ -19,15 +19,15 @@
         setLoad(true, true, true);
         loadCities();
 
-        $('#city').change(function() {
+        $('#citySelect').change(function() {
             loadUnis("?cityId=" + $(this).val());
         });
 
-        $('#university').change(function() {
+        $('#uniSelect').change(function() {
             loadFaculties("?uniId=" + $(this).val());
         });
 
-        $('#faculty').change(function() {
+        $('#facSelect').change(function() {
             loadGroups("?facId=" + $(this).val());
         });
     });

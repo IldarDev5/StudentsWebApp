@@ -63,7 +63,7 @@ public class SubjectsController
     @ResponseBody
     public String removeSubject(@RequestParam("subjectName") String subjectName)
     {
-        System.out.println("Kinda removed");
-        return "true";
+        subjectService.removeSubject(subjectName);
+        return "ok";
     }
 }

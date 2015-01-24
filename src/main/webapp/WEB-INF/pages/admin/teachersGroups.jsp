@@ -14,11 +14,11 @@
 
         uniSelect.change(function() {
             var uniId = $(this).val();
-            var teacherSelect = $('#teacherSelect');
+            var teacher = $('#teacherSelect');
             $.getJSON('/admin/teachers/get', { uniId : uniId }, function(data) {
-                teacherSelect.empty();
+                teacher.empty();
                 $.each(data, function(index, val) {
-                    teacherSelect.append("<option value=\"" + val.username + "\">"
+                    teacher.append("<option value=\"" + val.username + "\">"
                             + val.firstName + ", " + val.lastName + " (" + val.username + ")" + "</option>");
                 });
             });
@@ -33,6 +33,10 @@
 </script>
 
 <h1><spring:message code="teacher.groupsAndSubjects" /></h1>
+
+<a href="/admin/teachers/groups/add">
+    <spring:message code="teacher.addTGroup" />
+</a>
 
 <%--@elvariable id="cities" type="java.util.List<ru.ildar.database.entities.City>"--%>
 <form:form method="post" action="/admin/teachers/groups" commandName="taughtGroup">
@@ -58,10 +62,10 @@
 <c:if test="${tGroups != null}">
     <table border="1" id="tGroupsTable">
         <tr>
-            <th>Subject name</th>
-            <th>Semester</th>
-            <th>Group ID</th>
-            <th>Teacher</th>
+            <th><spring:message code="teacher.subjectName" /></th>
+            <th><spring:message code="teacher.semester" /></th>
+            <th><spring:message code="teacher.groupId" /></th>
+            <th><spring:message code="teacher.teacher" /></th>
         </tr>
         <c:forEach items="${tGroups}" var="tGroup">
             <tr>

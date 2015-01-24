@@ -16,7 +16,7 @@
                 xhr.setRequestHeader('X-CSRF-TOKEN', '${_csrf.token}');
             },
             success: function(data) {
-                $('#' + subjectName + 'Tr').remove();
+                $('#' + subjectName.replace(" ", "") + 'Tr').remove();
             }
         });
     }
@@ -30,7 +30,7 @@
         <th><spring:message code="sub.type" /></th>
     </tr>
     <c:forEach items="${subjects}" var="subject">
-        <tr id="${subject.subjectName}Tr">
+        <tr id="${subject.subjectName.replaceAll(" ","")}Tr">
             <td>${subject.subjectName}</td>
             <td>${subject.subjectType}</td>
             <td>

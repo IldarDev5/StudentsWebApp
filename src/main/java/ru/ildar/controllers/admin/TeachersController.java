@@ -9,7 +9,6 @@ import ru.ildar.controllers.pojos.TaughtGroup;
 import ru.ildar.controllers.pojos.TeachersGroupsPojo;
 import ru.ildar.database.entities.*;
 import ru.ildar.services.CityService;
-import ru.ildar.services.GroupService;
 import ru.ildar.services.SubjectService;
 import ru.ildar.services.TeacherService;
 
@@ -95,31 +94,31 @@ public class TeachersController
 
 
     @RequestMapping(value = "groups/add", method = RequestMethod.GET)
-    public ModelAndView addTeachersGroups(ModelMap model)
+    public ModelAndView addTeachersGroups(@RequestParam(value = "subject", required = false)
+                                              String subjectName, ModelMap model)
     {
-        List<Subject> subjects = subjectService.getAllSubjects();
-        List<String> subjectsStr = new ArrayList<>();
-//        subjects.stream().map(Subject::getSubjectName).forEach(subjectsStr::add);
-        for(Subject subject : subjects)
-            subjectsStr.add(subject.getSubjectName());
+        TeachersGroupsPojo tg = new TeachersGroupsPojo();
 
-        model.addAttribute("subjects", subjectsStr);
-        return new ModelAndView("addTeachersGroups", "tgroup", new TeachersGroupsPojo());
+        if(subjectName == null)
+        {
+            List<Subject> subjects = subjectService.getAllSubjects();
+            List<String> subjectsStr = new ArrayList<>();
+            //        subjects.stream().map(Subject::getSubjectName).forEach(subjectsStr::add);
+            for (Subject subject : subjects)
+                subjectsStr.add(subject.getSubjectName());
+            model.addAttribute("subjects", subjectsStr);
+        }
+        else
+            tg.setSubjectName(subjectName);
+        return new ModelAndView("addTeachersGroups", "tgroup", tg);
     }
 
     @RequestMapping(value ="groups/add", method = RequestMethod.POST)
-    public ModelAndView addTeachersGroups(@ModelAttribute("tgroup") TeachersGroupsPojo tgroup)
+    public String addTeachersGroups(@ModelAttribute("tgroup") TeachersGroupsPojo tgroup)
     {
         TeachersGroups tg = new TeachersGroups(tgroup.getSubjectName(), tgroup.getSemester(), null, null);
-        teacherService.setGroupAndTeacherAndAddTeachersGroups(tg,tgroup.getGroupSelect(), tgroup.getTeacher());
-        return new ModelAndView("redirect:/admin/teachers");
-    }
-
-    @RequestMapping(value = "groups/add/{subject}", method = RequestMethod.GET)
-    public ModelAndView addTeachersGroups(@PathVariable("subject") String subjectName)
-    {
-        TeachersGroupsPojo tg = new TeachersGroupsPojo();
-        tg.setSubjectName(subjectName);
-        return new ModelAndView("addTeachersGroups", "tgroup", tg);
+        teacherService.setGroupAndTeacherAndAddTeachersGroups(tg,
+                tgroup.getGroupSelect(), tgroup.getTeacherSelect());
+        return "redirect:/admin/teachers";
     }
 }

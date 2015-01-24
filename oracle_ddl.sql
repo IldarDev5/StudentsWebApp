@@ -131,6 +131,7 @@ create table students_app.teachers_groups(
   references students_app.groups(group_id),
   constraint fk_tg_subject_name foreign key(subject_name)
   references students_app.subjects(subject_name)
+    on delete cascade
 );
 
 create table students_app.grades(
@@ -149,6 +150,7 @@ create table students_app.grades(
   references students_app.teachers(username),
   constraint fk_gr_subject foreign key(subject_name)
   references students_app.subjects(subject_name)
+    on delete cascade
 );
 
 

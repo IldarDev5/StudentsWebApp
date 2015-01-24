@@ -59,4 +59,9 @@ public class SubjectService
     {
         return subjectDAO.exists(subjectName);
     }
+
+    public void removeSubject(String subjectName)
+    {
+        subjectDAO.delete(subjectName);
+    }
 }
