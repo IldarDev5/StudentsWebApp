@@ -16,11 +16,17 @@ public class FacultyService
         facultyDAO.save(fac);
     }
 
+    /**
+     * Returns faculties of the university, specified by the ID
+     */
     public Iterable<Faculty> getFacultiesByUniversity(int universityId)
     {
         return facultyDAO.findByUniversity_UnId(universityId);
     }
 
+    /**
+     * Remove a faculty by its ID
+     */
     public void removeFaculty(long facultyId)
     {
         facultyDAO.delete(facultyId);

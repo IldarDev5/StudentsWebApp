@@ -22,6 +22,10 @@ import ru.ildar.services.StudentService;
 
 import java.util.Arrays;
 
+/**
+ * Student controller that handles registering new
+ * students
+ */
 @Controller
 @RequestMapping("/register/student")
 public class StudentRegisterController
@@ -44,7 +48,7 @@ public class StudentRegisterController
     {
         if(!stud.getPassword().equals(stud.getRepeatPassword()))
             return regError("passNotEqual", stud);
-        if(studentService.getByUserName(stud.getUsername()) != null)
+        if(studentService.getByUsername(stud.getUsername()) != null)
             return regError("hasUsername", stud);
 
         stud.setPassword(new Md5PasswordEncoder().encodePassword(stud.getPassword(), null));

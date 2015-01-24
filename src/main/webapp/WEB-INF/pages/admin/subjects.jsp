@@ -4,8 +4,7 @@
 
 <script type="text/javascript">
     function removeSubject(subjectName) {
-        var choice = confirm('Removal of subject will incur removals of grades and data ' +
-                'that depends on this subject. Do you really want to delete it?');
+        var choice = confirm('<spring:message code="sub.confirmRemoval" />');
         if(choice == false)
             return;
 

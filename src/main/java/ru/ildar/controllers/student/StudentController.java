@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Student controller that handles read operations with
+ * student grades and teachers
+ */
 @Controller
 @RequestMapping("/stud")
 public class StudentController

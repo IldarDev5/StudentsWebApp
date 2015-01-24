@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import ru.ildar.services.LoginUserDetailsService;
 
+/**
+ * Spring Security configuration for this web app
+ */
 @Configuration
 @EnableWebSecurity
 public class AuthConfig extends WebSecurityConfigurerAdapter
@@ -31,7 +34,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter
                 .usernameParameter("username").passwordParameter("password")
             .and().logout().logoutUrl("/logout").logoutSuccessUrl("/startPage")
             .and().authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')").
-                antMatchers("/teacher/**").access("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER')").
+                antMatchers("/teacher/**").access("hasAnyRole('ROLE_TEACHER')").
                 antMatchers("/stud/**").access("hasAnyRole('ROLE_STUDENT')").
                 antMatchers("/auth/**").access("isFullyAuthenticated()").
                 antMatchers("/info/**").access("isFullyAuthenticated()");

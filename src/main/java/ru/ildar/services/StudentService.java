@@ -17,17 +17,27 @@ public class StudentService
     @Autowired
     private GroupDAO groupDAO;
 
+    /**
+     * Returns an avatar of the student specified by his username
+     */
     public byte[] getStudentPhoto(String username)
     {
         return studentDAO.findOne(username).getPersonPhoto();
     }
 
+    /**
+     * Returns the student specified by his username
+     */
     public Student getByUsername(String username)
     {
         return studentDAO.findOne(username);
     }
 
-    public void setGroupAndPhotoAndUpdate(Student details)
+    /**
+     * Update student fields firstName, lastName, enrollment, and Email
+     * @param details Object which stores new field values
+     */
+    public void updateStudent(Student details)
     {
         Student stud = studentDAO.findOne(details.getUsername());
         stud.setFirstName(details.getFirstName());
@@ -36,11 +46,12 @@ public class StudentService
         stud.setEmail(details.getEmail());
     }
 
-    public Student getByUserName(String username)
-    {
-        return studentDAO.findOne(username);
-    }
-
+    /**
+     * Sets a group specified by the group ID to the Student instance
+     * and saves this instance
+     * @param student Student to save
+     * @param groupId ID of the group to set to a student
+     */
     public void setGroupAndAddStudent(Student student, String groupId)
     {
         Group group = groupDAO.findOne(groupId);
@@ -48,6 +59,9 @@ public class StudentService
         studentDAO.save(student);
     }
 
+    /**
+     * Returns list of students from the group specified by its ID
+     */
     public List<Student> getByGroup(String groupId)
     {
         return studentDAO.getByGroup_GroupId(groupId);

@@ -4,33 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
-<script type="text/javascript">
-    $(function() {
-        setLoad(true, false, false);
-        triggerUniChange = true;
-
-        var uniSelect = $('#uniSelect');
-        var citySelect = $('#citySelect');
-
-        uniSelect.change(function() {
-            var uniId = $(this).val();
-            var teacher = $('#teacherSelect');
-            $.getJSON('/admin/teachers/get', { uniId : uniId }, function(data) {
-                teacher.empty();
-                $.each(data, function(index, val) {
-                    teacher.append("<option value=\"" + val.username + "\">"
-                            + val.firstName + ", " + val.lastName + " (" + val.username + ")" + "</option>");
-                });
-            });
-        });
-
-        loadUnis("?cityId=" + citySelect.val());
-
-        citySelect.change(function() {
-            loadUnis("?cityId=" + $(this).val());
-        });
-    });
-</script>
+<script type="text/javascript" src="/scripts/teachers_groups.js"></script>
 
 <h1><spring:message code="teacher.groupsAndSubjects" /></h1>
 

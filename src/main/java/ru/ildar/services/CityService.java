@@ -11,6 +11,9 @@ public class CityService
     @Autowired
     private CityDAO cityDAO;
 
+    /**
+     * Get all cities from the database
+     */
     public Iterable<City> getAllCities()
     {
         return cityDAO.findAll();

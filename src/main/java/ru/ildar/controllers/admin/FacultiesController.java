@@ -16,6 +16,9 @@ import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Administrator controller that handles CRUD operations with faculties
+ */
 @Controller
 @RequestMapping("/admin/faculties")
 public class FacultiesController

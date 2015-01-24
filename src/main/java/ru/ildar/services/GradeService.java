@@ -21,28 +21,39 @@ public class GradeService
     @Autowired
     private TeacherService teacherService;
 
+    /**
+     * Returns grades of the specified student in the specified semester
+     */
     public List<Grade> getStudentGradesInSemester(String studUsername, long semester)
     {
         return gradeDAO.findByStudent_UsernameAndSemester(studUsername, semester);
     }
 
+    /**
+     * Add grade to the database
+     */
     public void addGrade(Grade grade)
     {
         gradeDAO.save(grade);
     }
 
+    /**
+     * Returns semesters numbers in which this student got some grades
+     */
     public Set<Long> getStudentSemesters(String studUsername)
     {
         List<Grade> grades = gradeDAO.findByStudent_Username(studUsername);
         Set<Long> results = new TreeSet<>();
-//        grades.stream().map(Grade::getSemester).forEach(results::add);
-        for(Grade grade : grades)
-            results.add(grade.getSemester());
+        grades.stream().map(Grade::getSemester).forEach(results::add);
 
         return results;
     }
 
-    public List<Grade> getByTeachersGroups(TeachersGroups tGroups)
+    /**
+     * Returns grades, the criteria of search of which is composed of three
+     * fields of TeachersGroups instance - groupId, subject and semester.
+     */
+    public List<Grade> getGradesByTeachersGroups(TeachersGroups tGroups)
     {
         String groupId = tGroups.getGroup().getGroupId();
         String subject = tGroups.getSubjectName();
@@ -56,11 +67,25 @@ public class GradeService
         return grades;
     }
 
+    /**
+     * Find grade by the specified fields values.
+     * @param subject Subject on which grade was set
+     * @param semester Number of the semester in which grade was set
+     * @param username Username of the student who got this grade
+     * @param teacher Teacher who set this grade
+     */
     public Grade getStudentGrade(String subject, int semester, String username, String teacher)
     {
         return gradeDAO.findOneBySubjectNameAndSemesterAndStudent_UsernameAndTeacher_Username(subject, semester, username, teacher);
     }
 
+    /**
+     * Set Student and Teacher instances, found by their specified usernames, to the grade
+     * fields student and teacher, then save this grade
+     * @param studStr Student username
+     * @param teacherStr Teacher username
+     * @param grade Grade instance to save
+     */
     public void setStudentAndTeacherAndAddGrade(String studStr, String teacherStr, Grade grade)
     {
         Grade prevGrade = gradeDAO.findOneBySubjectNameAndSemesterAndStudent_UsernameAndTeacher_Username(grade.getSubjectName(), grade.getSemester(), studStr, teacherStr);
@@ -79,6 +104,9 @@ public class GradeService
         gradeDAO.save(grade);
     }
 
+    /**
+     * Remove the grade from the database
+     */
     public void removeGrade(long gradeId)
     {
         gradeDAO.delete(gradeId);

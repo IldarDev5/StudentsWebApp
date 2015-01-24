@@ -18,6 +18,10 @@ import ru.ildar.services.UniversityService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller that handles AJAX requests that are
+ * common for many pages to send
+ */
 @Controller
 @RequestMapping("/ajax")
 public class AjaxLoadingController

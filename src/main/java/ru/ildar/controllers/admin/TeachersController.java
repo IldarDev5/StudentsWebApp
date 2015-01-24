@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Administrator controller that handles CRUD operations with teachers
+ * and teachers groups
+ */
 @Controller
 @RequestMapping("/admin/teachers")
 public class TeachersController

@@ -14,24 +14,6 @@
 
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
 <script type="text/javascript" src="/scripts/register_stud.js"></script>
-<script type="text/javascript">
-    $(function() {
-        setLoad(true, true, true);
-        loadCities();
-
-        $('#citySelect').change(function() {
-            loadUnis("?cityId=" + $(this).val());
-        });
-
-        $('#uniSelect').change(function() {
-            loadFaculties("?uniId=" + $(this).val());
-        });
-
-        $('#facSelect').change(function() {
-            loadGroups("?facId=" + $(this).val());
-        });
-    });
-</script>
 
 <form:form method="post" action="/register/student" commandName="student">
     <table>

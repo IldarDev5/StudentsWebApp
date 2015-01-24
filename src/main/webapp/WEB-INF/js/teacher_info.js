@@ -26,6 +26,8 @@ $(function() {
         var city = $('#citySelect').val();
         var university = $('#universitySelect').val();
 
+        //Update information about teacher - first name, last name, e-mail, title,
+        // work start date and university
         $.ajax({
             contentType : 'application/json',
             url : updForm.attr('action'),
@@ -66,10 +68,6 @@ $(function() {
 
     var citySelect = $('#citySelect');
     var uniSelect = $('#universitySelect');
-
-    //facultySelect.val(facultyId);
-    //uniSelect.val(universityId);
-    //citySelect.val(cityId);
 
     citySelect.change(function() {
             var cityId = $(this).val();

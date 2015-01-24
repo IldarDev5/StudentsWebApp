@@ -7,14 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import ru.ildar.services.PersonService;
 import ru.ildar.services.PictureService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
 
+/**
+ * Controller that handles CRUD operations on users avatar images
+ */
 @Controller
 @RequestMapping("/pictures")
 public class PictureController

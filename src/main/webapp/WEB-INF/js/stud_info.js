@@ -23,6 +23,7 @@ $(function() {
         var email = $('#email').val();
         var enrollment = $('#enrollment').val();
 
+        //Update information about student - first name, last name, e-mail and enrollment
         $.ajax({
             contentType : 'application/json',
             url : updForm.attr('action'),

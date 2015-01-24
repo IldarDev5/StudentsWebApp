@@ -14,6 +14,10 @@ public class PictureService
     @Autowired
     private TeacherService teacherService;
 
+    /**
+     * Returns an avatar of the specified user, whether it's a
+     * teacher or a student.
+     */
     public byte[] getPicture(String username)
     {
         Person person = personService.getByUserName(username);
@@ -28,6 +32,13 @@ public class PictureService
         }
     }
 
+    /**
+     * Set the avatar specified by the array of bytes to the
+     * person specified by his username, whether it's a teacher or
+     * a student
+     * @param bytes An avatar image
+     * @param name Username of a person
+     */
     public void setPhoto(byte[] bytes, String name)
     {
         Person person = personService.getByUserName(name);
@@ -37,11 +48,15 @@ public class PictureService
                 teacherService.getByUserName(name).setPersonPhoto(bytes);
                 break;
             case "ROLE_STUDENT":
-                studentService.getByUserName(name).setPersonPhoto(bytes);
+                studentService.getByUsername(name).setPersonPhoto(bytes);
                 break;
         }
     }
 
+    /**
+     * Remove the avatar from a user
+     * @param username Username of the user
+     */
     public void removeAvatar(String username)
     {
         setPhoto(null, username);

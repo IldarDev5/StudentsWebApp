@@ -5,6 +5,7 @@ function loadGroups() {
     var facId = $('#facSelect').val();
     var groupsTable = $('#groupsTable');
 
+    //Load groups of the selected faculty
     $.getJSON('/admin/groups/OfFaculty?facId=' + facId, function(data) {
         if(data.length != 0) {
             groupsTable.empty();
@@ -24,6 +25,7 @@ function loadGroups() {
     });
 }
 
+//CSRF token that is set from the JSP
 var token;
 function setToken(t) { token = t; }
 
@@ -43,6 +45,7 @@ $(function() {
         $('#createGroupDiv').toggle();
     });
 
+    //Group creation - send AJAX request about new group information
     $('#createGroupBtn').click(function() {
         var facSelect = $('#facSelect');
         var groupId = $('#groupNameText').val();
@@ -60,6 +63,7 @@ $(function() {
             },
             success: function(ok) {
                 if(ok) {
+                    //Add new group to the table
                     var groupsTable = $('#groupsTable');
                     if(groupsTable.html().length == 0)
                         groupsTable.append("<tr><th>Group ID</th><th>Students Count</th><th>Faculty name</th></tr>");

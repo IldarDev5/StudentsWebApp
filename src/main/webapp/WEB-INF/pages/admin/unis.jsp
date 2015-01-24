@@ -2,25 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
-<script type="text/javascript">
-    function removeUn(unId) {
-        $("#unIdHidden").val(unId);
-        $('#removeUnForm').submit();
-    }
-
-    var universityId;
-    function uploadImageForUni(unId) {
-        universityId = unId;
-        $('#uniPic').click();
-    }
-
-    $(function() {
-        $('#uniPic').change(function() {
-            $('#uploadUnId').val(universityId);
-            $('#uploadUniPicForm').submit();
-        });
-    });
-</script>
+<script type="text/javascript" src="/scripts/admin_unis.js"></script>
 
 <form method="post" action="/admin/unis/image?${_csrf.parameterName}=${_csrf.token}"
       id="uploadUniPicForm" enctype="multipart/form-data">

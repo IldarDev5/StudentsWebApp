@@ -32,6 +32,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Administrator controller that handles CRUD operations with universities
+ * and universities descriptions
+ */
 @Controller
 @RequestMapping("/admin/unis")
 public class UniversitiesController

@@ -6,38 +6,7 @@
 <h1><spring:message code="teacher.addTGroup" /></h1>
 
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
-<script type="text/javascript">
-    $(function() {
-        setLoad(true, true, true);
-        triggerUniChange = true;
-
-        loadCities();
-
-        $('#citySelect').change(function() {
-            var city = $(this).val();
-            loadUnis("?cityId=" + city);
-        });
-
-        $('#uniSelect').change(function() {
-            var uniId = $(this).val();
-            loadFaculties("?uniId=" + uniId);
-
-            var teacher = $('#teacherSelect');
-            $.getJSON('/admin/teachers/get', { uniId : uniId }, function(data) {
-                teacher.empty();
-                $.each(data, function(index, val) {
-                    teacher.append("<option value=\"" + val.username + "\">"
-                    + val.firstName + ", " + val.lastName + " (" + val.username + ")" + "</option>");
-                });
-            });
-        });
-
-        $('#facSelect').change(function() {
-            var fac = $(this).val();
-            loadGroups("?facId=" + fac);
-        });
-    });
-</script>
+<script type="text/javascript" src="/scripts/add_teachers_groups.js"></script>
 
 <%--@elvariable id="subjects" type="java.util.List<java.lang.String>"--%>
 <form:form method="post" action="/admin/teachers/groups/add" commandName="tgroup">

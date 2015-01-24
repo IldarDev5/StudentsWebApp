@@ -7,11 +7,13 @@ import ru.ildar.database.entities.Person;
 
 import java.util.List;
 
+/**
+ * Repository for performing CRUD operations on the GRADES table
+ */
 public interface GradeDAO extends CrudRepository<Grade, Long>
 {
     List<Grade> findByStudent_UsernameAndSemester(String studUsername, long semester);
     List<Grade> findByStudent_Username(String userName);
-    List<Grade> findBySubjectName(String subjectName);
 
     List<Grade> findBySubjectNameAndSemesterAndStudent_Group_GroupId(String subject,
                                                              long semester, String groupId, Sort sort);

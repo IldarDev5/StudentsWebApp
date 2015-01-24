@@ -12,6 +12,9 @@ import ru.ildar.database.repositories.PersonDAO;
 
 import java.util.Arrays;
 
+/**
+ * Service used by Spring Security to fetch the user by his username
+ */
 @Service
 public class LoginUserDetailsService implements UserDetailsService
 {

@@ -13,15 +13,21 @@ public class LanguageService
     @Autowired
     private LanguageDAO languageDAO;
 
+    /**
+     * Returns all languages from the database
+     */
     public List<String> getAllLanguages()
     {
         List<String> result = new ArrayList<>();
-//        languageDAO.findAll().forEach(result::add);
-        for(String str : languageDAO.findAll())
-            result.add(str);
+        languageDAO.findAll().forEach(result::add);
         return result;
     }
 
+    /**
+     * Returns language specified by its abbreviation.
+     * For example if abbreviation is en, then 'English' is returned.
+     * @param abbrev The language abbreviation
+     */
     public String getLanguageByAbbreviation(String abbrev)
     {
         return languageDAO.findLanguageByAbbreviation(abbrev);

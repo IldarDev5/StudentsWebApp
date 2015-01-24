@@ -10,6 +10,9 @@ import ru.ildar.services.SubjectService;
 
 import java.util.List;
 
+/**
+ * Administrator controller that handles CRUD operations with subjects
+ */
 @Controller
 @RequestMapping("/admin/subjects")
 public class SubjectsController

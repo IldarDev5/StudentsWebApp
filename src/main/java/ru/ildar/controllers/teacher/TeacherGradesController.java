@@ -31,7 +31,7 @@ public class TeacherGradesController
     public ModelAndView gradesToGroupForSubjectBySemester(@RequestParam("id") int id, ModelMap model)
     {
         TeachersGroups tGroups = teacherService.getTeachersGroupsById(id);
-        List<Grade> grades = gradeService.getByTeachersGroups(tGroups);
+        List<Grade> grades = gradeService.getGradesByTeachersGroups(tGroups);
 
         model.addAttribute("tGroup", tGroups);
         model.addAttribute("grades", grades);

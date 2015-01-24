@@ -2,12 +2,15 @@
  * Created by Ildar on 04.01.15.
  */
 
+//Variables that indicate what is needed to load
 var loadUniversities = true;
 var loadFacs = true;
 var loadGrs = true;
 
+//If true, after universities loading change event on select will be triggered
 var triggerUniChange = false;
 
+/** Set necessary variables */
 function setLoad(unis, facs, groups) {
     loadUniversities = unis;
     loadFacs = facs;
@@ -53,6 +56,7 @@ function loadGroups(param) {
     loadDataForSelect('/ajax/groups', '#groupSelect', param);
 }
 
+/** Sends AJAX GET query and fills the specified element with arrived list data */
 function loadDataForSelect(path, elemId, data, callback) {
     $.getJSON(path + data, function(elems) {
         $(elemId).empty();

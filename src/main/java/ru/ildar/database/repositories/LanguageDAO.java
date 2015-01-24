@@ -5,6 +5,9 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import ru.ildar.database.entities.Language;
 
+/**
+ * Repository for performing CRUD operations on the LANGUAGES table
+ */
 public interface LanguageDAO extends Repository<Language, String>
 {
     @Query("select l.language from Language l")

@@ -10,6 +10,9 @@ import ru.ildar.services.GroupService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Administrator controller that handles CRUD operations with groups
+ */
 @Controller
 @RequestMapping("/admin/groups")
 public class GroupsController
@@ -29,13 +32,7 @@ public class GroupsController
     {
         Iterable<Group> groups = groupService.getGroupsByFaculty(facId);
         List<Group> result = new ArrayList<>();
-//        groups.forEach((g) -> { g.setStudents(null); g.getFaculty().setUniversity(null); result.add(g); });
-        for(Group group : groups)
-        {
-            group.setStudents(null);
-            group.getFaculty().setUniversity(null);
-            result.add(group);
-        }
+        groups.forEach((g) -> { g.setStudents(null); g.getFaculty().setUniversity(null); result.add(g); });
 
         return result;
     }

@@ -13,10 +13,12 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <!--Using Spring Data JPA for repositories generation-->
     <jpa:repositories base-package="ru.ildar.database.repositories" entity-manager-factory-ref="emf" />
 
     <aop:aspectj-autoproxy proxy-target-class="true" />
 
+    <!--Oracle data source-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
         <property name="url" value="jdbc:oracle:thin:@localhost:1521/orcl" />
@@ -43,6 +45,7 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
+    <!--Put transactions on the Services layer-->
     <tx:advice id="serviceAdvice">
         <tx:attributes>
             <tx:method name="get*" read-only="true" />

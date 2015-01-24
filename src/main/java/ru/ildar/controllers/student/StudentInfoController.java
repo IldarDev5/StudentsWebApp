@@ -13,6 +13,10 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+/**
+ * Student controller that handles read and update operations on
+ * information about students
+ */
 @Controller
 @RequestMapping("/info/student")
 public class StudentInfoController
@@ -44,7 +48,7 @@ public class StudentInfoController
         Student details = new Student(username, pd.getFirstName(), pd.getLastName(),
                 pd.getEmail(), dt, null, null);
 
-        studentService.setGroupAndPhotoAndUpdate(details);
+        studentService.updateStudent(details);
         return "true";
     }
 }

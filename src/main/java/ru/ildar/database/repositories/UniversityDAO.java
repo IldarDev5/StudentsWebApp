@@ -5,6 +5,9 @@ import ru.ildar.database.entities.University;
 
 import java.util.List;
 
+/**
+ * Repository for performing CRUD operations on the UNIVERSITIES table
+ */
 public interface UniversityDAO extends PagingAndSortingRepository<University, Long>
 {
     Iterable<University> findByCity_Id(int cityId);

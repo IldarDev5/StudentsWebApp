@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import ru.ildar.database.entities.Group;
 
 /**
- * Created by Ildar on 07.01.15.
+ * Repository for performing CRUD operations on the GROUPS table
  */
 public interface GroupDAO extends CrudRepository<Group, String>
 {

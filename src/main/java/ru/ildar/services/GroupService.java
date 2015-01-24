@@ -16,6 +16,12 @@ public class GroupService
     @Autowired
     private FacultyDAO facultyDAO;
 
+    /**
+     * Find a group by the specified group ID, initialize its
+     * students collection, and return it
+     * @param groupId ID of the group
+     * @return
+     */
     public Group getGroupWithStudents(String groupId)
     {
         Group group = groupDAO.findOne(groupId);
@@ -23,11 +29,20 @@ public class GroupService
         return group;
     }
 
+    /**
+     * Returns groups of the specified faculty
+     * @param facultyId ID of the faculty
+     */
     public Iterable<Group> getGroupsByFaculty(int facultyId)
     {
         return groupDAO.findByFaculty_FacultyId(facultyId);
     }
 
+    /**
+     * Adds the specified group to the faculty
+     * @param group Group to add
+     * @param facultyId ID of the faculty
+     */
     public void addGroupToFaculty(Group group, long facultyId)
     {
         Faculty faculty = facultyDAO.findOne(facultyId);
@@ -35,6 +50,9 @@ public class GroupService
         groupDAO.save(group);
     }
 
+    /**
+     * Returns a group by its ID
+     */
     public Object getGroupById(String groupId)
     {
         return groupDAO.findOne(groupId);
