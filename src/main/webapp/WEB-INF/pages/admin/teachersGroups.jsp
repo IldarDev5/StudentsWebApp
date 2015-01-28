@@ -18,14 +18,17 @@
         <tr>
             <td><spring:message code="teacher.city" /></td>
             <td><form:select path="citySelect" items="${cities}" itemValue="id" /></td>
+            <td><form:errors path="citySelect" /></td>
         </tr>
         <tr>
             <td><spring:message code="teacher.uni" /></td>
             <td><form:select path="uniSelect" /></td>
+            <td><form:errors path="uniSelect" /></td>
         </tr>
         <tr>
             <td><spring:message code="teacher.teacher" /></td>
             <td><form:select path="teacherSelect" /></td>
+            <td><form:errors path="teacherSelect" /></td>
         </tr>
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">

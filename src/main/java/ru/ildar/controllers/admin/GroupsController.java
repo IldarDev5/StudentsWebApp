@@ -1,6 +1,7 @@
 package ru.ildar.controllers.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,11 +64,25 @@ public class GroupsController
         }
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public String addGroup(@RequestBody CreatedGroup group)
     {
-        groupService.addGroupToFaculty(new Group(group.getGroupId()), group.getFacId());
-        return "ok";
+        if(group.getGroupId() == null || group.getGroupId().trim().equals(""))
+        {
+            return "{ok:false,reason:'EMPTY'}";
+        }
+
+        try
+        {
+            groupService.addGroupToFaculty(new Group(group.getGroupId()), group.getFacId());
+        }
+        catch(DuplicateKeyException exc)
+                //Group with such ID already exists in the database
+        {
+            return "{ok:false,reason:'DUPLICATE_NAME'}";
+        }
+
+        return "{ok:true}";
     }
 }

@@ -34,6 +34,7 @@
 <input type="button" id="createGroup" value="<spring:message code="group.create" />">
 <div id="createGroupDiv" style="display: none;">
     <spring:message code="group.enterID" /> <input type="text" id="groupNameText">
-    <input type="button" value="<spring:message code="group.submitCreate" />" id="createGroupBtn">
+    <input type="button" value="<spring:message code="group.submitCreate" />" id="createGroupBtn"> <br />
+    <span style="color: red" id="groupAddErr"></span>
 </div>
 

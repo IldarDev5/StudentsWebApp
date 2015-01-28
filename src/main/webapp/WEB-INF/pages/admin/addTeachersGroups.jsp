@@ -24,30 +24,37 @@
                     <td><form:select path="subjectName" items="${subjects}" /></td>
                 </c:otherwise>
             </c:choose>
+            <td><form:errors path="subjectName" /></td>
         </tr>
         <tr>
             <td><spring:message code="teacher.teacher" />:</td>
             <td><form:select path="teacherSelect" /></td>
+            <td><form:errors path="teacherSelect" /></td>
         </tr>
         <tr>
             <td><spring:message code="teacher.semester" />:</td>
             <td><form:input path="semester" /></td>
+            <td><form:errors path="semester" /></td>
         </tr>
         <tr>
             <td><spring:message code="teacher.city" />:</td>
             <td><form:select path="citySelect" /></td>
+            <td><form:errors path="citySelect" /></td>
         </tr>
         <tr>
             <td><spring:message code="teacher.uni" />:</td>
             <td><form:select path="uniSelect" /></td>
+            <td><form:errors path="uniSelect" /></td>
         </tr>
         <tr>
             <td><spring:message code="teacher.fac" />:</td>
             <td><form:select path="facSelect" /></td>
+            <td><form:errors path="facSelect" /></td>
         </tr>
         <tr>
             <td><spring:message code="teacher.group" />:</td>
             <td><form:select path="groupSelect" /></td>
+            <td><form:errors path="groupSelect" /></td>
         </tr>
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">

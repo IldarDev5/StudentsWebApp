@@ -1,6 +1,8 @@
 package ru.ildar.database.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by Ildar on 29.12.14.
@@ -9,7 +11,12 @@ import javax.persistence.*;
 @Table(name = "SUBJECTS", schema = "STUDENTS_APP", catalog = "")
 public class Subject
 {
+    @NotNull
+    @Size(min = 2, max = 100)
     private String subjectName;
+
+    @NotNull
+    @Size(min = 2, max = 50)
     private String subjectType;
 
     public Subject() { }

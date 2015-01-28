@@ -11,11 +11,12 @@
         <tr>
             <td><spring:message code="sub.name" />:</td>
             <td><form:input path="subjectName" /></td>
-            <td><span id="subjectNameErrSpan" style="color: red;"></span></td>
+            <td><form:errors path="subjectName" /></td>
         </tr>
         <tr>
             <td><spring:message code="sub.type" />:</td>
             <td><form:select path="subjectType" items="${subjectTypes}" /></td>
+            <td><form:errors path="subjectType" /></td>
         </tr>
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">

@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <%--@elvariable id="group" type="ru.ildar.database.entities.Group"--%>
-<h1>Group <c:out value="${group.groupId}" /></h1>
+<h1><spring:message code="auth.group" /> <c:out value="${group.groupId}" /></h1>
 
 <table border="1">
     <tr>

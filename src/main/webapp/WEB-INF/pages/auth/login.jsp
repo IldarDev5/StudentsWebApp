@@ -1,7 +1,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <h1><spring:message code="auth.login" /></h1>
+
+<c:if test="${param.auth eq 'fail'}">
+    <span style="color: red;"><spring:message code="auth.wrongLogin" /></span>
+</c:if>
+
 <form method="post" action="/login">
     <table>
         <tr>

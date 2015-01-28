@@ -2,11 +2,11 @@ package ru.ildar.controllers.admin;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.MediaType;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,18 +19,16 @@ import ru.ildar.services.LanguageService;
 import ru.ildar.services.UniversityService;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.beans.PropertyEditorSupport;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.security.Principal;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * Administrator controller that handles CRUD operations with universities
@@ -70,15 +68,20 @@ public class UniversitiesController
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public ModelAndView addUniversity(ModelMap model)
     {
-        model.addAttribute("uni", new UniversityPojo());
         model.addAttribute("cities", cityService.getAllCities());
-
         return new ModelAndView("addUniversity", "uni", new UniversityPojo());
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ModelAndView addUniversity(@ModelAttribute("uni") UniversityPojo uni)
+    public ModelAndView addUniversity(@ModelAttribute("uni") @Valid UniversityPojo uni,
+                                      BindingResult result, ModelMap model)
     {
+        if(result.hasErrors())
+        {
+            model.addAttribute("cities", cityService.getAllCities());
+            return new ModelAndView("addUniversity", "uni", uni);
+        }
+
         University university = new University(uni.getUnName(), uni.getUnAddress(), null, null);
         universityService.setCityAndAddUniversity(university, uni.getCitySelect());
 
@@ -176,7 +179,7 @@ public class UniversitiesController
         }
         catch(JpaSystemException exc)
         {
-            if(exc.getCause().getCause() instanceof SQLIntegrityConstraintViolationException)
+            if(exc.getCause().getCause() instanceof ConstraintViolationException)
                 //Attempt was made to insert a row in UN_DESCRIPTION the language field
                 //of which was distorted due to encoding conversions
             {
@@ -184,7 +187,10 @@ public class UniversitiesController
                 descr.setDescription(new String(descr.getDescription().getBytes("ISO-8859-1"), "UTF-8"));
                 universityService.setUniversityDescription(descr, principal.getName());
             }
+            else
+                exc.printStackTrace();
         }
+
         return "redirect:/admin/unis";
     }
 }

@@ -1,20 +1,23 @@
 package ru.ildar.controllers.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.ildar.controllers.pojos.FacultyPojo;
 import ru.ildar.database.entities.Faculty;
 import ru.ildar.database.entities.University;
 import ru.ildar.services.FacultyService;
 import ru.ildar.services.UniversityService;
 
+import javax.validation.Valid;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Administrator controller that handles CRUD operations with faculties
@@ -44,24 +47,39 @@ public class FacultiesController
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
-    public ModelAndView addNewFaculty(@RequestParam("unId") int uniId)
+    public ModelAndView addNewFaculty(@RequestParam("unId") long uniId, ModelMap model)
     {
         University un = universityService.getById(uniId);
-        return new ModelAndView("addFaculty", "university", un);
+        model.addAttribute("university", un);
+        FacultyPojo pojo = new FacultyPojo();
+        pojo.setUnId(uniId);
+        return new ModelAndView("addFaculty", "faculty", pojo);
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder)
+    {
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(fmt, false));
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ModelAndView addNewFaculty(@RequestParam("facultyName") String facultyName,
-                                      @RequestParam("foundDate") String foundDate,
-                                      @RequestParam("uni") String unId)
+    public ModelAndView addNewFaculty(@ModelAttribute("faculty") @Valid FacultyPojo pojo,
+                                      BindingResult result, ModelMap model)
             throws ParseException
     {
-        University un = universityService.getById(Integer.parseInt(unId));
-        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        Faculty fac = new Faculty(facultyName, new Date(fmt.parse(foundDate).getTime()), un);
+        if(result.hasErrors())
+        {
+            University un = universityService.getById(pojo.getUnId());
+            model.addAttribute("university", un);
+            return new ModelAndView("addFaculty", "faculty", pojo);
+        }
+
+        University un = universityService.getById(pojo.getUnId());
+        Faculty fac = new Faculty(pojo.getFacultyName(), new Date(pojo.getFoundDate().getTime()), un);
 
         facultyService.saveOrUpdateFaculty(fac);
 
-        return new ModelAndView("redirect:/admin/faculties?un_id=" + unId);
+        return new ModelAndView("redirect:/admin/faculties?un_id=" + pojo.getUnId());
     }
 }

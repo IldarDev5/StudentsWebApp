@@ -1,27 +1,39 @@
 package ru.ildar.controllers.pojos;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class TaughtGroup
 {
-    private String citySelect;
-    private long uniSelect;
+    @NotNull
+    @Min(1)
+    private Integer citySelect;
+
+    @NotNull
+    @Min(1)
+    private Integer uniSelect;
+
+    @NotNull
+    @Size(min = 2, max = 70)
     private String teacherSelect;
 
-    public String getCitySelect()
+    public Integer getCitySelect()
     {
         return citySelect;
     }
 
-    public void setCitySelect(String citySelect)
+    public void setCitySelect(Integer citySelect)
     {
         this.citySelect = citySelect;
     }
 
-    public long getUniSelect()
+    public Integer getUniSelect()
     {
         return uniSelect;
     }
 
-    public void setUniSelect(long uniSelect)
+    public void setUniSelect(Integer uniSelect)
     {
         this.uniSelect = uniSelect;
     }

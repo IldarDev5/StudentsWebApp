@@ -68,7 +68,7 @@ public class TeacherRegisterController
     private ModelAndView regError(String attr, TeacherRegisterPojo user)
     {
         ModelMap model = new ModelMap();
-        model.addAttribute("user", user);
+        model.addAttribute("teacher", user);
         model.addAttribute(attr, true);
         return new ModelAndView("registerTeacher", model);
     }

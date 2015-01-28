@@ -31,4 +31,9 @@ public class FacultyService
     {
         facultyDAO.delete(facultyId);
     }
+
+    public int getStudentsCount(Long unId)
+    {
+        return facultyDAO.sumByUniversity_UnId(unId);
+    }
 }

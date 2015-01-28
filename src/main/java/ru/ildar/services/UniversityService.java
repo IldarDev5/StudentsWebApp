@@ -5,14 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-import ru.ildar.database.entities.City;
-import ru.ildar.database.entities.Person;
-import ru.ildar.database.entities.University;
-import ru.ildar.database.entities.UniversityDescription;
-import ru.ildar.database.repositories.CityDAO;
-import ru.ildar.database.repositories.PersonDAO;
-import ru.ildar.database.repositories.UniDescriptionDAO;
-import ru.ildar.database.repositories.UniversityDAO;
+import ru.ildar.database.entities.*;
+import ru.ildar.database.repositories.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +22,8 @@ public class UniversityService
     private CityDAO cityDAO;
     @Autowired
     private UniDescriptionDAO uniDescriptionDAO;
+    @Autowired
+    private LanguageDAO languageDAO;
 
     /**
      * Add university to the database
@@ -139,5 +135,11 @@ public class UniversityService
         Person changeAuthor = personDAO.findOne(authorName);
         descr.setLastChangePerson(changeAuthor);
         uniDescriptionDAO.save(descr);
+    }
+
+    public UniversityDescription getDescriptionByLanguageAbbrev(long unId, String langAbbrev)
+    {
+        String lang = languageDAO.findLanguageByAbbreviation(langAbbrev);
+        return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang);
     }
 }

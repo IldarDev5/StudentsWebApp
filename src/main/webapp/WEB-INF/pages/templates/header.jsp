@@ -19,8 +19,19 @@
     <div id="strapline">
 
         <h4 style="display: inline; position: absolute; right: 10px; top: 10px;">
-            <a href="?lang=en"><img height="25" src="/images/US.png" title="English language"></a>
-            <a href="?lang=ru"><img height="25" src="/images/RU.png" tabindex="Russian language"></a>
+            <%--<c:if test="${param.lang != null}">--%>
+                <%--${param.lang = null}--%>
+            <%--</c:if>--%>
+            <%--<c:choose>--%>
+                <%--<c:when test="${param.size() == 0}">--%>
+                    <a href="?lang=en"><img height="25" src="/images/US.png" title="English language"></a>
+                    <a href="?lang=ru"><img height="25" src="/images/RU.png" tabindex="Russian language"></a>
+                <%--</c:when>--%>
+                <%--<c:otherwise>--%>
+                    <%--<a href="&lang=en"><img height="25" src="/images/US.png" title="English language"></a>--%>
+                    <%--<a href="&lang=ru"><img height="25" src="/images/RU.png" tabindex="Russian language"></a>--%>
+                <%--</c:otherwise>--%>
+            <%--</c:choose>--%>
         </h4>
 
         <sec:authorize access="isFullyAuthenticated()">
@@ -99,6 +110,13 @@
                         <a href="/register/teacher"><spring:message code="header.regAsTeacher" /></a>
                     </li>
                 </sec:authorize>
+
+
+                <sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT') || isAnonymous()">
+                    <li id="unisInfoLi">
+                        <a href="/unis/info"><spring:message code="header.unisInfo" /></a>
+                    </li>
+                </sec:authorize>
             </ul>
         </div><!--close menubar-->
     </nav>
@@ -107,8 +125,11 @@
 <div id="slideshow_container">
     <div class="slideshow">
         <ul class="slideshow">
-            <li class="show"><img width="940" height="250" src="/images/home_1.jpg" alt="&quot;Enter your caption here&quot;" /></li>
-            <li><img width="940" height="250" src="/images/home_2.jpg" alt="&quot;Enter your caption here&quot;" /></li>
+            <c:forEach items="${images}" var="image">
+                <li><img height="250" src="${image.src}" alt="${image.text}" /></li>
+            </c:forEach>
+            <%--<li class="show"><img width="940" height="250" src="/images/home_1.jpg" alt="&quot;Enter your caption here&quot;" /></li>--%>
+            <%--<li><img width="940" height="250" src="/images/home_2.jpg" alt="&quot;Enter your caption here&quot;" /></li>--%>
         </ul>
     </div><!--close slideshow-->
 </div><!--close slideshow_container-->

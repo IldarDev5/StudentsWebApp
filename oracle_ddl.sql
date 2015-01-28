@@ -17,6 +17,7 @@ create table STUDENTS_APP.languages(
 create table students_app.universities(
   un_id int primary key,
   un_name varchar2(150) not null,
+  un_address varchar2(100),
   un_city_id int not null,
   un_image blob,
   teachers_count int default 0,

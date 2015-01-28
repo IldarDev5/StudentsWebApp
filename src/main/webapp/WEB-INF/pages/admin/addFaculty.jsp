@@ -9,18 +9,20 @@
         <spring:argument value="${university.city.cityName}" />
     </spring:message>
 </h1>
-<form method="post" action="/admin/faculties/add">
+<form:form method="post" action="/admin/faculties/add" commandName="faculty">
     <table>
         <tr>
             <td><spring:message code="fac.name" />:</td>
-            <td><input type="text" id="facultyName" name="facultyName"></td>
+            <td><form:input path="facultyName" /></td>
+            <td><form:errors path="facultyName" /></td>
         </tr>
         <tr>
             <td><spring:message code="fac.date" />:</td>
-            <td><input type="text" id="foundDate" name="foundDate"></td>
+            <td><form:input path="foundDate" /></td>
+            <td><form:errors path="foundDate" /></td>
         </tr>
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <input type="hidden" name="uni" value="${university.unId}">
+    <form:hidden path="unId" />
     <input type="submit" value="<spring:message code="fac.submit" />">
-</form>
+</form:form>

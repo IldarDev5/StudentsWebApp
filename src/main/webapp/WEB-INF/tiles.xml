@@ -15,6 +15,11 @@
         <put-attribute name="body" value="/WEB-INF/pages/startPage.jsp" />
         <put-attribute name="currentId" value="startPageLi" />
     </definition>
+    <definition name="unisInfo" extends="base.definition">
+        <put-attribute name="title" value="Information about universities" />
+        <put-attribute name="body" value="/WEB-INF/pages/unisInfo.jsp" />
+        <put-attribute name="currentId" value="unisInfoLi" />
+    </definition>
     <definition name="loginPage" extends="base.definition">
         <put-attribute name="title" value="Login page" />
         <put-attribute name="body" value="/WEB-INF/pages/auth/login.jsp" />

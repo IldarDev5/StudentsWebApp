@@ -17,11 +17,11 @@ function setLoad(unis, facs, groups) {
     loadGrs = groups;
 }
 
-function loadCities() {
+function loadCities(selectedCity) {
     loadDataForSelect('/ajax/cities', '#citySelect', "",
         function() {
             if(loadUniversities === true) {
-                var cityId = $('#citySelect').val();
+                var cityId = selectedCity ? selectedCity : $('#citySelect').val();
                 if(cityId)
                     loadUnis("?cityId=" + cityId);
             }

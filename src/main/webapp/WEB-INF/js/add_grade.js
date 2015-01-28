@@ -37,11 +37,11 @@ $(function() {
         studentSelect.trigger("change");
 
     $('#addForm').submit(function() {
-        var val = parseInt($('#gradeValue').val());
-        if(isNaN(val) || val < 0 || val > 100) {
-            alert('Please enter the correct grade value(between 0 and 100).');
-            return false;
-        }
+        //var val = parseInt($('#gradeValue').val());
+        //if(isNaN(val) || val < 0 || val > 100) {
+        //    alert('Please enter the correct grade value(between 0 and 100).');
+        //    return false;
+        //}
 
         return true;
     });

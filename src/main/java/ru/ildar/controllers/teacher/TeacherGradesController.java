@@ -2,7 +2,9 @@ package ru.ildar.controllers.teacher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.StudentGradePojo;
@@ -13,6 +15,7 @@ import ru.ildar.services.GradeService;
 import ru.ildar.services.StudentService;
 import ru.ildar.services.TeacherService;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -45,14 +48,16 @@ public class TeacherGradesController
                                  @RequestParam("semester") int semester,
                                  ModelMap model)
     {
-        List<Student> studs = studentService.getByGroup(groupId);
+        StudentGradePojo s = new StudentGradePojo(groupId, subject, semester, null, null);
+        return addGrade(s, model);
+    }
 
-        model.addAttribute("subject", subject);
-        model.addAttribute("groupId", groupId);
-        model.addAttribute("semester", semester);
+    private ModelAndView addGrade(StudentGradePojo pojo, ModelMap model)
+    {
+        List<Student> studs = studentService.getByGroup(pojo.getGroupId());
+
         model.addAttribute("students", studs);
-
-        return new ModelAndView("addGrade");
+        return new ModelAndView("addGrade", "studGrade", pojo);
     }
 
     @RequestMapping(value = "checkStudentGrade", method = RequestMethod.GET)
@@ -67,12 +72,12 @@ public class TeacherGradesController
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ModelAndView addGrade(@ModelAttribute("studentPojo") StudentGradePojo s, Principal principal)
+    public ModelAndView addGrade(@ModelAttribute("studGrade") @Valid StudentGradePojo s,
+                                 BindingResult result, Principal principal, ModelMap model)
     {
-        if(s.getGradeValue() < 0 || s.getGradeValue() > 100)
+        if(result.hasErrors())
         {
-            return new ModelAndView("redirect:/teacher/grades/add?subject=" + s.getSubject()
-                    + "&groupId=" + s.getGroupId() + "&semester=" + s.getSemester());
+            return addGrade(s, model);
         }
 
         Grade grade = new Grade(s.getGradeValue(), s.getSemester(), null, null, s.getSubject());
@@ -89,5 +94,14 @@ public class TeacherGradesController
     {
         gradeService.removeGrade(gradeId);
         return "redirect:/teacher/grades?id=" + tGroupsId;
+    }
+
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateGrade(@RequestBody StudentGradePojo gr, Principal principal)
+    {
+        Grade grade = new Grade(gr.getGradeValue(), gr.getSemester(), null, null, gr.getSubject());
+        gradeService.setStudentAndTeacherAndAddGrade(gr.getStudentSelect(), principal.getName(), grade);
+        return "ok";
     }
 }
