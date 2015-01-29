@@ -2,6 +2,7 @@ package ru.ildar.services;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -90,6 +91,10 @@ public class UniversityService
      */
     public void setCityAndAddUniversity(University university, int cityId)
     {
+        University uni = universityDAO.findByCity_IdAndUnName(cityId, university.getUnName());
+        if(uni != null)
+            throw new DuplicateKeyException("University with such name and city already exists.");
+
         City city = cityDAO.findOne(cityId);
         university.setCity(city);
 

@@ -11,4 +11,5 @@ import java.util.List;
 public interface UniversityDAO extends PagingAndSortingRepository<University, Long>
 {
     Iterable<University> findByCity_Id(int cityId);
+    University findByCity_IdAndUnName(int cityId, String unName);
 }

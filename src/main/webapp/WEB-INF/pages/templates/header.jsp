@@ -24,8 +24,8 @@
             <%--</c:if>--%>
             <%--<c:choose>--%>
                 <%--<c:when test="${param.size() == 0}">--%>
-                    <a href="?lang=en"><img height="25" src="/images/US.png" title="English language"></a>
-                    <a href="?lang=ru"><img height="25" src="/images/RU.png" tabindex="Russian language"></a>
+                    <a href="?lang=en"><img height="25" src="/images/US.png" title="English"></a>
+                    <a href="?lang=ru"><img height="25" src="/images/RU.png" title="Русский(Russian)"></a>
                 <%--</c:when>--%>
                 <%--<c:otherwise>--%>
                     <%--<a href="&lang=en"><img height="25" src="/images/US.png" title="English language"></a>--%>

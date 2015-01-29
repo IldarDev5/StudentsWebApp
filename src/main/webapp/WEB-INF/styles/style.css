@@ -110,10 +110,11 @@ nav
   color: #FFF;} 
   
 #menubar
-{ width: 940px;
+{
+  width: 1200px;
   height: 55px;
   padding-top: 10px;
-  text-align: center; 
+  text-align: center;
   margin: 0 auto;}    
   
 ul#nav

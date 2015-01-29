@@ -2,6 +2,7 @@ package ru.ildar.controllers.admin;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
@@ -83,7 +84,17 @@ public class UniversitiesController
         }
 
         University university = new University(uni.getUnName(), uni.getUnAddress(), null, null);
-        universityService.setCityAndAddUniversity(university, uni.getCitySelect());
+        try
+        {
+            universityService.setCityAndAddUniversity(university, uni.getCitySelect());
+        }
+        catch(DuplicateKeyException exc)
+                //University with such name and city already exists
+        {
+            model.addAttribute("cities", cityService.getAllCities());
+            model.addAttribute("uniExists", true);
+            return new ModelAndView("addUniversity", "uni", uni);
+        }
 
         return new ModelAndView("redirect:/admin/unis");
     }
@@ -93,24 +104,6 @@ public class UniversitiesController
     {
         universityService.removeUniversity(unId);
         return new ModelAndView("redirect:/admin/unis");
-    }
-
-    @RequestMapping(value = "image", method = RequestMethod.GET)
-    public void universityImage(@RequestParam("unId") int unId, HttpServletResponse response)
-            throws IOException
-    {
-        University university = universityService.getById(unId);
-        byte[] image = university.getUnImage();
-
-        if(image != null)
-        {
-            response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-            response.getOutputStream().write(image);
-        }
-        else
-            response.sendRedirect("/images/no_uni_image.png");
-
-        response.getOutputStream().close();
     }
 
     @RequestMapping(value = "image", method = RequestMethod.POST,

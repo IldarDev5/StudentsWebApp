@@ -23,7 +23,8 @@ create table students_app.universities(
   teachers_count int default 0,
 
   constraint fk_city foreign key(un_city_id)
-  references students_app.cities(id)
+  references students_app.cities(id),
+  constraint uk_name_city unique(un_name, un_city_id)
 );
 
 create table STUDENTS_APP.Un_Description(

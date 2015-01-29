@@ -50,6 +50,7 @@
 <c:if test="${description != null}">
     <c:choose>
         <c:when test="${description.description != null}">
+            <img src="/unis/image?unId=${description.university.unId}" width="400">
             <table>
                 <tr>
                     <td><spring:message code="uni.address" />:</td>

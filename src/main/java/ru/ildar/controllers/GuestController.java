@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.UniversityInfoPojo;
+import ru.ildar.database.entities.University;
 import ru.ildar.database.entities.UniversityDescription;
 import ru.ildar.services.FacultyService;
 import ru.ildar.services.UniversityService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Locale;
 
 /**
@@ -84,5 +87,23 @@ public class GuestController
         model.addAttribute("description", description);
         model.addAttribute("studentsCount", studentsCount);
         return new ModelAndView("unisInfo", "university", pojo);
+    }
+
+    @RequestMapping(value = "/unis/image", method = RequestMethod.GET)
+    public void universityImage(@RequestParam("unId") int unId, HttpServletResponse response)
+            throws IOException
+    {
+        University university = universityService.getById(unId);
+        byte[] image = university.getUnImage();
+
+        if(image != null)
+        {
+            response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+            response.getOutputStream().write(image);
+        }
+        else
+            response.sendRedirect("/images/no_uni_image.png");
+
+        response.getOutputStream().close();
     }
 }

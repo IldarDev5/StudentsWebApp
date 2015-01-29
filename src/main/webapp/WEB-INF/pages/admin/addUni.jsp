@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <h1><spring:message code="uni.addUni" /></h1>
@@ -26,3 +27,8 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     <input type="submit" value="<spring:message code="uni.submit" />">
 </form:form>
+
+<%--@elvariable id="uniExists" type="java.lang.Boolean"--%>
+<c:if test="${uniExists != null && uniExists == true}">
+    <span style="color: red"><spring:message code="uni.uniExists" /></span>
+</c:if>

@@ -29,7 +29,7 @@
             <td><c:out value="${un.unAddress}" /></td>
             <td>
                 <a href="javascript:uploadImageForUni(${un.unId});">
-                    <img src="/admin/unis/image?unId=${un.unId}" width="100">
+                    <img src="/unis/image?unId=${un.unId}" width="100">
                 </a>
             </td>
             <td><c:out value="${un.teachersCount}" /></td>
