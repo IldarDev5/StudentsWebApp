@@ -19,7 +19,7 @@
                 $('#citySelect').val("${university.cityId}");
                 $('#uniSelect').val("${university.unId}");
             </c:if>
-        })
+        });
 
         loadCities("${university.cityId}");
 
@@ -43,26 +43,33 @@
         </tr>
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <input type="submit" value="<spring:message code="uni.submit" />">
+    <input type="submit" value="<spring:message code="uni.find" />">
 </form:form>
 
 <%--@elvariable id="studentsCount" type="java.lang.Integer"--%>
 <c:if test="${description != null}">
-    <table>
-        <tr>
-            <td><spring:message code="uni.address" />:</td>
-            <td><c:out value="${description.university.unAddress}" /></td>
-        </tr>
-        <tr>
-            <td><spring:message code="uni.teachersCount" />:</td>
-            <td><c:out value="${description.university.teachersCount}" /></td>
-        </tr>
-        <tr>
-            <td><spring:message code="uni.studentsCount" />:</td>
-            <td><c:out value="${studentsCount}" /></td>
-        </tr>
-    </table>
-    <div>
-        <c:out value="${description.description}" />
-    </div>
+    <c:choose>
+        <c:when test="${description.description != null}">
+            <table>
+                <tr>
+                    <td><spring:message code="uni.address" />:</td>
+                    <td><c:out value="${description.university.unAddress}" /></td>
+                </tr>
+                <tr>
+                    <td><spring:message code="uni.teachersCount" />:</td>
+                    <td><c:out value="${description.university.teachersCount}" /></td>
+                </tr>
+                <tr>
+                    <td><spring:message code="uni.studentsCount" />:</td>
+                    <td><c:out value="${studentsCount}" /></td>
+                </tr>
+            </table>
+            <div>
+                <c:out value="${description.description}" />
+            </div>
+        </c:when>
+        <c:otherwise>
+            <i><spring:message code="uni.descriptionsNotFound" /></i>
+        </c:otherwise>
+    </c:choose>
 </c:if>

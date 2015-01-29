@@ -9,11 +9,10 @@
     <input type="hidden" id="uploadUnId" name="uploadUnId">
     <input type="file" style="display: none;" id="uniPic" name="uniPic">
     <input type="hidden" name="pageNumber" value="${pageNumber}">
-    <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">--%>
 </form>
 
 
-<h1>Universities</h1>
+<h1><spring:message code="uni.unis" /></h1>
 <%--@elvariable id="universities" type="java.util.List<ru.ildar.database.entities.University>"--%>
 <table border="1">
     <tr>
@@ -74,4 +73,4 @@
 </c:forEach>
 
 <br />
-<a href="/admin/unis/add">Add new university</a>
+<a href="/admin/unis/add"><spring:message code="uni.add" /></a>

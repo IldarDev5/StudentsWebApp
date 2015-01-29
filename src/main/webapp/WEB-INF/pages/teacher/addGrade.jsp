@@ -10,6 +10,10 @@
 <script type="text/javascript" src="/scripts/add_grade.js"></script>
 <script type="text/javascript">
     setVars('${studGrade.subject}', ${studGrade.semester});
+
+    var i18n = [];
+    i18n["alreadyHasGrade"] = "<spring:message code="stud.alreadyHasGrade" />";
+    i18n["gradeBetween"] = "<spring:message code="stud.gradeBetween" />";
 </script>
 
 <form:form method="post" action="/teacher/grades/add" id="addForm" commandName="studGrade">

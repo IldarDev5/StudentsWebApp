@@ -9,7 +9,12 @@ function loadGroups() {
     $.getJSON('/admin/groups/OfFaculty?facId=' + facId, function(data) {
         if(data.length != 0) {
             groupsTable.empty();
-            groupsTable.append("<tr><th>Group ID</th><th>Students Count</th><th>Faculty name</th></tr>");
+            groupsTable.append(
+                "<tr>" +
+                    "<th>" + i18n["groupId"] + "</th>" +
+                    "<th>" + i18n["studentsCount"] + "</th>" +
+                    "<th>" + i18n["facultyName"] + "</th>" +
+                "</tr>");
             $.each(data, function (idx, group) {
                 var href = "href=\"/auth/studentGroup?groupId=" + group.groupId + "\"";
                 groupsTable.append(
@@ -21,7 +26,7 @@ function loadGroups() {
             });
         }
         else {
-            alert('No data found.');
+            alert(i18n["noDataFound"]);
         }
     });
 }
@@ -53,7 +58,7 @@ $(function() {
         var facName = facSelect.find("option:selected").text();
 
         if(groupId.length == 0) {
-            $('#groupAddErr').html('Please enter some value to the field.');
+            $('#groupAddErr').html(i18n["enterSomeValue"]);
             return;
         }
 
@@ -76,9 +81,9 @@ $(function() {
                     if(groupsTable.html().length == 0)
                         groupsTable.append(
                             "<tr>" +
-                                "<th>Group ID</th>" +
-                                "<th>Students Count</th>" +
-                                "<th>Faculty name</th>" +
+                                "<th>" + i18n["groupId"] + "</th>" +
+                                "<th>" + i18n["studentsCount"] + "</th>" +
+                                "<th>" + i18n["facultyName"] + "</th>" +
                             "</tr>");
 
                     var href = "href=\"/auth/studentGroup?groupId=" + groupId + "\"";
@@ -94,10 +99,10 @@ $(function() {
                 }
                 else {
                     if(resp.reason == 'EMPTY') {
-                        $('#groupAddErr').html('Please enter some value to the field.');
+                        $('#groupAddErr').html(i18n["enterSomeValue"]);
                     }
                     else if(resp.reason == 'DUPLICATE_NAME') {
-                        $('#groupAddErr').html('Group with such ID already exists.');
+                        $('#groupAddErr').html(i18n["groupExists"]);
                     }
                 }
             }

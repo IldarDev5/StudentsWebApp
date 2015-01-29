@@ -21,7 +21,12 @@ $(function() {
     });
 
     function insertHeadRow(table) {
-        var elem = "<tr><th>Semester</th><th>Grade</th><th>Teacher</th><th>Subject</th></tr>";
+        var elem = "<tr>" +
+                        "<th>" + i18n["semester"] + "</th>" +
+                        "<th>" + i18n["grade"] + "</th>" +
+                        "<th>" + i18n["teacher"] + "</th>" +
+                        "<th>" + i18n["subject"] + "</th>" +
+                    "</tr>";
         table.append(elem);
     }
 

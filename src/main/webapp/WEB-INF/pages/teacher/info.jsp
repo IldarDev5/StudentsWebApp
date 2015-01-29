@@ -41,6 +41,9 @@
         var cityId = ${teacher.university.city.id};
 
         var csrfToken = '${_csrf.token}';
+
+        var i18n = [];
+        i18n["dataUpdated"] = "<spring:message code="teacherInfo.dataUpdated" />";
     </script>
     <script type="text/javascript" src="/scripts/selectBox.js"></script>
     <script type="text/javascript" src="/scripts/teacher_info.js"></script>

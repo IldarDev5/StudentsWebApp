@@ -142,4 +142,9 @@ public class UniversityService
         String lang = languageDAO.findLanguageByAbbreviation(langAbbrev);
         return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang);
     }
+
+    public UniversityDescription getFirstDescriptionForUniversity(Long unId)
+    {
+        return uniDescriptionDAO.findOneByUniversity_UnId(unId);
+    }
 }

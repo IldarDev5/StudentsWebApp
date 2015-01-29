@@ -9,4 +9,5 @@ import ru.ildar.database.entities.UniversityDescription;
 public interface UniDescriptionDAO extends CrudRepository<UniversityDescription, Long>
 {
     UniversityDescription findByUniversity_UnIdAndLanguage(long unId, String lang);
+    UniversityDescription findOneByUniversity_UnId(Long unId);
 }

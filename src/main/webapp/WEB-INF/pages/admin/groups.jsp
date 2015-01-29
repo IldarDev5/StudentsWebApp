@@ -9,6 +9,14 @@
     $(function() {
         setToken('${_csrf.token}');
     });
+
+    var i18n = [];
+    i18n["groupId"] = "<spring:message code="groups.groupId" />";
+    i18n["studentsCount"] = "<spring:message code="groups.studentsCount" />";
+    i18n["facultyName"] = "<spring:message code="groups.facultyName" />";
+    i18n["noDataFound"] = "<spring:message code="groups.noDataFound" />";
+    i18n["enterSomeValue"] = "<spring:message code="groups.enterSomeValue" />";
+    i18n["groupExists"] = "<spring:message code="groups.groupExists" />";
 </script>
 
 <table>

@@ -46,6 +46,9 @@
 
     <script type="text/javascript">
         var csrfToken = '${_csrf.token}';
+
+        var i18n = [];
+        i18n["updated"] = "<spring:message code="studInfo.dataUpdated" />";
     </script>
     <script type="text/javascript" src="/scripts/selectBox.js"></script>
     <script type="text/javascript" src="/scripts/stud_info.js"></script>

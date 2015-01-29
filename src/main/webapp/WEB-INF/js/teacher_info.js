@@ -55,7 +55,7 @@ $(function() {
                     $('#workStartTd').html(workStart);
                     $('#universityTd').html(university + ", " + city);
 
-                    $('#updateSpan').html('Data is successfully updated.');
+                    $('#updateSpan').html(i18n["dataUpdated"]);
                 }
             }
         });

@@ -57,6 +57,27 @@ public class GuestController
 
         UniversityDescription description = universityService.
                 getDescriptionByLanguageAbbrev(pojo.getUnId(), locale.getLanguage());
+        if(description == null)
+            //No description for the user locale language;
+            //Try English; if there's no English, try first found;
+            //If there are no descriptions for this university at all,
+            //return information about this to user
+        {
+            description = universityService
+                    .getDescriptionByLanguageAbbrev(pojo.getUnId(), Locale.US.getLanguage());
+            if(description == null)
+                //No English, try to find any
+            {
+                description = universityService.getFirstDescriptionForUniversity(pojo.getUnId());
+                if(description == null)
+                    //No descriptions at all for this university
+                {
+                    model.addAttribute("description",
+                            new UniversityDescription(null, null, null, null, null));
+                    return new ModelAndView("unisInfo", "university", pojo);
+                }
+            }
+        }
 
         int studentsCount = facultyService.getStudentsCount(pojo.getUnId());
 

@@ -44,7 +44,7 @@ $(function() {
                     $('#emailTd').html(email);
                     $('#enrollmentTd').html(enrollment);
 
-                    $('#updateSpan').html('Data is successfully updated.');
+                    $('#updateSpan').html(i18n["updated"]);
                 }
             }
         });

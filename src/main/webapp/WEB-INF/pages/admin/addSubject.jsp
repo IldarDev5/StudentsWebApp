@@ -3,6 +3,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <script type="text/javascript" src="/scripts/add_subject.js"></script>
+<script type="text/javascript">
+    var i18n = [];
+    i18n["subjectExists"] = "<spring:message code="subj.subjectExists" />";
+    i18n["correctErrors"] = "<spring:message code="subj.correctErrors" />";
+</script>
 
 <h1><spring:message code="sub.addSubject" /></h1>
 <%--@elvariable id="subjectTypes" type="java.util.List<java.lang.String>"--%>

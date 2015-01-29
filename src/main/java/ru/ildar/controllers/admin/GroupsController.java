@@ -9,7 +9,9 @@ import ru.ildar.database.entities.Group;
 import ru.ildar.services.GroupService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Administrator controller that handles CRUD operations with groups
@@ -66,11 +68,14 @@ public class GroupsController
 
     @RequestMapping(value = "add", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public String addGroup(@RequestBody CreatedGroup group)
+    public Map<String, String> addGroup(@RequestBody CreatedGroup group)
     {
+        Map<String, String> result = new HashMap<>();
         if(group.getGroupId() == null || group.getGroupId().trim().equals(""))
         {
-            return "{ok:false,reason:'EMPTY'}";
+            result.put("ok", "false");
+            result.put("reason", "EMPTY");
+            return result;
         }
 
         try
@@ -80,9 +85,12 @@ public class GroupsController
         catch(DuplicateKeyException exc)
                 //Group with such ID already exists in the database
         {
-            return "{ok:false,reason:'DUPLICATE_NAME'}";
+            result.put("ok", "false");
+            result.put("reason", "DUPLICATE_NAME");
+            return result;
         }
 
-        return "{ok:true}";
+        result.put("ok", "true");
+        return result;
     }
 }

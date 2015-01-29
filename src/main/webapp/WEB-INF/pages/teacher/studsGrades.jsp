@@ -4,49 +4,13 @@
 <%--@elvariable id="tGroup" type="ru.ildar.database.entities.TeachersGroups"--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
-<script type="text/javascript">
-    var token;
-    function setToken(t) { token = t; }
-
-    function removeGrade(gradeId) {
-        $('#gradeId').val(gradeId);
-        $('#tGroupsId').val(${tGroup.id});
-        $('#removeGradeForm').submit();
-    }
-
-    function updateGrade(username, semester, subjectName) {
-        var grade = prompt('Enter the new grade value', '80');
-        if(grade == null)
-            return;
-        if(isNaN(grade) || parseInt(grade) < 0 || parseInt(grade) > 100) {
-            alert('Grade must be a number between 0 and 100 inclusively.');
-            return;
-        }
-
-        $.ajax({
-            url: '/teacher/grades/update',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                studentSelect : username,
-                semester : semester,
-                subject : subjectName,
-                gradeValue : grade
-            }),
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('X-CSRF-TOKEN', token);
-            },
-            success: function(ok) {
-                if(ok) {
-                    $('#' + username + 'Td').html(grade);
-                    $('#msgSpan').html("Value has been updated.");
-                }
-            }
-        });
-    }
-</script>
+<script type="text/javascript" src="/scripts/studsGrades.js"></script>
 <script type="text/javascript">
     setToken('${_csrf.token}');
+    var i18n = [];
+    i18n["enterGrade"] = "<spring:message code="studsGrades.enterGrade" />";
+    i18n["gradeBetween"] = "<spring:message code="studsGrades.gradeBetween" />";
+    i18n["valueUpdated"] = "<spring:message code="studsGrades.valueUpdated" />";
 </script>
 
 <h2>
