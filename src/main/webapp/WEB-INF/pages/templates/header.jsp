@@ -15,23 +15,25 @@
     });
 </script>
 
+<%--@elvariable id="utils" type="ru.ildar.controllers.CommonController.RequestUtils"--%>
 <header>
     <div id="strapline">
 
         <h4 style="display: inline; position: absolute; right: 10px; top: 10px;">
-            <%--<c:if test="${param.lang != null}">--%>
-                <%--${param.lang = null}--%>
-            <%--</c:if>--%>
-            <%--<c:choose>--%>
-                <%--<c:when test="${param.size() == 0}">--%>
+            <c:choose>
+                <c:when test="${param.size() == 0}">
                     <a href="?lang=en"><img height="25" src="/images/US.png" title="English"></a>
                     <a href="?lang=ru"><img height="25" src="/images/RU.png" title="Русский(Russian)"></a>
-                <%--</c:when>--%>
-                <%--<c:otherwise>--%>
-                    <%--<a href="&lang=en"><img height="25" src="/images/US.png" title="English language"></a>--%>
-                    <%--<a href="&lang=ru"><img height="25" src="/images/RU.png" tabindex="Russian language"></a>--%>
-                <%--</c:otherwise>--%>
-            <%--</c:choose>--%>
+                </c:when>
+                <c:otherwise>
+                    <a href="?${utils.removeLang(pageContext.request.getQueryString())}&lang=en">
+                        <img height="25" src="/images/US.png" title="English">
+                    </a>
+                    <a href="?${utils.removeLang(pageContext.request.getQueryString())}&lang=ru">
+                        <img height="25" src="/images/RU.png" tabindex="Русский(Russian)">
+                    </a>
+                </c:otherwise>
+            </c:choose>
         </h4>
 
         <sec:authorize access="isFullyAuthenticated()">

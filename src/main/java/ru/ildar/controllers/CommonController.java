@@ -18,6 +18,29 @@ public class CommonController
                 new Image("/images/unis/harvard.jpg", "Harvard University"));
     }
 
+    @ModelAttribute("utils")
+    public RequestUtils utils()
+    {
+        return new RequestUtils();
+    }
+
+    public static class RequestUtils
+    {
+        public String removeLang(String query)
+        {
+            StringBuilder result = new StringBuilder();
+            String[] params = query.split("&");
+            for (String s : params)
+            {
+                if(s.startsWith("lang="))
+                    continue;
+                result.append("&" + s);
+            }
+
+            return result.length() == 0 ? result.toString() : result.substring(1);
+        }
+    }
+
     public static class Image
     {
         private String src;
