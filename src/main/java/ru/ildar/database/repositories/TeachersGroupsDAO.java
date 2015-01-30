@@ -16,5 +16,6 @@ public interface TeachersGroupsDAO extends CrudRepository<TeachersGroups, Intege
     List<TeachersGroups> findByGroup(Group group);
     List<TeachersGroups> findByTeacher_Username(String name, Sort sort);
 
-    TeachersGroups findBySubjectNameAndSemesterAndGroup(String subject, long semester, Group group);
+    TeachersGroups findBySubjectNameAndSemesterAndGroupAndTeacher_Username
+            (String subject, long semester, Group group, String teacherUsername);
 }

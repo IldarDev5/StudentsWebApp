@@ -8,6 +8,13 @@
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
 <script type="text/javascript" src="/scripts/add_teachers_groups.js"></script>
 
+<%--@elvariable id="tGroupExists" type="java.lang.Boolean"--%>
+<c:if test="${tGroupExists != null && tGroupExists == true}">
+    <h3 style="color: red;">
+        <spring:message code="teacher.tGroupExists" />
+    </h3>
+</c:if>
+
 <%--@elvariable id="subjects" type="java.util.List<java.lang.String>"--%>
 <form:form method="post" action="/admin/teachers/groups/add" commandName="tgroup">
     <table>

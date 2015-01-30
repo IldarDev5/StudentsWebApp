@@ -1,6 +1,7 @@
 <%--@elvariable id="university" type="ru.ildar.database.entities.University"--%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <h1>
@@ -9,6 +10,12 @@
         <spring:argument value="${university.city.cityName}" />
     </spring:message>
 </h1>
+    <%--@elvariable id="facultyExists" type="java.lang.Boolean"--%>
+    <c:if test="${facultyExists != null && facultyExists == true}">
+        <h3 style="color: red;">
+            <spring:message code="fac.facExists" />
+        </h3>
+    </c:if>
 <form:form method="post" action="/admin/faculties/add" commandName="faculty">
     <table>
         <tr>

@@ -1,6 +1,7 @@
 package ru.ildar.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -144,11 +145,12 @@ public class TeacherService
     /**
      * Get TeachersGroups instances specified by three fields - subject, name, and student username
      */
-    public TeachersGroups getTeachersGroupsBySubjectSemesterAndGroupStudent(String subject,
-                                                        int semester, String studentSelect)
+    public TeachersGroups getTeachersGroupsBySubjectSemesterAndGroupStudent(String subject, int semester,
+                                                 String studentSelect, String teacherUsername)
     {
         Student student = studentDAO.findOne(studentSelect);
-        return teachersGroupsDAO.findBySubjectNameAndSemesterAndGroup(subject, semester, student.getGroup());
+        return teachersGroupsDAO.findBySubjectNameAndSemesterAndGroupAndTeacher_Username
+                (subject, semester, student.getGroup(), teacherUsername);
     }
 
     /**
@@ -162,6 +164,14 @@ public class TeacherService
                                                        String groupId, String teacherUsername)
     {
         Group group = groupDAO.findOne(groupId);
+        TeachersGroups otherTg = teachersGroupsDAO.findBySubjectNameAndSemesterAndGroupAndTeacher_Username
+                (tg.getSubjectName(), tg.getSemester(), group, teacherUsername);
+        if(otherTg != null)
+        {
+            throw new DuplicateKeyException("This group already has this teacher teaching this subject in this semester.");
+        }
+
+
         Teacher teacher = teacherDAO.findOne(teacherUsername);
         tg.setGroup(group);
         tg.setTeacher(teacher);
@@ -175,5 +185,10 @@ public class TeacherService
     public List<Teacher> getTeachersByUniversity(int uniId)
     {
         return teacherDAO.findByUniversity_UnId(uniId);
+    }
+
+    public void removeTeachersGroups(Integer tGroupId)
+    {
+        teachersGroupsDAO.delete(tGroupId);
     }
 }

@@ -50,7 +50,8 @@ create table students_app.faculties(
   students_count int default 0,
 
   constraint fk_un foreign key(un_id)
-  references students_app.universities(un_id)
+  references students_app.universities(un_id),
+  constraint uk_faculty unique(un_id, faculty_name)
 );
 
 create table students_app.roles(

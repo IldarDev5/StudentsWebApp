@@ -2,6 +2,7 @@ package ru.ildar.controllers.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -68,17 +69,26 @@ public class FacultiesController
                                       BindingResult result, ModelMap model)
             throws ParseException
     {
+        University un = universityService.getById(pojo.getUnId());
         if(result.hasErrors())
         {
-            University un = universityService.getById(pojo.getUnId());
             model.addAttribute("university", un);
             return new ModelAndView("addFaculty", "faculty", pojo);
         }
 
-        University un = universityService.getById(pojo.getUnId());
         Faculty fac = new Faculty(pojo.getFacultyName(), new Date(pojo.getFoundDate().getTime()), un);
 
-        facultyService.saveOrUpdateFaculty(fac);
+        try
+        {
+            facultyService.saveOrUpdateFaculty(fac);
+        }
+        catch(DuplicateKeyException exc)
+                //Faculty with such name already exists in the specified university
+        {
+            model.addAttribute("university", un);
+            model.addAttribute("facultyExists", true);
+            return new ModelAndView("addFaculty", "faculty", pojo);
+        }
 
         return new ModelAndView("redirect:/admin/faculties?un_id=" + pojo.getUnId());
     }

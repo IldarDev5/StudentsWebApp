@@ -1,6 +1,7 @@
 package ru.ildar.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.Faculty;
 import ru.ildar.database.repositories.FacultyDAO;
@@ -13,6 +14,13 @@ public class FacultyService
 
     public void saveOrUpdateFaculty(Faculty fac)
     {
+        Faculty otherFac = facultyDAO.
+                findByUniversity_UnIdAndFacultyName(fac.getUniversity().getUnId(), fac.getFacultyName());
+        if(otherFac != null)
+        {
+            throw new DuplicateKeyException("Faculty with such name already exists in the specified university");
+        }
+
         facultyDAO.save(fac);
     }
 

@@ -5,6 +5,11 @@
 
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
 <script type="text/javascript" src="/scripts/teachers_groups.js"></script>
+<script type="text/javascript">
+    $(function() {
+        setToken('${_csrf.token}');
+    });
+</script>
 
 <h1><spring:message code="teacher.groupsAndSubjects" /></h1>
 
@@ -45,11 +50,16 @@
             <th><spring:message code="teacher.teacher" /></th>
         </tr>
         <c:forEach items="${tGroups}" var="tGroup">
-            <tr>
+            <tr id="tGroup${tGroup.id}Tr">
                 <td>${tGroup.subjectName}</td>
                 <td>${tGroup.semester}</td>
                 <td>${tGroup.group.groupId}</td>
                 <td>${tGroup.teacher.username}</td>
+                <td>
+                    <a href="javascript:removeTGroup(${tGroup.id})">
+                        <spring:message code="teacher.removeTGroup" />
+                    </a>
+                </td>
             </tr>
         </c:forEach>
     </table>

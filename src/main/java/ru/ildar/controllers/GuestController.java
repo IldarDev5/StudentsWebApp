@@ -32,8 +32,9 @@ public class GuestController
     private FacultyService facultyService;
 
     @RequestMapping(value = "/startPage", method = RequestMethod.GET)
-    public String startPage()
+    public String startPage(ModelMap model)
     {
+        model.addAttribute("showSlideImages", true);
         return "startPage";
     }
 

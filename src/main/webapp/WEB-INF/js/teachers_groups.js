@@ -1,6 +1,24 @@
 /**
  * Created by Ildar on 24.01.2015.
  */
+
+var token;
+function setToken(t) { token = t; }
+
+function removeTGroup(tGroupId) {
+    $.ajax({
+        url: '/admin/teachers/groups/remove?tGroupId=' + tGroupId,
+        contentType: 'application/json',
+        type: 'post',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-TOKEN', token);
+        },
+        success: function(data) {
+            $('#tGroup' + tGroupId + 'Tr').remove();
+        }
+    });
+}
+
 $(function() {
     setLoad(true, false, false);
     triggerUniChange = true;

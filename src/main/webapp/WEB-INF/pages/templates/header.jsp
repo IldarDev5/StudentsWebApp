@@ -124,14 +124,16 @@
     </nav>
 </header>
 
-<div id="slideshow_container">
-    <div class="slideshow">
-        <ul class="slideshow">
-            <c:forEach items="${images}" var="image">
-                <li><img height="250" src="${image.src}" alt="${image.text}" /></li>
-            </c:forEach>
-            <%--<li class="show"><img width="940" height="250" src="/images/home_1.jpg" alt="&quot;Enter your caption here&quot;" /></li>--%>
-            <%--<li><img width="940" height="250" src="/images/home_2.jpg" alt="&quot;Enter your caption here&quot;" /></li>--%>
-        </ul>
-    </div><!--close slideshow-->
-</div><!--close slideshow_container-->
+<%--@elvariable id="showSlideImages" type="java.lang.Boolean"--%>
+<%--@elvariable id="images" type="java.util.List"--%>
+<c:if test="${showSlideImages != null}">
+    <div id="slideshow_container">
+        <div class="slideshow">
+            <ul class="slideshow">
+                <c:forEach items="${images}" var="image">
+                    <li><img height="250" src="${image.src}" alt="${image.text}" /></li>
+                </c:forEach>
+            </ul>
+        </div><!--close slideshow-->
+    </div><!--close slideshow_container-->
+</c:if>

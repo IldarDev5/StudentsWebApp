@@ -16,4 +16,5 @@ public interface FacultyDAO extends CrudRepository<Faculty, Long>
     @Query("select sum(f.studentsCount) from Faculty f where f.university.unId = :unId")
     int sumByUniversity_UnId(@Param("unId") Long unId);
 
+    Faculty findByUniversity_UnIdAndFacultyName(long unId, String facultyName);
 }

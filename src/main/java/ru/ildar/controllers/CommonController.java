@@ -1,21 +1,29 @@
 package ru.ildar.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 @ControllerAdvice
 public class CommonController
 {
+    @Autowired
+    private MessageSource messageSource;
+
     @ModelAttribute("images")
     public List<Image> images()
     {
+        Locale locale = LocaleContextHolder.getLocale();
+        String welcome = messageSource.getMessage("imgMsg.welcome", new Object[0], locale);
         return Arrays.asList(
-                new Image("/images/unis/kfu.jpg", "Kazan Federal University"),
-                new Image("/images/unis/kit.jpg", "Karlsruhe Institute of Technology"),
-                new Image("/images/unis/harvard.jpg", "Harvard University"));
+                new Image("/images/home_1.jpg", welcome),
+                new Image("/images/home_2.jpg", welcome));
     }
 
     @ModelAttribute("utils")

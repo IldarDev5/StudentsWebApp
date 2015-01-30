@@ -24,6 +24,7 @@
             <td><form:errors path="subjectType" /></td>
         </tr>
     </table>
+    <span style="color: red;" id="inputErr"></span> <br />
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     <input type="submit" value="<spring:message code="sub.submit" />">
 </form:form>

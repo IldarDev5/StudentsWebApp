@@ -5,6 +5,13 @@
 
 <h1><spring:message code="uni.addUni" /></h1>
 
+<%--@elvariable id="uniExists" type="java.lang.Boolean"--%>
+<c:if test="${uniExists != null && uniExists == true}">
+    <h3 style="color: red">
+        <spring:message code="uni.uniExists" />
+    </h3>
+</c:if>
+
 <%--@elvariable id="cities" type="java.util.List<ru.ildar.database.entities.City>"--%>
 <form:form method="post" action="/admin/unis/add" commandName="uni">
     <table>
@@ -27,8 +34,3 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     <input type="submit" value="<spring:message code="uni.submit" />">
 </form:form>
-
-<%--@elvariable id="uniExists" type="java.lang.Boolean"--%>
-<c:if test="${uniExists != null && uniExists == true}">
-    <span style="color: red"><spring:message code="uni.uniExists" /></span>
-</c:if>
