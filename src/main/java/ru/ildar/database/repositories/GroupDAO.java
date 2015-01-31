@@ -8,5 +8,5 @@ import ru.ildar.database.entities.Group;
  */
 public interface GroupDAO extends CrudRepository<Group, String>
 {
-    Iterable<Group> findByFaculty_FacultyId(long facultyId);
+    Iterable<Group> findByFaculty_FacultyIdOrderByGroupIdAscStudentsCountAsc(int facultyId);
 }

@@ -36,7 +36,7 @@ public class GroupService
      */
     public Iterable<Group> getGroupsByFaculty(int facultyId)
     {
-        return groupDAO.findByFaculty_FacultyId(facultyId);
+        return groupDAO.findByFaculty_FacultyIdOrderByGroupIdAscStudentsCountAsc(facultyId);
     }
 
     /**
@@ -44,7 +44,7 @@ public class GroupService
      * @param group Group to add
      * @param facultyId ID of the faculty
      */
-    public void addGroupToFaculty(Group group, long facultyId)
+    public void addGroupToFaculty(Group group, int facultyId)
     {
         Group gr = groupDAO.findOne(group.getGroupId());
         if(gr != null)

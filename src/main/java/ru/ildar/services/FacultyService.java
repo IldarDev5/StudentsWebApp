@@ -35,12 +35,12 @@ public class FacultyService
     /**
      * Remove a faculty by its ID
      */
-    public void removeFaculty(long facultyId)
+    public void removeFaculty(int facultyId)
     {
         facultyDAO.delete(facultyId);
     }
 
-    public int getStudentsCount(Long unId)
+    public int getStudentsCount(int unId)
     {
         return facultyDAO.sumByUniversity_UnId(unId);
     }

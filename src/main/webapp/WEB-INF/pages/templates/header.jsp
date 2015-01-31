@@ -127,6 +127,7 @@
 <%--@elvariable id="showSlideImages" type="java.lang.Boolean"--%>
 <%--@elvariable id="images" type="java.util.List"--%>
 <c:if test="${showSlideImages != null}">
+    <script type="text/javascript" src="/scripts/image_slide.js"></script>
     <div id="slideshow_container">
         <div class="slideshow">
             <ul class="slideshow">

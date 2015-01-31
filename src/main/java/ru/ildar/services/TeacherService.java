@@ -102,7 +102,7 @@ public class TeacherService
      * @param details Teacher instance the values of which would be used for updating
      * @param unId ID of the university
      */
-    public void setUniversityAndPhotoAndUpdate(Teacher details, long unId)
+    public void setUniversityAndPhotoAndUpdate(Teacher details, int unId)
     {
         byte[] photo = getTeacherPhoto(details.getUsername());
         University un = universityDAO.findOne(unId);
@@ -117,7 +117,7 @@ public class TeacherService
      * @param teacher Teacher instance the values of which would be used for updating
      * @param uniId ID of the university
      */
-    public void setUniversityAndAddTeacher(Teacher teacher, long uniId)
+    public void setUniversityAndAddTeacher(Teacher teacher, int uniId)
     {
         University university = universityDAO.findOne(uniId);
         teacher.setUniversity(university);

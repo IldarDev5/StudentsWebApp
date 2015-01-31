@@ -18,15 +18,15 @@
 </c:choose>
 
 <%--@elvariable id="teachers" type="java.util.List<ru.ildar.database.entities.Teacher>"--%>
-<table border="1">
+<table class="prettyTable">
     <tr>
-        <th><spring:message code="teacher.username" /></th>
-        <th><spring:message code="teacher.realName" /></th>
-        <th><spring:message code="teacher.email" /></th>
-        <th><spring:message code="teacher.title" /></th>
-        <th><spring:message code="teacher.university" /></th>
-        <th><spring:message code="teacher.workStartDate" /></th>
-        <th><spring:message code="teacher.photo" /></th>
+        <td><spring:message code="teacher.username" /></td>
+        <td><spring:message code="teacher.realName" /></td>
+        <td><spring:message code="teacher.email" /></td>
+        <td><spring:message code="teacher.title" /></td>
+        <td><spring:message code="teacher.university" /></td>
+        <td><spring:message code="teacher.workStartDate" /></td>
+        <td><spring:message code="teacher.photo" /></td>
     </tr>
     <c:forEach items="${teachers}" var="teacher">
         <tr>

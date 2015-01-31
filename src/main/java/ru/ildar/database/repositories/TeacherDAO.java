@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface TeacherDAO extends PagingAndSortingRepository<Teacher, String>
 {
-    List<Teacher> findByUniversity_UnId(long uniId);
+    List<Teacher> findByUniversity_UnId(int uniId);
 }

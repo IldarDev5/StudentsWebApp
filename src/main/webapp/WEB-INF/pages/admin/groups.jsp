@@ -34,8 +34,9 @@
     </tr>
 </table>
 <input type="button" value="<spring:message code="group.load" />" onclick="javascript:loadGroups();">
+<br />
 
-<table id="groupsTable" border="1">
+<table id="groupsTable" class="prettyTable" style="display: none;">
 
 </table>
 

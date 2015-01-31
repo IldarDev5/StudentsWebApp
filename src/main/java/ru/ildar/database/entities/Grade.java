@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "GRADES", schema = "STUDENTS_APP", catalog = "")
 public class Grade
 {
-    private long gradeId;
+    private int gradeId;
     private long gradeValue;
     private long semester;
     private Teacher teacher;
@@ -29,12 +29,12 @@ public class Grade
     @Column(name = "GRADE_ID")
     @GenericGenerator(name = "increment", strategy = "increment")
     @GeneratedValue(generator = "increment")
-    public long getGradeId()
+    public int getGradeId()
     {
         return gradeId;
     }
 
-    public void setGradeId(long gradeId)
+    public void setGradeId(int gradeId)
     {
         this.gradeId = gradeId;
     }

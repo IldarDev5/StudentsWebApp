@@ -8,12 +8,13 @@ function loadGroups() {
     //Load groups of the selected faculty
     $.getJSON('/admin/groups/OfFaculty?facId=' + facId, function(data) {
         if(data.length != 0) {
+            groupsTable.show();
             groupsTable.empty();
             groupsTable.append(
                 "<tr>" +
-                    "<th>" + i18n["groupId"] + "</th>" +
-                    "<th>" + i18n["studentsCount"] + "</th>" +
-                    "<th>" + i18n["facultyName"] + "</th>" +
+                    "<td>" + i18n["groupId"] + "</td>" +
+                    "<td>" + i18n["studentsCount"] + "</td>" +
+                    "<td>" + i18n["facultyName"] + "</td>" +
                 "</tr>");
             $.each(data, function (idx, group) {
                 var href = "href=\"/auth/studentGroup?groupId=" + group.groupId + "\"";
@@ -39,6 +40,8 @@ $(function() {
     setLoad(true, true, false);
     loadCities();
 
+    var groupNameText = $('#groupNameText');
+
     $('#citySelect').change(function() {
         loadUnis("?cityId=" + $(this).val());
     });
@@ -49,18 +52,22 @@ $(function() {
 
     $('#createGroup').click(function() {
         $('#createGroupDiv').toggle();
+        groupNameText.focus();
     });
 
     //Group creation - send AJAX request about new group information
     $('#createGroupBtn').click(function() {
         var facSelect = $('#facSelect');
-        var groupId = $('#groupNameText').val();
+        var groupId = groupNameText.val();
         var facName = facSelect.find("option:selected").text();
 
         if(groupId.length == 0) {
             $('#groupAddErr').html(i18n["enterSomeValue"]);
             return;
         }
+
+        groupNameText.empty();
+        $('#createGroupDiv').toggle();
 
         $.ajax({
             url: '/admin/groups/add',
@@ -74,16 +81,17 @@ $(function() {
                 xhr.setRequestHeader("X-CSRF-TOKEN", token);
             },
             success: function(resp) {
-                resp = JSON.parse(resp);  //Response arrives as a string; convert it to JSON
-                if(resp.ok === true) {
+                //resp = JSON.parse(resp);  //Response arrives as a string; convert it to JSON
+                if(resp.ok == 'true') {
                     //Add new group to the table
                     var groupsTable = $('#groupsTable');
+                    groupsTable.show();
                     if(groupsTable.html().length == 0)
                         groupsTable.append(
                             "<tr>" +
-                                "<th>" + i18n["groupId"] + "</th>" +
-                                "<th>" + i18n["studentsCount"] + "</th>" +
-                                "<th>" + i18n["facultyName"] + "</th>" +
+                                "<td>" + i18n["groupId"] + "</td>" +
+                                "<td>" + i18n["studentsCount"] + "</td>" +
+                                "<td>" + i18n["facultyName"] + "</td>" +
                             "</tr>");
 
                     var href = "href=\"/auth/studentGroup?groupId=" + groupId + "\"";
@@ -95,7 +103,8 @@ $(function() {
                         "</tr>");
 
                     $('#groupAddErr').html();
-                    $('#createGroupDiv').toggle();
+                    groupNameText.val("");
+                    $('#createGroupDiv').hide();
                 }
                 else {
                     if(resp.reason == 'EMPTY') {

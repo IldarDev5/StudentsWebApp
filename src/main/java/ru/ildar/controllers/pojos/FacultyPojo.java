@@ -12,7 +12,7 @@ public class FacultyPojo
 {
     @NotNull
     @Min(1)
-    private Long unId;
+    private Integer unId;
 
     @NotNull
     @Size(min = 2, max = 150)
@@ -23,12 +23,12 @@ public class FacultyPojo
     @Past
     private Date foundDate;
 
-    public Long getUnId()
+    public Integer getUnId()
     {
         return unId;
     }
 
-    public void setUnId(Long unId)
+    public void setUnId(Integer unId)
     {
         this.unId = unId;
     }

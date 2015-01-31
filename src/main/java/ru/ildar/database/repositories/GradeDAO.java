@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Repository for performing CRUD operations on the GRADES table
  */
-public interface GradeDAO extends CrudRepository<Grade, Long>
+public interface GradeDAO extends CrudRepository<Grade, Integer>
 {
     List<Grade> findByStudent_UsernameAndSemester(String studUsername, long semester);
     List<Grade> findByStudent_Username(String userName);

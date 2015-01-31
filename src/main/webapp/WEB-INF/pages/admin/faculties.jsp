@@ -20,11 +20,12 @@
 
 <%--@elvariable id="uni" type="ru.ildar.database.entities.University"--%>
 <h1><spring:message code="fac.facs" arguments="${uni.unName}" /></h1>
-<table border="1">
+<table class="prettyTable">
     <tr>
-        <th><spring:message code="fac.name" /></th>
-        <th><spring:message code="fac.date" /></th>
-        <th><spring:message code="fac.studsCount" /></th>
+        <td><spring:message code="fac.name" /></td>
+        <td><spring:message code="fac.date" /></td>
+        <td><spring:message code="fac.studsCount" /></td>
+        <td><spring:message code="fac.remove" /></td>
     </tr>
     <c:forEach items="${uni.faculties}" var="faculty">
         <tr id="faculty${faculty.facultyId}">

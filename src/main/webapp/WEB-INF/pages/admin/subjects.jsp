@@ -23,10 +23,12 @@
 
 <h1><spring:message code="sub.subjects" /></h1>
 <%--@elvariable id="subjects" type="java.util.List<ru.ildar.database.entities.Subject>"--%>
-<table border="1">
+<table class="prettyTable">
     <tr>
-        <th><spring:message code="sub.name" /></th>
-        <th><spring:message code="sub.type" /></th>
+        <td><spring:message code="sub.name" /></td>
+        <td><spring:message code="sub.type" /></td>
+        <td><spring:message code="sub.teachers" /></td>
+        <td><spring:message code="sub.remove" /></td>
     </tr>
     <c:forEach items="${subjects}" var="subject">
         <tr id="${subject.subjectName.replaceAll(" ","")}Tr">

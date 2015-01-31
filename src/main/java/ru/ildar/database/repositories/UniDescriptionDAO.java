@@ -6,8 +6,8 @@ import ru.ildar.database.entities.UniversityDescription;
 /**
  * Repository for performing CRUD operations on the UN_DESCRIPTION table
  */
-public interface UniDescriptionDAO extends CrudRepository<UniversityDescription, Long>
+public interface UniDescriptionDAO extends CrudRepository<UniversityDescription, Integer>
 {
-    UniversityDescription findByUniversity_UnIdAndLanguage(long unId, String lang);
-    UniversityDescription findOneByUniversity_UnId(Long unId);
+    UniversityDescription findByUniversity_UnIdAndLanguage(int unId, String lang);
+    UniversityDescription findOneByUniversity_UnId(int unId);
 }

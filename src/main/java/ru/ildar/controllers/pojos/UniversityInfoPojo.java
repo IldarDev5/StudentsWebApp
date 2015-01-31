@@ -7,28 +7,28 @@ public class UniversityInfoPojo
 {
     @NotNull
     @Min(1)
-    private Long cityId;
+    private Integer cityId;
 
     @NotNull
     @Min(1)
-    private Long unId;
+    private Integer unId;
 
-    public Long getCityId()
+    public Integer getCityId()
     {
         return cityId;
     }
 
-    public void setCityId(Long cityId)
+    public void setCityId(Integer cityId)
     {
         this.cityId = cityId;
     }
 
-    public Long getUnId()
+    public Integer getUnId()
     {
         return unId;
     }
 
-    public void setUnId(Long unId)
+    public void setUnId(Integer unId)
     {
         this.unId = unId;
     }

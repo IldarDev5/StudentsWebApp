@@ -107,7 +107,7 @@ public class GradeService
     /**
      * Remove the grade from the database
      */
-    public void removeGrade(long gradeId)
+    public void removeGrade(int gradeId)
     {
         gradeDAO.delete(gradeId);
     }

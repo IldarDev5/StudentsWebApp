@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 @Table(name = "FACULTIES", schema = "STUDENTS_APP", catalog = "")
 public class Faculty
 {
-    private long facultyId;
+    private int facultyId;
     private String facultyName;
     private Date foundDate;
     private int studentsCount;
@@ -28,12 +28,12 @@ public class Faculty
     @Column(name = "FACULTY_ID")
     @GenericGenerator(name = "increment", strategy = "increment")
     @GeneratedValue(generator = "increment")
-    public long getFacultyId()
+    public int getFacultyId()
     {
         return facultyId;
     }
 
-    public void setFacultyId(long facultyId)
+    public void setFacultyId(int facultyId)
     {
         this.facultyId = facultyId;
     }

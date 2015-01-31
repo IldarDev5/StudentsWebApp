@@ -18,7 +18,7 @@
 </a>
 
 <%--@elvariable id="cities" type="java.util.List<ru.ildar.database.entities.City>"--%>
-<form:form method="post" action="/admin/teachers/groups" commandName="taughtGroup">
+<form:form method="get" action="/admin/teachers/groups" commandName="taughtGroup">
     <table>
         <tr>
             <td><spring:message code="teacher.city" /></td>
@@ -37,17 +37,18 @@
         </tr>
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <input type="submit" value="<spring:message code="teacher.find" />">
+    <input type="submit" value="<spring:message code="teacher.find" />" name="get">
 </form:form>
 
 <%--@elvariable id="tGroups" type="java.util.List<ru.ildar.database.entities.TeachersGroups>"--%>
 <c:if test="${tGroups != null}">
-    <table border="1" id="tGroupsTable">
+    <table class="prettyTable" id="tGroupsTable">
         <tr>
-            <th><spring:message code="teacher.subjectName" /></th>
-            <th><spring:message code="teacher.semester" /></th>
-            <th><spring:message code="teacher.groupId" /></th>
-            <th><spring:message code="teacher.teacher" /></th>
+            <td><spring:message code="teacher.subjectName" /></td>
+            <td><spring:message code="teacher.semester" /></td>
+            <td><spring:message code="teacher.groupId" /></td>
+            <td><spring:message code="teacher.teacher" /></td>
+            <td><spring:message code="teacher.removeTGroup" /></td>
         </tr>
         <c:forEach items="${tGroups}" var="tGroup">
             <tr id="tGroup${tGroup.id}Tr">

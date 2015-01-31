@@ -3,6 +3,17 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
+<link rel="stylesheet" href="/css/jquery-ui.min.css">
+<script type="text/javascript" src="/scripts/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var enrollment = $('#enrollment');
+        enrollment.datepicker({ dateFormat : 'dd/mm/yy' });
+        if(enrollment.val() == '')
+            enrollment.val('01/01/2000');
+    });
+</script>
+
 <%--@elvariable id="stud" type="ru.ildar.database.entities.Student"--%>
 <h1><spring:message code="stud.about" arguments="${stud.username}" /></h1>
 <img src="/pictures/avatar?username=${stud.username}" height="200" />

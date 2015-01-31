@@ -52,7 +52,7 @@ public class TeachersGroupsController
         return teachersGroupsGeneric(model, null);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.GET, params = {"get"})
     public ModelAndView teachersGroups(@ModelAttribute("taughtGroup") TaughtGroup tGroup,
                                        BindingResult result, ModelMap model)
     {

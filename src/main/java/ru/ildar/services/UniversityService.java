@@ -37,7 +37,7 @@ public class UniversityService
     /**
      * Returns the university specified by its ID
      */
-    public University getById(long id)
+    public University getById(int id)
     {
         return universityDAO.findOne(id);
     }
@@ -104,7 +104,7 @@ public class UniversityService
     /**
      * Remove the university from the database
      */
-    public void removeUniversity(long unId)
+    public void removeUniversity(int unId)
     {
         universityDAO.delete(unId);
     }
@@ -114,7 +114,7 @@ public class UniversityService
      * @param unId University ID
      * @param bytes Image in bytes
      */
-    public void setImage(long unId, byte[] bytes)
+    public void setImage(int unId, byte[] bytes)
     {
         University university = universityDAO.findOne(unId);
         university.setUnImage(bytes);
@@ -125,7 +125,7 @@ public class UniversityService
      * @param unId University ID
      * @param lang Language
      */
-    public UniversityDescription getDescription(long unId, String lang)
+    public UniversityDescription getDescription(int unId, String lang)
     {
         return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang);
     }
@@ -142,13 +142,13 @@ public class UniversityService
         uniDescriptionDAO.save(descr);
     }
 
-    public UniversityDescription getDescriptionByLanguageAbbrev(long unId, String langAbbrev)
+    public UniversityDescription getDescriptionByLanguageAbbrev(int unId, String langAbbrev)
     {
         String lang = languageDAO.findLanguageByAbbreviation(langAbbrev);
         return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang);
     }
 
-    public UniversityDescription getFirstDescriptionForUniversity(Long unId)
+    public UniversityDescription getFirstDescriptionForUniversity(int unId)
     {
         return uniDescriptionDAO.findOneByUniversity_UnId(unId);
     }

@@ -8,7 +8,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <!-- modernizr enables HTML5 elements and feature detects -->
-    <script type="text/javascript" src="/scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/scripts/modernizr-1.5.min.js"></script>
 </head>
 
@@ -62,9 +62,6 @@
     <tiles:insertAttribute name="footer" />
 
 </div><!--close main-->
-
-<!-- javascript at the bottom for fast page loading -->
-<script type="text/javascript" src="/scripts/image_slide.js"></script>
 
 </body>
 </html>

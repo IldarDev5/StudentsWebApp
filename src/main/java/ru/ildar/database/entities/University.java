@@ -9,7 +9,7 @@ import java.util.Collection;
 @Table(name = "UNIVERSITIES", schema = "STUDENTS_APP", catalog = "")
 public class University
 {
-    private long unId;
+    private int unId;
     private String unName;
     private String unAddress;
     private byte[] unImage;
@@ -30,12 +30,12 @@ public class University
     @Column(name = "UN_ID")
     @GenericGenerator(name = "increment", strategy = "increment")
     @GeneratedValue(generator = "increment")
-    public long getUnId()
+    public int getUnId()
     {
         return unId;
     }
 
-    public void setUnId(long unId)
+    public void setUnId(int unId)
     {
         this.unId = unId;
     }

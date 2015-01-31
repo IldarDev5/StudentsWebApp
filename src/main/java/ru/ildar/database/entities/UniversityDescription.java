@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 @Table(name = "UN_DESCRIPTION", schema = "STUDENTS_APP", catalog = "")
 public class UniversityDescription
 {
-    private long id;
+    private int id;
     private String description;
     private Timestamp lastChangeDate;
     private String language;
@@ -32,12 +32,12 @@ public class UniversityDescription
     @Column(name = "ID")
     @GenericGenerator(name = "increment", strategy = "increment")
     @GeneratedValue(generator = "increment")
-    public long getId()
+    public int getId()
     {
         return id;
     }
 
-    public void setId(long id)
+    public void setId(int id)
     {
         this.id = id;
     }

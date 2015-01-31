@@ -48,7 +48,7 @@ public class FacultiesController
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
-    public ModelAndView addNewFaculty(@RequestParam("unId") long uniId, ModelMap model)
+    public ModelAndView addNewFaculty(@RequestParam("unId") int uniId, ModelMap model)
     {
         University un = universityService.getById(uniId);
         model.addAttribute("university", un);

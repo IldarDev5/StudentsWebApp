@@ -14,13 +14,16 @@
 
 <h1><spring:message code="uni.unis" /></h1>
 <%--@elvariable id="universities" type="java.util.List<ru.ildar.database.entities.University>"--%>
-<table border="1">
+<table class="prettyTable">
     <tr>
-        <th><spring:message code="uni.city" /></th>
-        <th><spring:message code="uni.name" /></th>
-        <th><spring:message code="uni.address" /></th>
-        <th><spring:message code="uni.image" /></th>
-        <th><spring:message code="uni.teachersCount" /></th>
+        <td><spring:message code="uni.city" /></td>
+        <td><spring:message code="uni.name" /></td>
+        <td><spring:message code="uni.address" /></td>
+        <td><spring:message code="uni.image" /></td>
+        <td><spring:message code="uni.teachersCount" /></td>
+        <td><spring:message code="uni.faculties" /></td>
+        <td><spring:message code="uni.remove" /></td>
+        <td><spring:message code="uni.description" /></td>
     </tr>
     <c:forEach items="${universities}" var="un">
         <tr>
