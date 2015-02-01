@@ -149,6 +149,33 @@ ul#nav li.current a, ul#nav li:hover a
   background: -o-linear-gradient(#43A9FF, #0043A8);
   background: -webkit-linear-gradient(#43A9FF, #0043A8);
   text-shadow: none;}
+
+input[type="submit"], input[type="button"] {
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 9;
+    -moz-border-radius: 9;
+    border-radius: 9px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 6px 8px 6px 8px;
+    text-decoration: none;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
   
 #slideshow_container
 { height: 270px;

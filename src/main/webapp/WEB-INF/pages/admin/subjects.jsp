@@ -22,6 +22,12 @@
 </script>
 
 <h1><spring:message code="sub.subjects" /></h1>
+<div class="button_small">
+    <a href="/admin/subjects/add">
+        <spring:message code="sub.add" />
+    </a>
+</div>
+<br /><br />
 <%--@elvariable id="subjects" type="java.util.List<ru.ildar.database.entities.Subject>"--%>
 <table class="prettyTable">
     <tr>
@@ -46,9 +52,6 @@
             </td>
         </tr>
     </c:forEach>
-    <a href="/admin/subjects/add">
-        <spring:message code="sub.add" />
-    </a>
 </table>
 
 <%--@elvariable id="pagesCount" type="java.lang.Integer"--%>

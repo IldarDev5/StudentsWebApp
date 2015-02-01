@@ -20,6 +20,12 @@
 
 <%--@elvariable id="uni" type="ru.ildar.database.entities.University"--%>
 <h1><spring:message code="fac.facs" arguments="${uni.unName}" /></h1>
+<div class="button_small">
+    <a href="/admin/faculties/add?unId=${uni.unId}">
+        <spring:message code="fac.add" />
+    </a>
+</div>
+<br /> <br />
 <table class="prettyTable">
     <tr>
         <td><spring:message code="fac.name" /></td>
@@ -40,6 +46,3 @@
         </tr>
     </c:forEach>
 </table>
-<a href="/admin/faculties/add?unId=${uni.unId}">
-    <spring:message code="fac.add" />
-</a>

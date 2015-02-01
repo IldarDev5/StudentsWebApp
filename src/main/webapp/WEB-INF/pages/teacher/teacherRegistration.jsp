@@ -68,5 +68,5 @@
     </table>
     <input type="hidden" name="role" value="${teacher.role}">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <input type="submit" value="<spring:message code="teach.reg.register" />">
+    <input type="submit" value="<spring:message code="teach.reg.register" />" class="current">
 </form:form>

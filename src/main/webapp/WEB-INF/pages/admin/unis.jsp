@@ -13,6 +13,10 @@
 
 
 <h1><spring:message code="uni.unis" /></h1>
+<div class="button_small">
+    <a href="/admin/unis/add"><spring:message code="uni.add" /></a>
+</div>
+<br /> <br />
 <%--@elvariable id="universities" type="java.util.List<ru.ildar.database.entities.University>"--%>
 <table class="prettyTable">
     <tr>
@@ -74,6 +78,3 @@
     </c:choose>
     <c:if test="${page != pagesCount}">,</c:if>
 </c:forEach>
-
-<br />
-<a href="/admin/unis/add"><spring:message code="uni.add" /></a>

@@ -21,5 +21,6 @@
         </c:forEach>
     </select>
 </div>
+<br /> <br />
 <table id="gradesTable" class="prettyTable">
 </table>

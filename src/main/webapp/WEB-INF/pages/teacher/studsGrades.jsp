@@ -23,6 +23,14 @@
     </spring:message>
 </h2>
 
+<div class="button_small">
+    <a href="/teacher/grades/add?subject=${tGroup.subjectName}
+    &groupId=${tGroup.group.groupId}&semester=${tGroup.semester}">
+        <spring:message code="teach.addGradeToStud" />
+    </a>
+</div>
+<br /><br />
+
 <table class="prettyTable">
     <tr>
         <td><spring:message code="teach.student" /></td>
@@ -55,11 +63,6 @@
     <input type="hidden" name="tGroupsId" id="tGroupsId">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 </form>
-
-<a href="/teacher/grades/add?subject=${tGroup.subjectName}
-&groupId=${tGroup.group.groupId}&semester=${tGroup.semester}">
-    <spring:message code="teach.addGradeToStud" />
-</a>
 
 <br />
 <span id="msgSpan" style="color : red;"></span>
