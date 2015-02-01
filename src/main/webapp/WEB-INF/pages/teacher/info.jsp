@@ -2,6 +2,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <link rel="stylesheet" href="/css/jquery-ui.min.css">
 <script type="text/javascript" src="/scripts/jquery/jquery-ui.min.js"></script>
@@ -59,9 +60,11 @@
     <script type="text/javascript" src="/scripts/selectBox.js"></script>
     <script type="text/javascript" src="/scripts/teacher_info.js"></script>
 
-    <a href="javascript:showUpdateForm();">
-        <spring:message code="teach.updateInfo" />
-    </a>
+    <div class="button_small" style="margin-right: 7px;">
+        <a href="javascript:showUpdateForm();">
+            <spring:message code="teach.updateInfo" />
+        </a>
+    </div> <br /><br />
     <form method="post" action="/info/teacher" hidden="hidden" id="updateForm">
         <table>
             <tr>
@@ -111,12 +114,21 @@
         <input type="submit" value="<spring:message code="teach.save" />">
     </form>
 
-    <a href="javascript:showUploadAvatarForm();">
-        <spring:message code="teach.uploadAvatar" />
-    </a>
-    <a href="javascript:removeAvatar();">
-        <spring:message code="teach.removeAvatar" />
-    </a>
+    <div class="button_small" style="margin-right: 7px;">
+        <a href="javascript:showUploadAvatarForm();">
+            <spring:message code="teach.uploadAvatar" />
+        </a>
+    </div>
+    <c:if test="${fn:length(teacher.personPhoto) == 1}">
+        <!--This teacher has an avatar-->
+        <div class="button_small" style="margin-right: 7px;">
+            <a href="javascript:removeAvatar();">
+                <spring:message code="teach.removeAvatar" />
+            </a>
+        </div>
+    </c:if>
+    <br /><br />
+
     <form hidden="hidden" id="removeAvatarForm" method="post" action="/info/removePic">
         <input type="hidden" name="username" value="${teacher.username}">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">

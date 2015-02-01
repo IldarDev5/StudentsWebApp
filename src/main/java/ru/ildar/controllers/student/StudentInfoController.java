@@ -32,6 +32,9 @@ public class StudentInfoController
             username = principal.getName();
 
         Student student = studentService.getByUsername(username);
+        if(student.getPersonPhoto() != null)
+            //Set bytes size to 1 so JSP side would know that this student has an avatar
+            student.setPersonPhoto(new byte[1]);
         return new ModelAndView("studInfo", "stud", student);
     }
 

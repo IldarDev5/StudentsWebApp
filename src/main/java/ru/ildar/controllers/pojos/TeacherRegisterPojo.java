@@ -1,15 +1,35 @@
 package ru.ildar.controllers.pojos;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class TeacherRegisterPojo
 {
+    @NotNull
+    @Size(min = 2, max = 70)
     private String username;
-    private String password;
-    private String repeatPassword;
-    private String role;
-    private int uniSelect;
-    private int citySelect;
 
-    public TeacherRegisterPojo() { }
+    @NotNull
+    @Size(min = 2, max = 100)
+    private String password;
+
+    @NotNull
+    @Size(min = 2, max = 100)
+    private String repeatPassword;
+
+    @NotNull
+    @Size(min = 2, max = 15)
+    private String role;
+
+    @NotNull
+    @Min(1)
+    private Integer uniSelect;
+
+    @NotNull
+    @Min(1)
+    private Integer citySelect;
+
 
     public String getUsername()
     {
@@ -51,22 +71,22 @@ public class TeacherRegisterPojo
         this.role = role;
     }
 
-    public int getUniSelect()
+    public Integer getUniSelect()
     {
         return uniSelect;
     }
 
-    public void setUniSelect(int uniSelect)
+    public void setUniSelect(Integer uniSelect)
     {
         this.uniSelect = uniSelect;
     }
 
-    public int getCitySelect()
+    public Integer getCitySelect()
     {
         return citySelect;
     }
 
-    public void setCitySelect(int citySelect)
+    public void setCitySelect(Integer citySelect)
     {
         this.citySelect = citySelect;
     }

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import ru.ildar.database.entities.Teacher;
 import ru.ildar.services.PersonService;
 import ru.ildar.services.TeacherService;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 
 @Controller
@@ -40,8 +42,14 @@ public class TeacherRegisterController
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ModelAndView registerPage(@ModelAttribute TeacherRegisterPojo teacherReg)
+    public ModelAndView registerPage(@ModelAttribute("teacher") @Valid TeacherRegisterPojo teacherReg,
+                                     BindingResult result)
     {
+        if(result.hasErrors())
+        {
+            return new ModelAndView("registerTeacher", "teacher", teacherReg);
+        }
+
         if(!teacherReg.getPassword().equals(teacherReg.getRepeatPassword()))
             return regError("passNotEqual", teacherReg);
         if(teacherService.getByUserName(teacherReg.getUsername()) != null)

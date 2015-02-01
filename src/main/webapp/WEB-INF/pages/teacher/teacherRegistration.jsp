@@ -32,6 +32,7 @@
                 </form:label>
             </td>
             <td><form:input path="username" /></td>
+            <td><form:errors path="username" /></td>
         </tr>
         <tr>
             <td>
@@ -40,6 +41,7 @@
                 </form:label>
             </td>
             <td><form:password path="password" /></td>
+            <td><form:errors path="password" /></td>
         </tr>
         <tr>
             <td>
@@ -48,6 +50,7 @@
                 </form:label>
             </td>
             <td><form:password path="repeatPassword" /></td>
+            <td><form:errors path="repeatPassword" /></td>
         </tr>
         <tr>
             <td>
@@ -56,6 +59,7 @@
                 </form:label>
             </td>
             <td><form:select path="citySelect" /></td>
+            <td><form:errors path="citySelect" /></td>
         </tr>
         <tr>
             <td>
@@ -64,9 +68,10 @@
                 </form:label>
             </td>
             <td><form:select path="uniSelect" /></td>
+            <td><form:errors path="uniSelect" /></td>
         </tr>
     </table>
     <input type="hidden" name="role" value="${teacher.role}">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <input type="submit" value="<spring:message code="teach.reg.register" />" class="current">
+    <input type="submit" value="<spring:message code="teach.reg.register" />">
 </form:form>

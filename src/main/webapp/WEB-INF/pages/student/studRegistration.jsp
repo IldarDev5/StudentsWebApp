@@ -24,6 +24,7 @@
                 </form:label>
             </td>
             <td><form:input path="username" /></td>
+            <td><form:errors path="username" /></td>
         </tr>
         <tr>
             <td>
@@ -32,6 +33,7 @@
                 </form:label>
             </td>
             <td><form:password path="password" /></td>
+            <td><form:errors path="password" /></td>
         </tr>
         <tr>
             <td>
@@ -40,6 +42,7 @@
                 </form:label>
             </td>
             <td><form:password path="repeatPassword" /></td>
+            <td><form:errors path="repeatPassword" /></td>
         </tr>
         <tr>
             <td>
@@ -48,6 +51,7 @@
                 </form:label>
             </td>
             <td><form:select path="citySelect" /></td>
+            <td><form:errors path="citySelect" /></td>
         </tr>
         <tr>
             <td>
@@ -56,6 +60,7 @@
                 </form:label>
             </td>
             <td><form:select path="uniSelect" /></td>
+            <td><form:errors path="uniSelect" /></td>
         </tr>
         <tr>
             <td>
@@ -64,6 +69,7 @@
                 </form:label>
             </td>
             <td><form:select path="facSelect" /></td>
+            <td><form:errors path="facSelect" /></td>
         </tr>
         <tr>
             <td>
@@ -72,6 +78,7 @@
                 </form:label>
             </td>
             <td><form:select path="groupSelect" /></td>
+            <td><form:errors path="groupSelect" /></td>
         </tr>
     </table>
     <input type="hidden" name="role" value="${student.role}">
