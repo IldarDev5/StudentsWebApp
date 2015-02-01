@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 
@@ -45,9 +46,11 @@
             </div><!--close sidebar-->
             <div class="sidebar">
                 <div class="sidebar_item">
-                    <h2>Contact</h2>
-                    <p>Phone: +44 (0)1234 567891</p>
-                    <p>Email: <a href="mailto:info@youremail.co.uk">info@youremail.co.uk</a></p>
+                    <h2><spring:message code="contact.contact" /></h2>
+                    <p><spring:message code="contact.phone" />: +79377790467</p>
+                    <p><spring:message code="contact.email" />:
+                        <a href="mailto:ildars1995@gmail.com">ildars1995@gmail.com</a>
+                    </p>
                 </div><!--close sidebar_item-->
             </div><!--close sidebar-->
         </div><!--close sidebar_container-->

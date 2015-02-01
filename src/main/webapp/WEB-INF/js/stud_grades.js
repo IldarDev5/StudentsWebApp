@@ -22,10 +22,10 @@ $(function() {
 
     function insertHeadRow(table) {
         var elem = "<tr>" +
-                        "<th>" + i18n["semester"] + "</th>" +
-                        "<th>" + i18n["grade"] + "</th>" +
-                        "<th>" + i18n["teacher"] + "</th>" +
-                        "<th>" + i18n["subject"] + "</th>" +
+                        "<td>" + i18n["semester"] + "</td>" +
+                        "<td>" + i18n["grade"] + "</td>" +
+                        "<td>" + i18n["teacher"] + "</td>" +
+                        "<td>" + i18n["subject"] + "</td>" +
                     "</tr>";
         table.append(elem);
     }

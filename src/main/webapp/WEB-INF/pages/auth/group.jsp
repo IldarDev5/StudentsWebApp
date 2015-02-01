@@ -5,10 +5,11 @@
 <%--@elvariable id="group" type="ru.ildar.database.entities.Group"--%>
 <h1><spring:message code="auth.group" /> <c:out value="${group.groupId}" /></h1>
 
-<table border="1">
+<table class="prettyTable">
     <tr>
-        <th><spring:message code="auth.username" /></th>
-        <th><spring:message code="auth.name" /></th>
+        <td><spring:message code="auth.username" /></td>
+        <td><spring:message code="auth.name" /></td>
+        <td><spring:message code="auth.moreInfo" /></td>
     </tr>
     <c:forEach items="${group.students}" var="student">
         <tr>

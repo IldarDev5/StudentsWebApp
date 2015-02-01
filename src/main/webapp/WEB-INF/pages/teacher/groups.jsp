@@ -5,11 +5,12 @@
 <h1><spring:message code="teach.groupsYouTeach" /></h1>
 
 <%--@elvariable id="groups" type="java.util.List<ru.ildar.database.entities.TeachersGroups>"--%>
-<table border="1">
+<table class="prettyTable">
     <tr>
-        <th><spring:message code="teach.gr.groupId" /></th>
-        <th><spring:message code="teach.gr.semester" /></th>
-        <th><spring:message code="teach.gr.subjectName" /></th>
+        <td><spring:message code="teach.gr.groupId" /></td>
+        <td><spring:message code="teach.gr.semester" /></td>
+        <td><spring:message code="teach.gr.subjectName" /></td>
+        <td><spring:message code="teach.gr.grades" /></td>
     </tr>
     <c:forEach items="${groups}" var="tGroup">
         <c:set var="groupId" value="${tGroup.group.groupId}" />

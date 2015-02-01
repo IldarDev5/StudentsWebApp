@@ -23,12 +23,14 @@
     </spring:message>
 </h2>
 
-<table>
+<table class="prettyTable">
     <tr>
-        <th><spring:message code="teach.student" /></th>
-        <th><spring:message code="teach.semester" /></th>
-        <th><spring:message code="teach.subjectName" /></th>
-        <th><spring:message code="teach.grade" /></th>
+        <td><spring:message code="teach.student" /></td>
+        <td><spring:message code="teach.semester" /></td>
+        <td><spring:message code="teach.subjectName" /></td>
+        <td><spring:message code="teach.grade" /></td>
+        <td><spring:message code="teach.updateGrade" /></td>
+        <td><spring:message code="teach.remove" /></td>
     </tr>
     <c:forEach items="${grades}" var="grade">
         <tr>
@@ -40,7 +42,7 @@
                 <spring:message code="teach.updateGrade" /></a>
             </td>
             <td>
-                <a href="javascript:removeGrade(${grade.gradeId});">
+                <a href="javascript:removeGrade('${grade.gradeId}', '${tGroup.id}');">
                     <spring:message code="teach.remove" />
                 </a>
             </td>

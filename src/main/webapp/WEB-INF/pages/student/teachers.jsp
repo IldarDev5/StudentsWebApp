@@ -4,12 +4,13 @@
 
 <h1><spring:message code="stud.teachers" /></h1>
 <%--@elvariable id="teachers" type="java.util.Map<ru.ildar.database.entities.Teacher, java.lang.String>"--%>
-<table>
+<table class="prettyTable">
     <tr>
-        <th><spring:message code="stud.teachers.username" /></th>
-        <th><spring:message code="stud.teachers.firstName" /></th>
-        <th><spring:message code="stud.teachers.lastName" /></th>
-        <th><spring:message code="stud.teachers.subjects" /></th>
+        <td><spring:message code="stud.teachers.username" /></td>
+        <td><spring:message code="stud.teachers.firstName" /></td>
+        <td><spring:message code="stud.teachers.lastName" /></td>
+        <td><spring:message code="stud.teachers.subjects" /></td>
+        <td><spring:message code="stud.teachers.moreInfo" /></td>
     </tr>
     <c:forEach items="${teachers}" var="teacher">
         <tr>

@@ -1,9 +1,9 @@
 var token;
 function setToken(t) { token = t; }
 
-function removeGrade(gradeId) {
+function removeGrade(gradeId, tGroupId) {
     $('#gradeId').val(gradeId);
-    $('#tGroupsId').val(${tGroup.id});
+    $('#tGroupsId').val(tGroupId);
     $('#removeGradeForm').submit();
 }
 
