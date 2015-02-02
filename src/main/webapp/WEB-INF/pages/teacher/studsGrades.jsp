@@ -24,8 +24,7 @@
 </h2>
 
 <div class="button_small">
-    <a href="/teacher/grades/add?subject=${tGroup.subjectName}
-    &groupId=${tGroup.group.groupId}&semester=${tGroup.semester}">
+    <a href="/teacher/grades/add?subject=${tGroup.subjectName}&groupId=${tGroup.group.groupId}&semester=${tGroup.semester}">
         <spring:message code="teach.addGradeToStud" />
     </a>
 </div>

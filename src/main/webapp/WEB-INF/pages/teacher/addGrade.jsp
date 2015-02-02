@@ -19,12 +19,12 @@
 <form:form method="post" action="/teacher/grades/add" id="addForm" commandName="studGrade">
     <table>
         <tr>
-            <td><spring:message code="teach.group" /></td>
+            <td><spring:message code="teach.group" />:</td>
             <td><c:out value="${studGrade.groupId}" /></td>
             <td><form:errors path="groupId" /> </td>
         </tr>
         <tr>
-            <td><spring:message code="teach.subject" /></td>
+            <td><spring:message code="teach.subject" />:</td>
             <td><c:out value="${studGrade.subject}" /></td>
             <td><form:errors path="subject" /></td>
         </tr>

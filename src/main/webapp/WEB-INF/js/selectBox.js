@@ -7,6 +7,8 @@ var loadUniversities = true;
 var loadFacs = true;
 var loadGrs = true;
 
+var submittingAllowed = false;
+
 //If true, after universities loading change event on select will be triggered
 var triggerUniChange = false;
 
@@ -19,8 +21,11 @@ function setLoad(unis, facs, groups) {
 
 function loadCities(selectedCity) {
     loadDataForSelect('/ajax/cities', '#citySelect', "",
-        function() {
-            if(loadUniversities === true) {
+        function(empty) {
+            if(!loadUniversities)
+                submittingAllowed = !empty;
+
+            if(loadUniversities) {
                 var cityId = selectedCity ? selectedCity : $('#citySelect').val();
                 if(cityId)
                     loadUnis("?cityId=" + cityId);
@@ -30,7 +35,20 @@ function loadCities(selectedCity) {
 
 function loadUnis(param) {
     loadDataForSelect('/ajax/universities', '#uniSelect', param,
-        function() {
+        function(empty) {
+            if(empty) {
+                var facSelect = $('#facSelect');
+                var groupSelect = $('#groupSelect');
+                if(facSelect)
+                    facSelect.empty();
+                if(groupSelect)
+                    groupSelect.empty();
+                submittingAllowed = false;
+                return;
+            }
+            if(!loadFacs)
+                submittingAllowed = !empty;
+
             if(triggerUniChange === true)
                 $('#uniSelect').trigger("change");
             if(loadFacs === true) {
@@ -43,7 +61,17 @@ function loadUnis(param) {
 
 function loadFaculties(param) {
     loadDataForSelect('/ajax/faculties', '#facSelect', param,
-        function() {
+        function(empty) {
+            if(empty) {
+                var groupSelect = $('#groupSelect');
+                if(groupSelect)
+                    groupSelect.empty();
+                submittingAllowed = false;
+                return;
+            }
+            if(!loadGrs)
+                submittingAllowed = !empty;
+
             if(loadGrs === true) {
                 var facId = $('#facSelect').val();
                 if(facId)
@@ -53,7 +81,9 @@ function loadFaculties(param) {
 }
 
 function loadGroups(param) {
-    loadDataForSelect('/ajax/groups', '#groupSelect', param);
+    loadDataForSelect('/ajax/groups', '#groupSelect', param, function(empty) {
+        submittingAllowed = !empty;
+    });
 }
 
 /** Sends AJAX GET query and fills the specified element with arrived list data */
@@ -66,6 +96,6 @@ function loadDataForSelect(path, elemId, data, callback) {
         });
 
         if(callback)
-            callback();
+            callback(elems.length == 0);
     });
 }

@@ -7,12 +7,12 @@
 <link rel="stylesheet" href="/css/jquery-ui.min.css">
 <script type="text/javascript" src="/scripts/jquery/jquery-ui.min.js"></script>
 <script type="text/javascript">
-//    $(function() {
-//        var foundDate = $('#foundDate');
-//        foundDate.datepicker({ dateFormat : 'dd/mm/yy' });
-//        if(foundDate.val() == '')
-//            foundDate.val('01/01/2000');
-//    });
+    $(function() {
+        var foundDate = $('#foundDate');
+        foundDate.datepicker({ dateFormat : 'dd/mm/yy' });
+        if(foundDate.val() == '')
+            foundDate.val('01/01/2000');
+    });
 </script>
 
 <h1>
@@ -27,7 +27,7 @@
             <spring:message code="fac.facExists" />
         </h3>
     </c:if>
-<form:form method="post" action="/admin/faculties/add" commandName="faculty">
+<form:form method="post" action="/admin/faculties/add?unId=${university.unId}" commandName="faculty">
     <table>
         <tr>
             <td><spring:message code="fac.name" />:</td>

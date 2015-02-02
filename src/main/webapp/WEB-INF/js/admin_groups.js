@@ -2,6 +2,11 @@
  * Created by Ildar on 24.01.2015.
  */
 function loadGroups() {
+    if(!submittingAllowed) {
+        alert(i18n["someDataAbsent"]);
+        return;
+    }
+
     var facId = $('#facSelect').val();
     var groupsTable = $('#groupsTable');
 
@@ -51,12 +56,22 @@ $(function() {
     });
 
     $('#createGroup').click(function() {
+        if(!submittingAllowed) {
+            alert(i18n["someDataAbsent"]);
+            return;
+        }
+
         $('#createGroupDiv').toggle();
         groupNameText.focus();
     });
 
     //Group creation - send AJAX request about new group information
     $('#createGroupBtn').click(function() {
+        if(!submittingAllowed) {
+            alert(i18n["someDataAbsent"]);
+            return;
+        }
+
         var facSelect = $('#facSelect');
         var groupId = groupNameText.val();
         var facName = facSelect.find("option:selected").text();
@@ -65,9 +80,6 @@ $(function() {
             $('#groupAddErr').html(i18n["enterSomeValue"]);
             return;
         }
-
-        groupNameText.empty();
-        $('#createGroupDiv').toggle();
 
         $.ajax({
             url: '/admin/groups/add',
@@ -102,15 +114,15 @@ $(function() {
                             "<td>" + facName +"</td>" +
                         "</tr>");
 
-                    $('#groupAddErr').html();
+                    $('#groupAddErr').html("");
                     groupNameText.val("");
-                    $('#createGroupDiv').hide();
+                    $('#createGroupDiv').toggle();
                 }
                 else {
-                    if(resp.reason == 'EMPTY') {
+                    if(resp.reason.localeCompare('EMPTY') == 0) {
                         $('#groupAddErr').html(i18n["enterSomeValue"]);
                     }
-                    else if(resp.reason == 'DUPLICATE_NAME') {
+                    else if(resp.reason.localeCompare('DUPLICATE_NAME') == 0) {
                         $('#groupAddErr').html(i18n["groupExists"]);
                     }
                 }

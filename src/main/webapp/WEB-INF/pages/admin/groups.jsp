@@ -17,6 +17,7 @@
     i18n["noDataFound"] = "<spring:message code="groups.noDataFound" />";
     i18n["enterSomeValue"] = "<spring:message code="groups.enterSomeValue" />";
     i18n["groupExists"] = "<spring:message code="groups.groupExists" />";
+    i18n["someDataAbsent"] = "<spring:message code="groups.someDataAbsent" />";
 </script>
 
 <table>
