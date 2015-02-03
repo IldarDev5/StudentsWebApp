@@ -65,6 +65,7 @@
             <spring:message code="teach.updateInfo" />
         </a>
     </div> <br /><br />
+
     <form method="post" action="/info/teacher" hidden="hidden" id="updateForm">
         <table>
             <tr>

@@ -50,8 +50,6 @@ public class TeacherRegisterController
             return new ModelAndView("registerTeacher", "teacher", teacherReg);
         }
 
-        if(!teacherReg.getPassword().equals(teacherReg.getRepeatPassword()))
-            return regError("passNotEqual", teacherReg);
         if(teacherService.getByUserName(teacherReg.getUsername()) != null)
             return regError("hasUsername", teacherReg);
 

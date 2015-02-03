@@ -1,9 +1,12 @@
 package ru.ildar.controllers.pojos;
 
+import ru.ildar.validation.descriptor.FieldsMatch;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@FieldsMatch(first = "password", second = "repeatPassword", message = "{webapp.validation.passwordsMatch}")
 public class StudentRegisterPojo
 {
     @NotNull

@@ -4,9 +4,6 @@
 
 <h1><spring:message code="stud.register" /></h1>
 <span style="color: red">
-    <c:if test="${passNotEqual != null}">
-        <spring:message code="stud.passNotEqual" />
-    </c:if>
     <c:if test="${hasUsername != null}">
         <spring:message code="stud.usernameExists" />
     </c:if>
