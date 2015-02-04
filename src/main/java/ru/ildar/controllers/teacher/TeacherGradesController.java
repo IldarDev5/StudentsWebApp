@@ -18,6 +18,7 @@ import ru.ildar.services.TeacherService;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/teacher/grades")
@@ -31,10 +32,12 @@ public class TeacherGradesController
     private TeacherService teacherService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView gradesToGroupForSubjectBySemester(@RequestParam("id") int id, ModelMap model)
+    public ModelAndView gradesToGroupForSubjectBySemester(@RequestParam("id") int id, ModelMap model,
+                                                          Locale locale)
     {
         TeachersGroups tGroups = teacherService.getTeachersGroupsById(id);
         List<Grade> grades = gradeService.getGradesByTeachersGroups(tGroups);
+        gradeService.setTranslationToGradeSubjects(grades, locale.getLanguage());
 
         model.addAttribute("tGroup", tGroups);
         model.addAttribute("grades", grades);

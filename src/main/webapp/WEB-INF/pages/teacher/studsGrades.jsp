@@ -36,22 +36,28 @@
         <td><spring:message code="teach.semester" /></td>
         <td><spring:message code="teach.subjectName" /></td>
         <td><spring:message code="teach.grade" /></td>
-        <td><spring:message code="teach.updateGrade" /></td>
-        <td><spring:message code="teach.remove" /></td>
+        <td><spring:message code="operations" /></td>
     </tr>
     <c:forEach items="${grades}" var="grade">
         <tr>
             <td>${grade.student.username}</td>
             <td>${grade.semester}</td>
-            <td>${grade.subjectName}</td>
+            <td>${grade.translation != null ? grade.translation : grade.subjectName}</td>
             <td id="${grade.student.username}Td">${grade.gradeValue}</td>
-            <td><a href="javascript:updateGrade('${grade.student.username}', '${grade.semester}', '${grade.subjectName}');">
-                <spring:message code="teach.updateGrade" /></a>
-            </td>
             <td>
-                <a href="javascript:removeGrade('${grade.gradeId}', '${tGroup.id}');">
-                    <spring:message code="teach.remove" />
+                <div>
+                <a href="javascript:updateGrade('${grade.student.username}', '${grade.semester}', '${grade.subjectName}');"
+                        style="text-decoration: none;">
+                    <img src="/images/user_icons/update.png"
+                         title="<spring:message code="teach.updateGrade" />">
                 </a>
+
+                <a href="javascript:removeGrade('${grade.gradeId}', '${tGroup.id}');"
+                        style="text-decoration: none;">
+                    <img src="/images/user_icons/remove.png"
+                         title="<spring:message code="teach.remove" />">
+                </a>
+                </div>
             </td>
         </tr>
     </c:forEach>

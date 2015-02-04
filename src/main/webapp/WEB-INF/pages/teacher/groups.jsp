@@ -20,7 +20,8 @@
             <td>${tGroup.subjectTranslation != null ? tGroup.subjectTranslation : tGroup.subjectName}</td>
             <td>
                 <a href="/teacher/grades?id=${tGroup.id}">
-                    <spring:message code="teach.gr.grades" />
+                    <img height="24" src="/images/user_icons/grades.png"
+                         title="<spring:message code="teach.gr.grades" />">
                 </a>
             </td>
         </tr>

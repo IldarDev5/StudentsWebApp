@@ -25,9 +25,7 @@
         <td><spring:message code="uni.address" /></td>
         <td><spring:message code="uni.image" /></td>
         <td><spring:message code="uni.teachersCount" /></td>
-        <td><spring:message code="uni.faculties" /></td>
-        <td><spring:message code="uni.remove" /></td>
-        <td><spring:message code="uni.description" /></td>
+        <td><spring:message code="operations" /></td>
     </tr>
     <c:forEach items="${universities}" var="un">
         <tr>
@@ -41,18 +39,17 @@
             </td>
             <td><c:out value="${un.teachersCount}" /></td>
             <td>
-                <a href="/admin/faculties?un_id=${un.unId}">
-                    <spring:message code="uni.faculties" />
+                <a href="/admin/faculties?un_id=${un.unId}" style="text-decoration: none;">
+                    <img src="/images/user_icons/faculties.png"
+                         title="<spring:message code="uni.faculties" />">
                 </a>
-            </td>
-            <td>
-                <a href="javascript:removeUn(${un.unId});">
-                    <spring:message code="uni.remove" />
+                <a href="javascript:removeUn(${un.unId});" style="text-decoration: none;">
+                    <img src="/images/user_icons/remove_uni.png"
+                         title="<spring:message code="uni.remove" />">
                 </a>
-            </td>
-            <td>
-                <a href="/admin/unis/description?unId=${un.unId}">
-                    <spring:message code="uni.description" />
+                <a href="/admin/unis/description?unId=${un.unId}" style="text-decoration: none;">
+                    <img src="/images/user_icons/description.png"
+                         title="<spring:message code="uni.description" />">
                 </a>
             </td>
         </tr>

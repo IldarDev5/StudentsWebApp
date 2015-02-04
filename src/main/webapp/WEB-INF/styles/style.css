@@ -1,6 +1,6 @@
 @font-face { 
   font-family: News Cycle;
-} 
+}
 
 html
 { height: 100%;}
@@ -60,7 +60,7 @@ a, a:hover
   background: transparent;
   font-weight: bold;
   outline: none;
-  text-decoration: underline;}
+    text-decoration:underline;}
 
 a:hover
 { text-decoration: none;}

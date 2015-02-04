@@ -5,6 +5,7 @@
 $(function() {
     var subjectName = $('#subjectName');
     $('#languageAbbrev').change(function() {
+        $('#subjectTranslation').val('');
         var subjName = subjectName.val();
         var language = $(this).val();
 
@@ -15,6 +16,8 @@ $(function() {
                     $('#subjectTranslation').val(tr.translation);
                     $('#id').val(tr.id);
                 }
+                else
+                    $('#id').val('');
             });
     });
 });

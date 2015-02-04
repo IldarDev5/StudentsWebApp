@@ -60,7 +60,8 @@
                 <td>${tGroup.teacher.username}</td>
                 <td>
                     <a href="javascript:removeTGroup(${tGroup.id})">
-                        <spring:message code="teacher.removeTGroup" />
+                        <img src="/images/user_icons/remove.png"
+                             title="<spring:message code="teacher.removeTGroup" />">
                     </a>
                 </td>
             </tr>

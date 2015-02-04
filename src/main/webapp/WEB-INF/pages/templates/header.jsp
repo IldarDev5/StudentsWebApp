@@ -22,8 +22,12 @@
         <h4 style="display: inline; position: absolute; right: 10px; top: 10px;">
             <c:choose>
                 <c:when test="${param.size() == 0}">
-                    <a href="?lang=en"><img height="25" src="/images/US.png" title="English"></a>
-                    <a href="?lang=ru"><img height="25" src="/images/RU.png" title="Русский(Russian)"></a>
+                    <a href="?lang=en" style="text-decoration: none;">
+                        <img height="25" src="/images/US.png" title="English">
+                    </a>
+                    <a href="?lang=ru" style="text-decoration: none;">
+                        <img height="25" src="/images/RU.png" title="Русский(Russian)">
+                    </a>
                 </c:when>
                 <c:otherwise>
                     <a href="?${utils.removeLang(pageContext.request.getQueryString())}&lang=en">

@@ -33,27 +33,29 @@
     <tr>
         <td><spring:message code="sub.name" /></td>
         <td><spring:message code="sub.type" /></td>
-        <td><spring:message code="sub.teachers" /></td>
-        <td><spring:message code="sub.remove" /></td>
-        <td><spring:message code="sub.localized" /></td>
+        <td><spring:message code="operations" /></td>
     </tr>
     <c:forEach items="${subjects}" var="subject">
         <tr id="${subject.subjectName.replaceAll(" ","")}Tr">
             <td>${subject.subjectName}</td>
             <td>${subject.subjectType}</td>
             <td>
-                <a href="/admin/teachers/bySubject?subject=${subject.subjectName}">
-                    <spring:message code="sub.teachers" />
+                <a href="/admin/teachers/bySubject?subject=${subject.subjectName}"
+                        style="text-decoration: none;">
+                    <img src="/images/user_icons/teachers.png"
+                         title="<spring:message code="sub.teachers" />">
                 </a>
-            </td>
-            <td>
-                <a href="javascript:removeSubject('${subject.subjectName}');">
-                    <spring:message code="sub.remove" />
+
+                <a href="javascript:removeSubject('${subject.subjectName}');"
+                        style="text-decoration: none;">
+                    <img src="/images/user_icons/remove_uni.png"
+                         title="<spring:message code="sub.remove" />">
                 </a>
-            </td>
-            <td>
-                <a href="/admin/subjects/localized?subject=${subject.subjectName}">
-                    <spring:message code="sub.localized" />
+
+                <a href="/admin/subjects/localized?subject=${subject.subjectName}"
+                        style="text-decoration: none;">
+                    <img src="/images/user_icons/localize.png"
+                         title="<spring:message code="sub.localized" />">
                 </a>
             </td>
         </tr>

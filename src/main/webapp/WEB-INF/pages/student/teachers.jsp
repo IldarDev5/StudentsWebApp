@@ -10,7 +10,7 @@
         <td><spring:message code="stud.teachers.firstName" /></td>
         <td><spring:message code="stud.teachers.lastName" /></td>
         <td><spring:message code="stud.teachers.subjects" /></td>
-        <td><spring:message code="stud.teachers.moreInfo" /></td>
+        <td><spring:message code="operations" /></td>
     </tr>
     <c:forEach items="${teachers}" var="teacher">
         <tr>
@@ -20,7 +20,8 @@
             <td><c:out value="${teacher.value}" /></td>
             <td>
                 <a href="/info/teacher?username=${teacher.key.username}">
-                    <spring:message code="stud.teachers.moreInfo" />
+                    <img src="/images/user_icons/info.png"
+                         title="<spring:message code="stud.teachers.moreInfo" />">
                 </a>
             </td>
         </tr>
