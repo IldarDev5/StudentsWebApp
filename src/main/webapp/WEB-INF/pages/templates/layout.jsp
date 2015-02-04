@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 
 <head>
-    <title><tiles:insertAttribute name="title" /></title>
+    <title>
+        <c:set var="titleKey"><tiles:getAsString name="title" /></c:set>
+        <spring:message code="${titleKey}" />
+    </title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <!-- modernizr enables HTML5 elements and feature detects -->
