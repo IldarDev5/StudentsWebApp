@@ -79,6 +79,19 @@ create table students_app.subjects(
   references students_app.subject_types(subject_type)
 );
 
+create table STUDENTS_APP.SUBJECTS_LOCALIZED(
+  id INT primary key,
+  subject_name VARCHAR2(100) not null,
+  subject_translation VARCHAR2(100) not null,
+  language VARCHAR2(25) not null,
+
+  CONSTRAINT fk_i18n_subject_name FOREIGN KEY (subject_name)
+  REFERENCES STUDENTS_APP.SUBJECTS(subject_name),
+  CONSTRAINT fk_i8n_language FOREIGN KEY (language)
+  REFERENCES STUDENTS_APP.LANGUAGES(language),
+  CONSTRAINT uk_subject_localized UNIQUE (subject_name, language)
+);
+
 create table students_app.groups(
   group_id varchar2(20) primary key,
   faculty_id int not null,

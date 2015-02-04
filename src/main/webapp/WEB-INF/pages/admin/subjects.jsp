@@ -35,6 +35,7 @@
         <td><spring:message code="sub.type" /></td>
         <td><spring:message code="sub.teachers" /></td>
         <td><spring:message code="sub.remove" /></td>
+        <td><spring:message code="sub.localized" /></td>
     </tr>
     <c:forEach items="${subjects}" var="subject">
         <tr id="${subject.subjectName.replaceAll(" ","")}Tr">
@@ -48,6 +49,11 @@
             <td>
                 <a href="javascript:removeSubject('${subject.subjectName}');">
                     <spring:message code="sub.remove" />
+                </a>
+            </td>
+            <td>
+                <a href="/admin/subjects/localized?subject=${subject.subjectName}">
+                    <spring:message code="sub.localized" />
                 </a>
             </td>
         </tr>

@@ -117,6 +117,11 @@
         <put-attribute name="body" value="/WEB-INF/pages/admin/subjects.jsp" />
         <put-attribute name="currentId" value="adminSubjectsLi" />
     </definition>
+    <definition name="localizedSubjects" extends="base.definition">
+        <put-attribute name="title" value="Localized Subjects" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/localizedSubjects.jsp" />
+        <put-attribute name="currentId" value="adminSubjectsLi" />
+    </definition>
     <definition name="adminTeachers" extends="base.definition">
         <put-attribute name="title" value="Teachers" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/teachers.jsp" />

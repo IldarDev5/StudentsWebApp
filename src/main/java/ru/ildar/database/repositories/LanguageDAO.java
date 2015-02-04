@@ -11,8 +11,10 @@ import ru.ildar.database.entities.Language;
 public interface LanguageDAO extends Repository<Language, String>
 {
     @Query("select l.language from Language l")
-    Iterable<String> findAll();
+    Iterable<String> findAllValues();
 
-    @Query("select l.language from Language l where l.abbreviation = :abbrev")
-    String findLanguageByAbbreviation(@Param("abbrev") String abbrev);
+    Iterable<Language> findAll();
+
+    @Query("select l from Language l where l.abbreviation = :abbrev")
+    Language findLanguageByAbbreviation(@Param("abbrev") String abbrev);
 }

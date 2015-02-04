@@ -144,8 +144,8 @@ public class UniversityService
 
     public UniversityDescription getDescriptionByLanguageAbbrev(int unId, String langAbbrev)
     {
-        String lang = languageDAO.findLanguageByAbbreviation(langAbbrev);
-        return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang);
+        Language lang = languageDAO.findLanguageByAbbreviation(langAbbrev);
+        return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang.getLanguage());
     }
 
     public UniversityDescription getFirstDescriptionForUniversity(int unId)

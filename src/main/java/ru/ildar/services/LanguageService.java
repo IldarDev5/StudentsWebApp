@@ -2,6 +2,7 @@ package ru.ildar.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.ildar.database.entities.Language;
 import ru.ildar.database.repositories.LanguageDAO;
 
 import java.util.ArrayList;
@@ -14,11 +15,21 @@ public class LanguageService
     private LanguageDAO languageDAO;
 
     /**
-     * Returns all languages from the database
+     * Returns all languages names(not abbreviations) from the database
      */
-    public List<String> getAllLanguages()
+    public List<String> getAllLanguagesValues()
     {
         List<String> result = new ArrayList<>();
+        languageDAO.findAllValues().forEach(result::add);
+        return result;
+    }
+
+    /**
+     * Returns all languages from the database
+     */
+    public List<Language> getAllLanguages()
+    {
+        List<Language> result = new ArrayList<>();
         languageDAO.findAll().forEach(result::add);
         return result;
     }
@@ -30,6 +41,6 @@ public class LanguageService
      */
     public String getLanguageByAbbreviation(String abbrev)
     {
-        return languageDAO.findLanguageByAbbreviation(abbrev);
+        return languageDAO.findLanguageByAbbreviation(abbrev).getLanguage();
     }
 }

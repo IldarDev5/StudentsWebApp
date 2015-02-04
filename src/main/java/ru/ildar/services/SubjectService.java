@@ -3,10 +3,12 @@ package ru.ildar.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.ildar.database.entities.Language;
+import ru.ildar.database.entities.LocalizedSubject;
 import ru.ildar.database.entities.Subject;
-import ru.ildar.database.entities.SubjectType;
+import ru.ildar.database.repositories.LanguageDAO;
+import ru.ildar.database.repositories.LocalizedSubjectDAO;
 import ru.ildar.database.repositories.SubjectDAO;
-import ru.ildar.database.repositories.SubjectTypeDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,9 @@ public class SubjectService
     @Autowired
     private SubjectDAO subjectDAO;
     @Autowired
-    private SubjectTypeDAO subjectTypeDAO;
+    private LocalizedSubjectDAO localizedSubjectDAO;
+    @Autowired
+    private LanguageDAO languageDAO;
 
     /**
      * Returns all subjects from the database
@@ -26,8 +30,7 @@ public class SubjectService
     {
         Iterable<Subject> it = subjectDAO.findAll();
         List<Subject> result = new ArrayList<>();
-        for(Subject subj : it)
-            result.add(subj);
+        it.forEach(result::add);
         return result;
     }
 
@@ -40,8 +43,7 @@ public class SubjectService
     {
         Iterable<Subject> it = subjectDAO.findAll(new PageRequest(pageNumber, subjectsPerPage));
         List<Subject> result = new ArrayList<>();
-        for(Subject subj : it)
-            result.add(subj);
+        it.forEach(result::add);
         return result;
     }
 
@@ -59,8 +61,7 @@ public class SubjectService
     public List<String> getSubjectTypes()
     {
         List<String> types = new ArrayList<>();
-        for(SubjectType type : subjectTypeDAO.findAll())
-            types.add(type.getSubjectType());
+        subjectDAO.findAll().forEach((t) -> types.add(t.getSubjectType()));
         return types;
     }
 
@@ -86,5 +87,17 @@ public class SubjectService
     public void removeSubject(String subjectName)
     {
         subjectDAO.delete(subjectName);
+    }
+
+    public void setSubjectAndLangAndSaveLocalization(String subjectName, String langAbbrev, LocalizedSubject subject)
+    {
+        subject.setSubject(subjectDAO.findOne(subjectName));
+        subject.setLanguage(languageDAO.findLanguageByAbbreviation(langAbbrev));
+        localizedSubjectDAO.save(subject);
+    }
+
+    public LocalizedSubject getSubjectLocalization(String subjectName, String languageAbbrev)
+    {
+        return localizedSubjectDAO.findBySubject_SubjectNameAndLanguage_Abbreviation(subjectName, languageAbbrev);
     }
 }
