@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.StudentRegisterPojo;
+import ru.ildar.database.entities.City;
 import ru.ildar.database.entities.Person;
 import ru.ildar.database.entities.Student;
+import ru.ildar.services.CityService;
 import ru.ildar.services.PersonService;
 import ru.ildar.services.StudentService;
 
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Student controller that handles registering new
@@ -36,6 +39,14 @@ public class StudentRegisterController
     private StudentService studentService;
     @Autowired
     private PersonService personService;
+    @Autowired
+    private CityService cityService;
+
+    @ModelAttribute("cities")
+    public List<City> cities()
+    {
+        return cityService.getAllCities();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView registerPage()

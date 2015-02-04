@@ -43,11 +43,11 @@ function setToken(t) { token = t; }
 
 $(function() {
     setLoad(true, true, false);
-    loadCities();
 
     var groupNameText = $('#groupNameText');
 
-    $('#citySelect').change(function() {
+    var citySelect = $('#citySelect');
+    citySelect.change(function() {
         loadUnis("?cityId=" + $(this).val());
     });
 
@@ -64,6 +64,8 @@ $(function() {
         $('#createGroupDiv').toggle();
         groupNameText.focus();
     });
+
+    citySelect.trigger("change");
 
     //Group creation - send AJAX request about new group information
     $('#createGroupBtn').click(function() {

@@ -11,12 +11,14 @@
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
 <script type="text/javascript">
     $(function() {
-        setLoad(true, true, false);
-        loadCities();
+        setLoad(true, false, false);
 
-        $('#city').change(function() {
+        var city = $('#citySelect');
+        city.change(function() {
             loadUnis("?cityId=" + $(this).val());
         });
+
+        city.trigger("change");
     });
 </script>
 
@@ -55,7 +57,7 @@
                     <spring:message code="teach.reg.city" />
                 </form:label>
             </td>
-            <td><form:select path="citySelect" /></td>
+            <td><form:select path="citySelect" items="${cities}" itemLabel="cityName" itemValue="id" /></td>
             <td><form:errors path="citySelect" /></td>
         </tr>
         <tr>

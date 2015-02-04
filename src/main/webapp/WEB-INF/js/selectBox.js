@@ -33,9 +33,12 @@ function loadCities(selectedCity) {
         });
 }
 
-function loadUnis(param) {
+function loadUnis(param, callback) {
     loadDataForSelect('/ajax/universities', '#uniSelect', param,
         function(empty) {
+            if(callback)
+                callback();
+
             if(empty) {
                 var facSelect = $('#facSelect');
                 var groupSelect = $('#groupSelect');

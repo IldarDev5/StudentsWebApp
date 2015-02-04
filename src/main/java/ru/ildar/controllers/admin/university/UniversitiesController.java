@@ -44,8 +44,6 @@ public class UniversitiesController
     private UniversityService universityService;
     @Autowired
     private CityService cityService;
-    @Autowired
-    private LanguageService languageService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView getUniversities(ModelMap model)

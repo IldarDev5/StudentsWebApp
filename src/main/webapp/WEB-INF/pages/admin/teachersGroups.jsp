@@ -13,9 +13,11 @@
 
 <h1><spring:message code="teacher.groupsAndSubjects" /></h1>
 
-<a href="/admin/teachers/groups/add">
-    <spring:message code="teacher.addTGroup" />
-</a>
+<div class="button_small">
+    <a href="/admin/teachers/groups/add">
+        <spring:message code="teacher.addTGroup" />
+    </a>
+</div><br /><br />
 
 <%--@elvariable id="cities" type="java.util.List<ru.ildar.database.entities.City>"--%>
 <form:form method="get" action="/admin/teachers/groups" commandName="taughtGroup">

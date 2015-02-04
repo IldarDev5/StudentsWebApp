@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.Group;
+import ru.ildar.services.CityService;
 import ru.ildar.services.GroupService;
 
 import java.util.ArrayList;
@@ -22,11 +23,13 @@ public class GroupsController
 {
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private CityService cityService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView groups()
     {
-        return new ModelAndView("groups");
+        return new ModelAndView("groups", "cities", cityService.getAllCities());
     }
 
     @RequestMapping(value = "OfFaculty", method = RequestMethod.GET)

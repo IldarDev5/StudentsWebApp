@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.City;
 import ru.ildar.database.repositories.CityDAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CityService
 {
@@ -14,8 +17,11 @@ public class CityService
     /**
      * Get all cities from the database
      */
-    public Iterable<City> getAllCities()
+    public List<City> getAllCities()
     {
-        return cityDAO.findAll();
+        Iterable<City> cities = cityDAO.findAll();
+        List<City> result = new ArrayList<>();
+        cities.forEach(result::add);
+        return result;
     }
 }

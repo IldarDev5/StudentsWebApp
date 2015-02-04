@@ -10,22 +10,23 @@
         setLoad(true, false, false);
         triggerUniChange = true;
 
-        var uniChanged = false;
-        $('#uniSelect').change(function() {
-            if(uniChanged)
-                return;
-            uniChanged = true;
-            <c:if test="${university.cityId != null}">
-                $('#citySelect').val("${university.cityId}");
-                $('#uniSelect').val("${university.unId}");
-            </c:if>
-        });
+        var citySelect = $('#cityId');
 
-        loadCities("${university.cityId}");
+        var unId = null;
+        <c:if test="${university.cityId != null}">
+            citySelect.val("${university.cityId}");
+            unId = "${university.unId}";
+        </c:if>
 
-        $('#citySelect').change(function() {
-            loadUnis("?cityId=" + $(this).val());
+        citySelect.change(function() {
+            loadUnis("?cityId=" + $(this).val(), function() {
+                if(unId != null) {
+                    $('#uniSelect').val(unId);
+                    unId = null;
+                }
+            });
         });
+        citySelect.trigger("change");
 
     });
 </script>
@@ -35,7 +36,8 @@
     <table>
         <tr>
             <td><spring:message code="uni.city" />:</td>
-            <td><form:select path="cityId" id="citySelect" /></td>
+            <td><form:select path="cityId"
+                    items="${cities}" itemLabel="cityName" itemValue="id" /></td>
         </tr>
         <tr>
             <td><spring:message code="uni.name" />:</td>

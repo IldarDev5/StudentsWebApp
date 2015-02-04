@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.UniversityInfoPojo;
 import ru.ildar.database.entities.University;
 import ru.ildar.database.entities.UniversityDescription;
+import ru.ildar.services.CityService;
 import ru.ildar.services.FacultyService;
 import ru.ildar.services.UniversityService;
 
@@ -30,6 +31,8 @@ public class GuestController
     private UniversityService universityService;
     @Autowired
     private FacultyService facultyService;
+    @Autowired
+    private CityService cityService;
 
     @RequestMapping(value = "/startPage", method = RequestMethod.GET)
     public String startPage(ModelMap model)
@@ -45,8 +48,9 @@ public class GuestController
     }
 
     @RequestMapping(value = "/unis/info", method = RequestMethod.GET)
-    public ModelAndView viewUniversityInfo()
+    public ModelAndView viewUniversityInfo(ModelMap model)
     {
+        model.addAttribute("cities", cityService.getAllCities());
         return new ModelAndView("unisInfo", "university", new UniversityInfoPojo());
     }
 
@@ -54,6 +58,8 @@ public class GuestController
     public ModelAndView viewUniversityInfo(@ModelAttribute @Valid UniversityInfoPojo pojo, Locale locale,
                                            BindingResult result, ModelMap model)
     {
+        model.addAttribute("cities", cityService.getAllCities());
+
         if(result.hasErrors())
         {
             return new ModelAndView("unisInfo", "university", pojo);

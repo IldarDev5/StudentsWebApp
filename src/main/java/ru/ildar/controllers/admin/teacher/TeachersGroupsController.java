@@ -35,35 +35,25 @@ public class TeachersGroupsController
     @Autowired
     private SubjectService subjectService;
 
-    private ModelAndView teachersGroupsGeneric(ModelMap model, TaughtGroup group)
-    {
-        Iterable<City> cities = cityService.getAllCities();
-        List<City> citiesList = new ArrayList<>();
-        cities.forEach(citiesList::add);
-
-        model.addAttribute("cities", citiesList);
-
-        return new ModelAndView("teachersGroups", "taughtGroup", group == null ? new TaughtGroup() : group);
-    }
-
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView teachersGroups(ModelMap model)
     {
-        return teachersGroupsGeneric(model, null);
+        model.addAttribute("cities", cityService.getAllCities());
+        return new ModelAndView("teachersGroups", "taughtGroup", new TaughtGroup());
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET, params = {"get"})
     public ModelAndView teachersGroups(@ModelAttribute("taughtGroup") TaughtGroup tGroup,
                                        BindingResult result, ModelMap model)
     {
+        model.addAttribute("cities", cityService.getAllCities());
         if(result.hasErrors())
         {
-            return teachersGroupsGeneric(model, tGroup);
+            return new ModelAndView("teachersGroups", "taughtGroup", tGroup);
         }
 
-        List<TeachersGroups> tGroups = teacherService.getTeachersGroups(tGroup.getTeacherSelect());
-        model.addAttribute("tGroups", tGroups);
-        return teachersGroupsGeneric(model, tGroup);
+        model.addAttribute("tGroups", teacherService.getTeachersGroups(tGroup.getTeacherSelect()));
+        return new ModelAndView("teachersGroups", "taughtGroup", tGroup);
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)

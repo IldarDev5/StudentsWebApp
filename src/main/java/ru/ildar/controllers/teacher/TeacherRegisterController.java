@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.TeacherRegisterPojo;
+import ru.ildar.database.entities.City;
 import ru.ildar.database.entities.Person;
 import ru.ildar.database.entities.Teacher;
+import ru.ildar.services.CityService;
 import ru.ildar.services.PersonService;
 import ru.ildar.services.TeacherService;
 
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/register/teacher")
@@ -32,6 +35,14 @@ public class TeacherRegisterController
     private TeacherService teacherService;
     @Autowired
     private PersonService personService;
+    @Autowired
+    private CityService cityService;
+
+    @ModelAttribute("cities")
+    public List<City> cities()
+    {
+        return cityService.getAllCities();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView registerPage()

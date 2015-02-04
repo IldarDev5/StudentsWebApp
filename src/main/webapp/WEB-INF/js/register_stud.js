@@ -5,9 +5,9 @@
 //Load cities, universities and faculties to register student
 $(function() {
     setLoad(true, true, true);
-    loadCities();
 
-    $('#citySelect').change(function() {
+    var citySelect = $('#citySelect');
+    citySelect.change(function() {
         loadUnis("?cityId=" + $(this).val());
     });
 
@@ -18,4 +18,6 @@ $(function() {
     $('#facSelect').change(function() {
         loadGroups("?facId=" + $(this).val());
     });
+
+    citySelect.trigger("change");
 });

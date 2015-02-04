@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <h1><spring:message code="group.groups" /></h1>
@@ -23,7 +24,13 @@
 <table>
     <tr>
         <td><spring:message code="group.selectCity" /></td>
-        <td><select id="citySelect"></select></td>
+        <td>
+            <select id="citySelect">
+                <c:forEach items="${cities}" var="city">
+                    <option value="${city.id}">${city.cityName}</option>
+                </c:forEach>
+            </select>
+        </td>
     </tr>
     <tr>
         <td><spring:message code="group.selectUni" /></td>
