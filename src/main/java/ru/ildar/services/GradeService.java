@@ -3,10 +3,7 @@ package ru.ildar.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.ildar.database.entities.Grade;
-import ru.ildar.database.entities.Student;
-import ru.ildar.database.entities.Teacher;
-import ru.ildar.database.entities.TeachersGroups;
+import ru.ildar.database.entities.*;
 import ru.ildar.database.repositories.GradeDAO;
 
 import java.util.*;
@@ -20,6 +17,10 @@ public class GradeService
     private StudentService studentService;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private LanguageService languageService;
+    @Autowired
+    private SubjectService subjectService;
 
     /**
      * Returns grades of the specified student in the specified semester
@@ -110,5 +111,16 @@ public class GradeService
     public void removeGrade(int gradeId)
     {
         gradeDAO.delete(gradeId);
+    }
+
+    public void setTranslationToGradeSubjects(List<Grade> grades, String languageAbbrev)
+    {
+        grades.stream().forEach((grade) ->
+        {
+            LocalizedSubject locSubj = subjectService
+                    .getSubjectLocalization(grade.getSubjectName(), languageAbbrev);
+            if(locSubj != null)
+                grade.setTranslation(locSubj.getSubjectTranslation());
+        });
     }
 }

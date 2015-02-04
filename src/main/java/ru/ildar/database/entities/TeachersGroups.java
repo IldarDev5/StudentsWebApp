@@ -17,6 +17,9 @@ public class TeachersGroups
     private Group group;
     private Teacher teacher;
 
+    //Transient field
+    private String subjectTranslation;
+
     public TeachersGroups() { }
     public TeachersGroups(String subjectName, long semester, Group group, Teacher teacher)
     {
@@ -102,5 +105,16 @@ public class TeachersGroups
     public void setTeacher(Teacher teacher)
     {
         this.teacher = teacher;
+    }
+
+    @Transient
+    public String getSubjectTranslation()
+    {
+        return subjectTranslation;
+    }
+
+    public void setSubjectTranslation(String subjectTranslation)
+    {
+        this.subjectTranslation = subjectTranslation;
     }
 }

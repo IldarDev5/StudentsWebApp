@@ -23,6 +23,8 @@ public class TeacherService
     private UniversityDAO universityDAO;
     @Autowired
     private GroupDAO groupDAO;
+    @Autowired
+    private SubjectService subjectService;
 
     /**
      * Returns teachers of the specified subject.
@@ -47,20 +49,28 @@ public class TeacherService
 
     /**
      * Returns teachers of the specified student and subjects that each teacher
-     * teaches him.
+     * teaches him. Teacher of the student = teacher of the group this student is in.
      */
-    public Map<Teacher, Set<String>> getStudentTeachers(String studName)
+    public Map<Teacher, Set<String>> getStudentTeachers(String studName, Locale locale)
     {
         Map<Teacher, Set<String>> result = new TreeMap<>();
         Student student = studentDAO.findOne(studName);
         Group group = student.getGroup();
+
         List<TeachersGroups> tgs = teachersGroupsDAO.findByGroup(group);
         for(TeachersGroups tg : tgs)
         {
+            if(result.containsKey(tg.getTeacher()))
+                continue;
+
             Set<String> subjs = new TreeSet<>();
-            tgs.stream().filter((tgr) -> tgr.getGroup().equals(group) &&
-                    tgr.getTeacher().equals(tg.getTeacher()))
-                    .forEach((tgr) -> subjs.add(tgr.getSubjectName()));
+            tgs.stream().filter((tgr) -> tgr.getTeacher().equals(tg.getTeacher()))
+                    .forEach((tgr) ->
+                    {
+                        LocalizedSubject locSubj = subjectService
+                                .getSubjectLocalization(tgr.getSubjectName(), locale.getLanguage());
+                        subjs.add(locSubj != null ? locSubj.getSubjectTranslation() : tgr.getSubjectName());
+                    });
             result.put(tg.getTeacher(), subjs);
         }
 
@@ -187,8 +197,20 @@ public class TeacherService
         return teacherDAO.findByUniversity_UnId(uniId);
     }
 
+    /** Remove TeachersGroups instance from the database by its ID */
     public void removeTeachersGroups(Integer tGroupId)
     {
         teachersGroupsDAO.delete(tGroupId);
+    }
+
+    public void setTranslationToSubjects(List<TeachersGroups> tGroups, String languageAbbrev)
+    {
+        tGroups.forEach((tGroup) ->
+        {
+            LocalizedSubject locSubj = subjectService
+                    .getSubjectLocalization(tGroup.getSubjectName(), languageAbbrev);
+            if(locSubj != null)
+                tGroup.setSubjectTranslation(locSubj.getSubjectTranslation());
+        });
     }
 }

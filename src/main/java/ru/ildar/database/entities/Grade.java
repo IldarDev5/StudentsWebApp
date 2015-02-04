@@ -13,7 +13,10 @@ public class Grade
     private long semester;
     private Teacher teacher;
     private Student student;
-    private String subject;
+    private String subjectName;
+
+    //Transient field
+    private String translation;
 
     public Grade() { }
     public Grade(long gradeValue, long semester, Teacher teacher, Student student, String subject)
@@ -22,7 +25,7 @@ public class Grade
         this.semester = semester;
         this.teacher = teacher;
         this.student = student;
-        this.subject = subject;
+        this.subjectName = subject;
     }
 
     @Id
@@ -67,12 +70,12 @@ public class Grade
     @Column(name = "SUBJECT_NAME")
     public String getSubjectName()
     {
-        return subject;
+        return subjectName;
     }
 
     public void setSubjectName(String subject)
     {
-        this.subject = subject;
+        this.subjectName = subject;
     }
 
     @Override
@@ -87,7 +90,7 @@ public class Grade
     @Override
     public int hashCode()
     {
-        return (int) (gradeId ^ (gradeId >>> 32));
+        return (gradeId ^ (gradeId >>> 32));
     }
 
     @ManyToOne
@@ -112,5 +115,16 @@ public class Grade
     public void setStudent(Student student)
     {
         this.student = student;
+    }
+
+    @Transient
+    public String getTranslation()
+    {
+        return translation;
+    }
+
+    public void setTranslation(String translation)
+    {
+        this.translation = translation;
     }
 }

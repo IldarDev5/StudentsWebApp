@@ -13,6 +13,7 @@ import ru.ildar.services.TeacherService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/teacher")
@@ -22,9 +23,10 @@ public class TeacherController
     private TeacherService teacherService;
 
     @RequestMapping(value = "groups", method = RequestMethod.GET)
-    public ModelAndView teacherGroups(Principal principal)
+    public ModelAndView teacherGroups(Principal principal, Locale locale)
     {
         List<TeachersGroups> tGroups = teacherService.getTeachersGroups(principal.getName());
+        teacherService.setTranslationToSubjects(tGroups, locale.getLanguage());
         return new ModelAndView("teacherGroups", "groups", tGroups);
     }
 }

@@ -13,8 +13,9 @@ $(function() {
             insertHeadRow(table);
             for(var i = 0;i < grades.length;i++) {
                 var g = grades[i];
+                var subjName = g.translation != null ? g.translation : g.subjectName;
                 var elem = "<tr><td>" + g.semester + "</td><td>" + g.gradeValue + "</td>"
-                    + "<td>" + g.teacher.username + "</td><td>" + g.subjectName + "</td></tr>";
+                    + "<td>" + g.teacher.username + "</td><td>" + subjName + "</td></tr>";
                 table.append(elem);
             }
         });

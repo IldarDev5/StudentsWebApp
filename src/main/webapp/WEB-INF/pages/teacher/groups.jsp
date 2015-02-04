@@ -17,7 +17,7 @@
         <tr>
             <td><a href="/auth/studentGroup?groupId=${groupId}">${groupId}</a></td>
             <td>${tGroup.semester}</td>
-            <td>${tGroup.subjectName}</td>
+            <td>${tGroup.subjectTranslation != null ? tGroup.subjectTranslation : tGroup.subjectName}</td>
             <td>
                 <a href="/teacher/grades?id=${tGroup.id}">
                     <spring:message code="teach.gr.grades" />
