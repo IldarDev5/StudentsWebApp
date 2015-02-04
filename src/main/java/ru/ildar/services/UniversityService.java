@@ -16,15 +16,15 @@ import java.util.List;
 public class UniversityService
 {
     @Autowired
-    private PersonDAO personDAO;
-    @Autowired
     private UniversityDAO universityDAO;
-    @Autowired
-    private CityDAO cityDAO;
     @Autowired
     private UniDescriptionDAO uniDescriptionDAO;
     @Autowired
-    private LanguageDAO languageDAO;
+    private PersonService personService;
+    @Autowired
+    private CityService cityService;
+    @Autowired
+    private LanguageService languageService;
 
     /**
      * Add university to the database
@@ -95,7 +95,7 @@ public class UniversityService
         if(uni != null)
             throw new DuplicateKeyException("University with such name and city already exists.");
 
-        City city = cityDAO.findOne(cityId);
+        City city = cityService.getById(cityId);
         university.setCity(city);
 
         universityDAO.save(university);
@@ -137,14 +137,14 @@ public class UniversityService
      */
     public void setUniversityDescription(UniversityDescription descr, String authorName)
     {
-        Person changeAuthor = personDAO.findOne(authorName);
+        Person changeAuthor = personService.getByUserName(authorName);
         descr.setLastChangePerson(changeAuthor);
         uniDescriptionDAO.save(descr);
     }
 
     public UniversityDescription getDescriptionByLanguageAbbrev(int unId, String langAbbrev)
     {
-        Language lang = languageDAO.findLanguageByAbbreviation(langAbbrev);
+        Language lang = languageService.getLanguageByAbbreviation(langAbbrev);
         return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang.getLanguage());
     }
 

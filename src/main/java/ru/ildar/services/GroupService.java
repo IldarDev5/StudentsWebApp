@@ -15,13 +15,12 @@ public class GroupService
     @Autowired
     private GroupDAO groupDAO;
     @Autowired
-    private FacultyDAO facultyDAO;
+    private FacultyService facultyService;
 
     /**
      * Find a group by the specified group ID, initialize its
      * students collection, and return it
      * @param groupId ID of the group
-     * @return
      */
     public Group getGroupWithStudents(String groupId)
     {
@@ -50,7 +49,7 @@ public class GroupService
         if(gr != null)
             throw new DuplicateKeyException("Group with such ID already exists.");
 
-        Faculty faculty = facultyDAO.findOne(facultyId);
+        Faculty faculty = facultyService.get(facultyId);
         group.setFaculty(faculty);
         groupDAO.save(group);
     }
@@ -58,7 +57,7 @@ public class GroupService
     /**
      * Returns a group by its ID
      */
-    public Object getGroupById(String groupId)
+    public Group getGroupById(String groupId)
     {
         return groupDAO.findOne(groupId);
     }

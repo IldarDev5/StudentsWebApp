@@ -21,7 +21,7 @@ public class SubjectService
     @Autowired
     private LocalizedSubjectDAO localizedSubjectDAO;
     @Autowired
-    private LanguageDAO languageDAO;
+    private LanguageService languageService;
 
     /**
      * Returns all subjects from the database
@@ -92,7 +92,7 @@ public class SubjectService
     public void setSubjectAndLangAndSaveLocalization(String subjectName, String langAbbrev, LocalizedSubject subject)
     {
         subject.setSubject(subjectDAO.findOne(subjectName));
-        subject.setLanguage(languageDAO.findLanguageByAbbreviation(langAbbrev));
+        subject.setLanguage(languageService.getLanguageByAbbreviation(langAbbrev));
         localizedSubjectDAO.save(subject);
     }
 

@@ -15,7 +15,7 @@ public class StudentService
     @Autowired
     private StudentDAO studentDAO;
     @Autowired
-    private GroupDAO groupDAO;
+    private GroupService groupService;
 
     /**
      * Returns an avatar of the student specified by his username
@@ -54,7 +54,7 @@ public class StudentService
      */
     public void setGroupAndAddStudent(Student student, String groupId)
     {
-        Group group = groupDAO.findOne(groupId);
+        Group group = groupService.getGroupById(groupId);
         student.setGroup(group);
         studentDAO.save(student);
     }

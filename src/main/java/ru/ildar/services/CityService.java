@@ -24,4 +24,9 @@ public class CityService
         cities.forEach(result::add);
         return result;
     }
+
+    public City getById(int cityId)
+    {
+        return cityDAO.findOne(cityId);
+    }
 }

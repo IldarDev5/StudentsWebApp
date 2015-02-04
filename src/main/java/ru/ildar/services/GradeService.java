@@ -18,8 +18,6 @@ public class GradeService
     @Autowired
     private TeacherService teacherService;
     @Autowired
-    private LanguageService languageService;
-    @Autowired
     private SubjectService subjectService;
 
     /**

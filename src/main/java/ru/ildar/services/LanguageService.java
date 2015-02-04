@@ -39,8 +39,8 @@ public class LanguageService
      * For example if abbreviation is en, then 'English' is returned.
      * @param abbrev The language abbreviation
      */
-    public String getLanguageByAbbreviation(String abbrev)
+    public Language getLanguageByAbbreviation(String abbrev)
     {
-        return languageDAO.findLanguageByAbbreviation(abbrev).getLanguage();
+        return languageDAO.findLanguageByAbbreviation(abbrev);
     }
 }

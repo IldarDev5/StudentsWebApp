@@ -44,4 +44,9 @@ public class FacultyService
     {
         return facultyDAO.sumByUniversity_UnId(unId);
     }
+
+    public Faculty get(int facultyId)
+    {
+        return facultyDAO.findOne(facultyId);
+    }
 }

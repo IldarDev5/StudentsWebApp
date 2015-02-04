@@ -19,12 +19,12 @@ import java.util.Arrays;
 public class LoginUserDetailsService implements UserDetailsService
 {
     @Autowired
-    private PersonDAO personDAO;
+    private PersonService personService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        Person p = personDAO.findOne(username);
+        Person p = personService.getByUserName(username);
         return new User(username, p.getPassword(), true, true, true, true,
                 Arrays.asList(new SimpleGrantedAuthority(p.getRoleName())));
     }

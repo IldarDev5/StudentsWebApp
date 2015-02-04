@@ -32,7 +32,7 @@ public class UniversityDescriptionsController
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView viewDescription(@RequestParam("unId") int unId, Locale locale, ModelMap model)
     {
-        String lang = languageService.getLanguageByAbbreviation(locale.getLanguage());
+        String lang = languageService.getLanguageByAbbreviation(locale.getLanguage()).getLanguage();
         return viewDescription(unId, lang, model);
     }
 

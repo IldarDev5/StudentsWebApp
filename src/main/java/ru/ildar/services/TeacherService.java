@@ -18,11 +18,11 @@ public class TeacherService
     @Autowired
     private TeachersGroupsDAO teachersGroupsDAO;
     @Autowired
-    private StudentDAO studentDAO;
+    private StudentService studentService;
     @Autowired
-    private UniversityDAO universityDAO;
+    private UniversityService universityService;
     @Autowired
-    private GroupDAO groupDAO;
+    private GroupService groupService;
     @Autowired
     private SubjectService subjectService;
 
@@ -54,7 +54,7 @@ public class TeacherService
     public Map<Teacher, Set<String>> getStudentTeachers(String studName, Locale locale)
     {
         Map<Teacher, Set<String>> result = new TreeMap<>();
-        Student student = studentDAO.findOne(studName);
+        Student student = studentService.getByUsername(studName);
         Group group = student.getGroup();
 
         List<TeachersGroups> tgs = teachersGroupsDAO.findByGroup(group);
@@ -115,7 +115,7 @@ public class TeacherService
     public void setUniversityAndPhotoAndUpdate(Teacher details, int unId)
     {
         byte[] photo = getTeacherPhoto(details.getUsername());
-        University un = universityDAO.findOne(unId);
+        University un = universityService.getById(unId);
         details.setPersonPhoto(photo);
         details.setUniversity(un);
 
@@ -129,7 +129,7 @@ public class TeacherService
      */
     public void setUniversityAndAddTeacher(Teacher teacher, int uniId)
     {
-        University university = universityDAO.findOne(uniId);
+        University university = universityService.getById(uniId);
         teacher.setUniversity(university);
         teacherDAO.save(teacher);
     }
@@ -158,7 +158,7 @@ public class TeacherService
     public TeachersGroups getTeachersGroupsBySubjectSemesterAndGroupStudent(String subject, int semester,
                                                  String studentSelect, String teacherUsername)
     {
-        Student student = studentDAO.findOne(studentSelect);
+        Student student = studentService.getByUsername(studentSelect);
         return teachersGroupsDAO.findBySubjectNameAndSemesterAndGroupAndTeacher_Username
                 (subject, semester, student.getGroup(), teacherUsername);
     }
@@ -173,7 +173,7 @@ public class TeacherService
     public void setGroupAndTeacherAndAddTeachersGroups(TeachersGroups tg,
                                                        String groupId, String teacherUsername)
     {
-        Group group = groupDAO.findOne(groupId);
+        Group group = groupService.getGroupById(groupId);
         TeachersGroups otherTg = teachersGroupsDAO.findBySubjectNameAndSemesterAndGroupAndTeacher_Username
                 (tg.getSubjectName(), tg.getSemester(), group, teacherUsername);
         if(otherTg != null)
