@@ -172,7 +172,7 @@ create table students_app.grades(
 create table STUDENTS_APP.news(
   news_id int primary key,
   author_username varchar2(70) not null,
-  publish_date date not null,
+  publish_date timestamp not null,
   brief_description varchar2(150) not null,
   full_description varchar2(1500) not null,
 

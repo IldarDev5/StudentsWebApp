@@ -45,4 +45,19 @@ public class NewsService
         news.setAuthor(person);
         newsDAO.save(news);
     }
+
+    public void removeNews(int newsId)
+    {
+        newsDAO.delete(newsId);
+    }
+
+    public void updateNews(News news)
+    {
+        News prevNews = newsDAO.findOne(news.getNewsId());
+        if(prevNews != null)
+        {
+            prevNews.setBriefDescription(news.getBriefDescription());
+            prevNews.setFullDescription(news.getFullDescription());
+        }
+    }
 }

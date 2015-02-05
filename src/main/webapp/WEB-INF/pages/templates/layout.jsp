@@ -44,7 +44,17 @@
             currNewsPage = pageNumber;
         });
     }
+
+    function removeNews(newsId) {
+        $('#layoutNewsId').val(newsId);
+        $('#newsDeleteForm').submit();
+    }
 </script>
+
+<form id="newsDeleteForm" hidden="hidden" method="post" action="/admin/news/remove">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+    <input type="hidden" name="layoutNewsId" id="layoutNewsId">
+</form>
 
 <body>
 <div id="main">
@@ -64,7 +74,23 @@
                     <div class="sidebar">
                         <div class="sidebar_item">
                             <h3><c:out value="${newsObj.publishDateAsString}" /></h3>
-                            <p><c:out value="${newsObj.briefDescription}" /></p>
+                            <p>
+                                <c:out value="${newsObj.briefDescription}" />
+                                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                    <a href="javascript:removeNews(${newsObj.newsId})"
+                                            style="text-decoration: none;">
+                                        <img src="/images/user_icons/remove.png"
+                                             title="<spring:message code="news.remove" />">
+                                    </a>
+                                    <c:if test="${pageContext.request.userPrincipal.name
+                                                    eq newsObj.author.username}">
+                                        <a href="/admin/news/edit?newsId=${newsObj.newsId}">
+                                            <img src="/images/user_icons/update.png"
+                                                 title="<spring:message code="news.edit" />">
+                                        </a>
+                                    </c:if>
+                                </sec:authorize>
+                            </p>
                             <a href="/news/view?newsId=${newsObj.newsId}">
                                 <spring:message code="news.more" />
                             </a>

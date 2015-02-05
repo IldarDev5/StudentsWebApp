@@ -92,6 +92,11 @@
         <put-attribute name="body" value="/WEB-INF/pages/admin/addNews.jsp" />
         <put-attribute name="currentId" value="startPageLi" />
     </definition>
+    <definition name="editNews" extends="base.definition">
+        <put-attribute name="title" value="admin.editNews.title" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/editNews.jsp" />
+        <put-attribute name="currentId" value="startPageLi" />
+    </definition>
     <definition name="teachersGroups" extends="base.definition">
         <put-attribute name="title" value="admin.teachersGroups.title" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/teachersGroups.jsp" />
@@ -118,7 +123,7 @@
         <put-attribute name="currentId" value="adminUnisLi" />
     </definition>
     <definition name="groups" extends="base.definition">
-        <put-attribute name="title" value="admin.groups.Title" />
+        <put-attribute name="title" value="admin.groups.title" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/groups.jsp" />
         <put-attribute name="currentId" value="adminGroupsLi" />
     </definition>

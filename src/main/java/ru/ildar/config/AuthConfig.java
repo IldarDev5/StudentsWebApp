@@ -1,9 +1,12 @@
 package ru.ildar.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,6 +17,7 @@ import ru.ildar.services.LoginUserDetailsService;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthConfig extends WebSecurityConfigurerAdapter
 {
     @Autowired
@@ -38,5 +42,13 @@ public class AuthConfig extends WebSecurityConfigurerAdapter
                 antMatchers("/stud/**").access("hasAnyRole('ROLE_STUDENT')").
                 antMatchers("/auth/**").access("isFullyAuthenticated()").
                 antMatchers("/info/**").access("isFullyAuthenticated()");
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean()
+            throws Exception
+    {
+        return super.authenticationManagerBean();
     }
 }

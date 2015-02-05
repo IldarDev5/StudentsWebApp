@@ -3,7 +3,10 @@ package ru.ildar.database.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 @Entity
@@ -12,8 +15,14 @@ public class News
 {
     private int newsId;
     private Person author;
-    private Date publishDate;
+    private Timestamp publishDate;
+
+    @NotNull
+    @Size(min = 2, max = 150)
     private String briefDescription;
+
+    @NotNull
+    @Size(min = 2, max = 1500)
     private String fullDescription;
 
     public News() { }
@@ -45,12 +54,12 @@ public class News
     }
 
     @Column(name = "PUBLISH_DATE")
-    public Date getPublishDate()
+    public Timestamp getPublishDate()
     {
         return publishDate;
     }
 
-    public void setPublishDate(Date publishDate)
+    public void setPublishDate(Timestamp publishDate)
     {
         this.publishDate = publishDate;
     }
