@@ -6,30 +6,18 @@
 <%--@elvariable id="university" type="ru.ildar.controllers.pojos.UniversityInfoPojo"--%>
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
 <script type="text/javascript">
-    $(function() {
-        setLoad(true, false, false);
-        triggerUniChange = true;
+    var unCityId = null;
+    var unId = null;
 
-        var citySelect = $('#cityId');
+    <c:if test="${university.cityId != null}">
+        unCityId = "${university.cityId}";
+        unId = "${university.unId}";
+    </c:if>
 
-        var unId = null;
-        <c:if test="${university.cityId != null}">
-            citySelect.val("${university.cityId}");
-            unId = "${university.unId}";
-        </c:if>
-
-        citySelect.change(function() {
-            loadUnis("?cityId=" + $(this).val(), function() {
-                if(unId != null) {
-                    $('#uniSelect').val(unId);
-                    unId = null;
-                }
-            });
-        });
-        citySelect.trigger("change");
-
-    });
+    var i18n = [];
+    i18n["someDataAbsent"] = "<spring:message code="unis.someDataAbsent" />";
 </script>
+<script type="text/javascript" src="/scripts/unisInfo.js"></script>
 
 <h1><spring:message code="header.unisInfo" /></h1>
 <form:form method="post" action="/unis/info" commandName="university">

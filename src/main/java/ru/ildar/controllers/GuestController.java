@@ -68,8 +68,8 @@ public class GuestController
     }
 
     @RequestMapping(value = "/unis/info", method = RequestMethod.POST)
-    public ModelAndView viewUniversityInfo(@ModelAttribute @Valid UniversityInfoPojo pojo, Locale locale,
-                                           BindingResult result, ModelMap model)
+    public ModelAndView viewUniversityInfo(@ModelAttribute @Valid UniversityInfoPojo pojo,
+                                           BindingResult result, Locale locale, ModelMap model)
     {
         model.addAttribute("cities", cityService.getAllCities());
 

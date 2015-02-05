@@ -18,37 +18,12 @@
     <script type="text/javascript" src="/scripts/modernizr-1.5.min.js"></script>
 </head>
 
+<script type="text/javascript" src="/scripts/layout.js"></script>
 <script type="text/javascript">
     var currId = '<tiles:insertAttribute name="currentId" />';
-    var currNewsPage = 1;
 
-    function loadNews(pageNumber) {
-        $.getJSON('/news/' + pageNumber, { }, function(news) {
-            var newsDiv = $('#newsDiv');
-            newsDiv.empty();
-            $.each(news, function(index, newsObj) {
-                newsDiv.append("<div class='sidebar'>" +
-                                    "<div class='sidebar_item'>" +
-                                        "<h3>" + newsObj.publishDateAsString + "</h3>" +
-                                        "<p>" + newsObj.briefDescription + "</p>" +
-                                        "<a href='/news/view?newsId=" + newsObj.newsId + "'>" +
-                                            "<spring:message code="news.more" />" +
-                                        "</a>" +
-                                    "</div>" +
-                                "</div>");
-            });
-
-            $('#number' + pageNumber).html("<b>" + pageNumber + "</b>");
-            $('#number' + currNewsPage).html("<a href='javascript:loadNews(" + currNewsPage +
-                                            ")'>" + currNewsPage + "</a>");
-            currNewsPage = pageNumber;
-        });
-    }
-
-    function removeNews(newsId) {
-        $('#layoutNewsId').val(newsId);
-        $('#newsDeleteForm').submit();
-    }
+    var i18n = [];
+    i18n["moreNews"] = "<spring:message code="news.more" />";
 </script>
 
 <form id="newsDeleteForm" hidden="hidden" method="post" action="/admin/news/remove">

@@ -37,7 +37,7 @@ function loadUnis(param, callback) {
     loadDataForSelect('/ajax/universities', '#uniSelect', param,
         function(empty) {
             if(callback)
-                callback();
+                callback(empty);
 
             if(empty) {
                 var facSelect = $('#facSelect');
