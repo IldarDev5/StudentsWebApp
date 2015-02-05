@@ -169,6 +169,17 @@ create table students_app.grades(
     on delete cascade
 );
 
+create table STUDENTS_APP.news(
+  news_id int primary key,
+  author_username varchar2(70) not null,
+  publish_date date not null,
+  brief_description varchar2(150) not null,
+  full_description varchar2(1500) not null,
+
+  CONSTRAINT fk_news_author foreign key(author_username)
+  REFERENCES STUDENTS_APP.PEOPLE(USERNAME)
+);
+
 
 create or replace trigger students_app.faculty_person
 before insert or update of group_id on students_app.students

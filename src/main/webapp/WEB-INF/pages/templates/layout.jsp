@@ -2,6 +2,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 
@@ -19,6 +20,30 @@
 
 <script type="text/javascript">
     var currId = '<tiles:insertAttribute name="currentId" />';
+    var currNewsPage = 1;
+
+    function loadNews(pageNumber) {
+        $.getJSON('/news/' + pageNumber, { }, function(news) {
+            var newsDiv = $('#newsDiv');
+            newsDiv.empty();
+            $.each(news, function(index, newsObj) {
+                newsDiv.append("<div class='sidebar'>" +
+                                    "<div class='sidebar_item'>" +
+                                        "<h3>" + newsObj.publishDateAsString + "</h3>" +
+                                        "<p>" + newsObj.briefDescription + "</p>" +
+                                        "<a href='/news/view?newsId=" + newsObj.newsId + "'>" +
+                                            "<spring:message code="news.more" />" +
+                                        "</a>" +
+                                    "</div>" +
+                                "</div>");
+            });
+
+            $('#number' + pageNumber).html("<b>" + pageNumber + "</b>");
+            $('#number' + currNewsPage).html("<a href='javascript:loadNews(" + currNewsPage +
+                                            ")'>" + currNewsPage + "</a>");
+            currNewsPage = pageNumber;
+        });
+    }
 </script>
 
 <body>
@@ -29,25 +54,41 @@
     <div id="site_content">
 
         <div class="sidebar_container">
+            <h2><spring:message code="news.news" /></h2>
+            <%--@elvariable id="news" type="java.util.List<ru.ildar.database.entities.News>"--%>
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <a href="/admin/news/add"><spring:message code="news.addNews" /></a>
+            </sec:authorize>
+            <div id="newsDiv">
+                <c:forEach items="${news}" var="newsObj">
+                    <div class="sidebar">
+                        <div class="sidebar_item">
+                            <h3><c:out value="${newsObj.publishDateAsString}" /></h3>
+                            <p><c:out value="${newsObj.briefDescription}" /></p>
+                            <a href="/news/view?newsId=${newsObj.newsId}">
+                                <spring:message code="news.more" />
+                            </a>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
             <div class="sidebar">
                 <div class="sidebar_item">
-                    <h2>New Website</h2>
-                    <p>Welcome to our new website. Please have a look around, any feedback is much appreciated.</p>
-                </div><!--close sidebar_item-->
-            </div><!--close sidebar-->
-            <div class="sidebar">
-                <div class="sidebar_item">
-                    <h2>Latest Update</h2>
-                    <h3>March 2013</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque cursus tempor enim.</p>
-                </div><!--close sidebar_item-->
-            </div><!--close sidebar-->
-            <div class="sidebar">
-                <div class="sidebar_item">
-                    <h3>February 2013</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque cursus tempor enim.</p>
-                </div><!--close sidebar_item-->
-            </div><!--close sidebar-->
+                    <%--@elvariable id="newsPagesCount" type="java.lang.Integer"--%>
+                    <c:forEach begin="1" end="${newsPagesCount}" step="1" var="idx">
+                        <c:if test="${idx == 1}">
+                            <span id="number${idx}">
+                                <b><c:out value="${idx}" /></b>
+                            </span>
+                        </c:if>
+                        <c:if test="${idx != 1}">
+                            <span id="number${idx}">
+                                <a href="javascript:loadNews(${idx});"><c:out value="${idx}" /></a>
+                            </span>
+                        </c:if>
+                    </c:forEach>
+                </div>
+            </div>
             <div class="sidebar">
                 <div class="sidebar_item">
                     <h2><spring:message code="contact.contact" /></h2>

@@ -1,6 +1,8 @@
 package ru.ildar.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ru.ildar.controllers.pojos.Image;
 import ru.ildar.controllers.pojos.UniversityInfoPojo;
 import ru.ildar.database.entities.University;
 import ru.ildar.database.entities.UniversityDescription;
@@ -19,6 +22,8 @@ import ru.ildar.services.UniversityService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -34,9 +39,17 @@ public class GuestController
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @RequestMapping(value = "/startPage", method = RequestMethod.GET)
-    public String startPage(ModelMap model)
+    public String startPage(ModelMap model, Locale locale)
     {
+        String welcome = messageSource.getMessage("imgMsg.welcome", new Object[0], locale);
+        List<Image> images = Arrays.asList(
+                new Image("/images/home_1.jpg", welcome),
+                new Image("/images/home_2.jpg", welcome));
+        model.addAttribute("images", images);
         model.addAttribute("showSlideImages", true);
         return "startPage";
     }

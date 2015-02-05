@@ -20,6 +20,11 @@
         <put-attribute name="body" value="/WEB-INF/pages/unisInfo.jsp" />
         <put-attribute name="currentId" value="unisInfoLi" />
     </definition>
+    <definition name="viewNews" extends="base.definition">
+        <put-attribute name="title" value="viewNews.title" />
+        <put-attribute name="body" value="/WEB-INF/pages/viewNews.jsp" />
+        <put-attribute name="currentId" value="startPageLi" />
+    </definition>
     <definition name="loginPage" extends="base.definition">
         <put-attribute name="title" value="auth.login.title" />
         <put-attribute name="body" value="/WEB-INF/pages/auth/login.jsp" />
@@ -82,6 +87,11 @@
     </definition>
 
 
+    <definition name="addNews" extends="base.definition">
+        <put-attribute name="title" value="admin.addNews.title" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/addNews.jsp" />
+        <put-attribute name="currentId" value="startPageLi" />
+    </definition>
     <definition name="teachersGroups" extends="base.definition">
         <put-attribute name="title" value="admin.teachersGroups.title" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/teachersGroups.jsp" />
