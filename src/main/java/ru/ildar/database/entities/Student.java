@@ -8,7 +8,8 @@ import java.text.SimpleDateFormat;
  * Created by Ildar on 07.01.15.
  */
 @Entity
-@Table(name = "STUDENTS", schema = "STUDENTS_APP", catalog = "")
+@Table(name = "STUDENTS", schema = "STUDENTS_APP", catalog = "",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"FIRST_NAME", "LAST_NAME", "EMAIL", "GROUP_ID"}))
 public class Student
 {
     private String username;

@@ -31,7 +31,7 @@ public class Person implements Comparable<Person>
     }
 
     @Basic
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", nullable = false)
     public String getPassword()
     {
         return password;
@@ -43,7 +43,7 @@ public class Person implements Comparable<Person>
     }
 
     @Basic
-    @Column(name = "ROLE_NAME")
+    @Column(name = "ROLE_NAME", nullable = false)
     public String getRoleName()
     {
         return role;

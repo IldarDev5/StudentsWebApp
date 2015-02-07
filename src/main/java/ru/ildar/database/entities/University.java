@@ -6,7 +6,8 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "UNIVERSITIES", schema = "STUDENTS_APP", catalog = "")
+@Table(name = "UNIVERSITIES", schema = "STUDENTS_APP", catalog = "",
+        uniqueConstraints = @UniqueConstraint( columnNames = {"UN_NAME", "UN_CITY_ID"}))
 public class University
 {
     private int unId;
@@ -64,7 +65,7 @@ public class University
     }
 
     @Basic
-    @Column(name = "UN_NAME")
+    @Column(name = "UN_NAME", nullable = false)
     public String getUnName()
     {
         return unName;

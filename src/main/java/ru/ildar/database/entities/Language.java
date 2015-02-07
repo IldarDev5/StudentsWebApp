@@ -10,7 +10,7 @@ public class Language
     private String abbreviation;
 
     @Id
-    @Column(name = "LANGUAGE")
+    @Column(name = "LANGUAGE", nullable = false)
     public String getLanguage()
     {
         return language;
@@ -22,7 +22,7 @@ public class Language
     }
 
     @Basic
-    @Column(name = "LANG_ABBREV")
+    @Column(name = "LANG_ABBREV", unique = true, nullable = false)
     public String getAbbreviation() { return abbreviation; }
 
     public void setAbbreviation(String abbreviation) { this.abbreviation = abbreviation; }

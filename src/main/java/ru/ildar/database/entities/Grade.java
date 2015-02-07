@@ -5,7 +5,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "GRADES", schema = "STUDENTS_APP", catalog = "")
+@Table(name = "GRADES", schema = "STUDENTS_APP", catalog = "",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"STUD_USERNAME", "TEACHER_USERNAME",
+                                    "SUBJECT_NAME", "SEMESTER"}))
 public class Grade
 {
     private int gradeId;
@@ -43,7 +45,7 @@ public class Grade
     }
 
     @Basic
-    @Column(name = "GRADE_VALUE")
+    @Column(name = "GRADE_VALUE", nullable = false)
     public long getGradeValue()
     {
         return gradeValue;
@@ -55,7 +57,7 @@ public class Grade
     }
 
     @Basic
-    @Column(name = "SEMESTER")
+    @Column(name = "SEMESTER", nullable = false)
     public long getSemester()
     {
         return semester;
@@ -67,7 +69,7 @@ public class Grade
     }
 
     @Basic
-    @Column(name = "SUBJECT_NAME")
+    @Column(name = "SUBJECT_NAME", nullable = false)
     public String getSubjectName()
     {
         return subjectName;

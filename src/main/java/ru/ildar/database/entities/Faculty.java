@@ -39,7 +39,7 @@ public class Faculty
     }
 
     @Basic
-    @Column(name = "FACULTY_NAME")
+    @Column(name = "FACULTY_NAME", nullable = false)
     public String getFacultyName()
     {
         return facultyName;
@@ -96,7 +96,7 @@ public class Faculty
     @Override
     public int hashCode()
     {
-        return (int) (facultyId ^ (facultyId >>> 32));
+        return (facultyId ^ (facultyId >>> 32));
     }
 
     @ManyToOne

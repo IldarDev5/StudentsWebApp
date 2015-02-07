@@ -8,7 +8,9 @@ import javax.persistence.*;
  * Created by Ildar on 07.01.15.
  */
 @Entity
-@Table(name = "TEACHERS_GROUPS", schema = "STUDENTS_APP", catalog = "")
+@Table(name = "TEACHERS_GROUPS", schema = "STUDENTS_APP", catalog = "",
+        uniqueConstraints = @UniqueConstraint(columnNames =
+                {"TEACHER_USERNAME", "GROUP_ID", "SUBJECT_NAME", "SEMESTER"}))
 public class TeachersGroups
 {
     private int id;
@@ -44,7 +46,7 @@ public class TeachersGroups
     }
 
     @Basic
-    @Column(name = "SUBJECT_NAME")
+    @Column(name = "SUBJECT_NAME", nullable = false)
     public String getSubjectName()
     {
         return subjectName;
@@ -56,7 +58,7 @@ public class TeachersGroups
     }
 
     @Basic
-    @Column(name = "SEMESTER")
+    @Column(name = "SEMESTER", nullable = false)
     public long getSemester()
     {
         return semester;

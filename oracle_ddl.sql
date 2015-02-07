@@ -48,6 +48,7 @@ create table students_app.faculties(
   un_id int not null,
   faculty_name varchar2(150) not null,
   students_count int default 0,
+  found_date date,
 
   constraint fk_un foreign key(un_id)
   references students_app.universities(un_id),
@@ -73,7 +74,7 @@ create table students_app.subject_types(
 
 create table students_app.subjects(
   subject_name varchar2(100) primary key,
-  subject_type varchar2(50),
+  subject_type varchar2(50) not null,
 
   constraint fk_subject_type foreign key (subject_type)
   references students_app.subject_types(subject_type)
@@ -113,7 +114,8 @@ create table students_app.students(
   constraint fk_person_student foreign key(username)
   references students_app.people(username),
   constraint fk_person foreign key(group_id)
-  references students_app.groups(group_id)
+  references students_app.groups(group_id),
+  constraint uk_person unique(first_name, last_name, email, group_id)
 );
 
 create table students_app.teachers(

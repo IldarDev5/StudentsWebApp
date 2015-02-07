@@ -43,7 +43,7 @@ public class UniversityDescription
     }
 
     @Basic
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", nullable = false)
     public String getDescription()
     {
         return description;
@@ -55,7 +55,7 @@ public class UniversityDescription
     }
 
     @Basic
-    @Column(name = "LAST_CHANGE_DATE")
+    @Column(name = "LAST_CHANGE_DATE", nullable = false)
     public Timestamp getLastChangeDate()
     {
         return lastChangeDate;
@@ -67,7 +67,7 @@ public class UniversityDescription
     }
 
     @Basic
-    @Column(name = "LANGUAGE")
+    @Column(name = "LANGUAGE", nullable = false)
     public String getLanguage()
     {
         return language;

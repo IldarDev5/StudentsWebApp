@@ -5,7 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "SUBJECTS_LOCALIZED", schema = "STUDENTS_APP")
+@Table(name = "SUBJECTS_LOCALIZED", schema = "STUDENTS_APP",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"SUBJECT_NAME", "LANGUAGE"}))
 public class LocalizedSubject
 {
     private Integer id;
@@ -48,7 +49,7 @@ public class LocalizedSubject
         this.subject = subject;
     }
 
-    @Column(name = "subject_translation")
+    @Column(name = "subject_translation", nullable = false)
     public String getSubjectTranslation()
     {
         return subjectTranslation;

@@ -38,7 +38,7 @@ public class Subject
         this.subjectName = subjectName;
     }
 
-    @Column(name = "SUBJECT_TYPE")
+    @Column(name = "SUBJECT_TYPE", nullable = false)
     public String getSubjectType()
     {
         return subjectType;

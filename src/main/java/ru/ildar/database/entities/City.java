@@ -5,7 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CITIES")
+@Table(name = "CITIES", uniqueConstraints = @UniqueConstraint(columnNames = {"CITY_NAME", "COUNTRY"}))
 public class City
 {
     private int id;
@@ -26,7 +26,7 @@ public class City
     }
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     @GenericGenerator(name = "increment", strategy = "increment")
     @GeneratedValue(generator = "increment")
     public int getId()
@@ -39,7 +39,7 @@ public class City
         this.id = id;
     }
 
-    @Column(name = "CITY_NAME")
+    @Column(name = "CITY_NAME", nullable = false)
     public String getCityName()
     {
         return cityName;

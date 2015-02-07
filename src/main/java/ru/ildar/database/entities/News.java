@@ -53,7 +53,7 @@ public class News
         this.author = author;
     }
 
-    @Column(name = "PUBLISH_DATE")
+    @Column(name = "PUBLISH_DATE", nullable = false)
     public Timestamp getPublishDate()
     {
         return publishDate;
@@ -73,7 +73,7 @@ public class News
         return new SimpleDateFormat("dd/MM/yyyy").format(publishDate);
     }
 
-    @Column(name = "BRIEF_DESCRIPTION")
+    @Column(name = "BRIEF_DESCRIPTION", nullable = false)
     public String getBriefDescription()
     {
         return briefDescription;
@@ -84,7 +84,7 @@ public class News
         this.briefDescription = briefDescription;
     }
 
-    @Column(name = "FULL_DESCRIPTION")
+    @Column(name = "FULL_DESCRIPTION", nullable = false)
     public String getFullDescription()
     {
         return fullDescription;
