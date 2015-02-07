@@ -8,7 +8,7 @@
     <table>
         <tr>
             <td><spring:message code="news.briefDescription" />:</td>
-            <td><form:input path="briefDescription" /></td>
+            <td><form:input path="briefDescription" autofocus="true" /></td>
             <td><form:errors path="briefDescription" /></td>
         </tr>
         <tr>

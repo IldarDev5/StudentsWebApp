@@ -51,4 +51,24 @@ $(function() {
 
         return false;
     });
+
+    $("#avatarForm").submit(function() {
+        try {
+            var fileSize = 0.0;
+            //for FF, Safari, Opera and Others
+            fileSize = $("#avatar")[0].files[0].size / 1048576.0; //size in MBs
+        }
+        catch (e) {
+            alert("Error is :" + e);
+            return false;
+        }
+
+        if(fileSize > 1) {
+            //File size is more than 1 MB
+            alert(i18n["fileSizeBig"]);
+            return false;
+        }
+
+        return true;
+    });
 });

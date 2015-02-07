@@ -11,10 +11,11 @@ import ru.ildar.database.entities.News;
 import ru.ildar.services.NewsService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Controller
@@ -25,12 +26,14 @@ public class NewsController
     private NewsService newsService;
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView addNews()
     {
         return new ModelAndView("addNews", "newsObj", new News());
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView addNews(@ModelAttribute("newsObj") @Valid News news,
                                 BindingResult result, Principal principal)
             throws UnsupportedEncodingException
@@ -62,7 +65,16 @@ public class NewsController
     public ModelAndView editNews(@RequestParam("newsId") int newsId, Principal principal)
     {
         News news = newsService.getNews(newsId);
+        if(news == null)
+            //news == null -> Either user has entered ID of news that doesn't exist in the DB,
+            //or user was already watching edit page of this news and he removed this news from
+            //the panel on the right
+        {
+            return new ModelAndView("redirect:/startPage");
+        }
+
         if(!news.getAuthor().getUsername().equals(principal.getName()))
+            //Checking that user that tries to edit the news is the same user that created it
         {
             throw new ResourceAccessDeniedException();
         }

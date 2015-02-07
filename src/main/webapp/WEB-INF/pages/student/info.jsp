@@ -61,6 +61,7 @@
 
         var i18n = [];
         i18n["updated"] = "<spring:message code="studInfo.dataUpdated" />";
+        i18n["fileSizeBig"] = "<spring:message code="studInfo.fileSizeBig" arguments="1" />";
     </script>
     <script type="text/javascript" src="/scripts/selectBox.js"></script>
     <script type="text/javascript" src="/scripts/stud_info.js"></script>
@@ -114,7 +115,7 @@
     </form>
     <form hidden="hidden" id="avatarForm" method="post"
             action="/pictures/avatar?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
-        <spring:message code="stud.uploadImage" /> <input type="file" name="avatar"> <br />
+        <spring:message code="stud.uploadImage" /> <input type="file" id="avatar" name="avatar"> <br />
         <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
         <input type="submit" value="Upload">
     </form>

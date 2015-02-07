@@ -24,6 +24,15 @@
 
     var i18n = [];
     i18n["moreNews"] = "<spring:message code="news.more" />";
+    i18n["newsEdit"] = "<spring:message code="news.edit" />";
+    i18n["newsRemove"] = "<spring:message code="news.remove" />";
+
+    var isAdmin = false;
+    var username;
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        isAdmin = true;
+        username = "${pageContext.request.userPrincipal.name}";
+    </sec:authorize>
 </script>
 
 <form id="newsDeleteForm" hidden="hidden" method="post" action="/admin/news/remove">
