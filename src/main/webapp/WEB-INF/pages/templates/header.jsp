@@ -85,6 +85,9 @@
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <li id="adminCitiesLi">
+                        <a href="/admin/cities"><spring:message code="header.cities" /></a>
+                    </li>
                     <li id="adminUnisLi">
                         <a href="/admin/unis"><spring:message code="header.unisAndFacs" /></a>
                     </li>

@@ -33,7 +33,6 @@ public class NewsController
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView addNews(@ModelAttribute("newsObj") @Valid News news,
                                 BindingResult result, Principal principal)
             throws UnsupportedEncodingException
@@ -52,7 +51,6 @@ public class NewsController
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String remove(@RequestParam("layoutNewsId") int newsId, HttpServletRequest request)
     {
         newsService.removeNews(newsId);
@@ -61,7 +59,6 @@ public class NewsController
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView editNews(@RequestParam("newsId") int newsId, Principal principal)
     {
         News news = newsService.getNews(newsId);

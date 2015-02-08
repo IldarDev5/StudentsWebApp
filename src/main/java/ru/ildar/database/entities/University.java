@@ -42,7 +42,7 @@ public class University
     }
 
     @ManyToOne
-    @JoinColumn(name = "UN_CITY_ID", referencedColumnName = "ID", nullable = false)
+    @JoinColumn(name = "UN_CITY_ID", referencedColumnName = "ID")
     public City getCity()
     {
         return city;
@@ -114,7 +114,7 @@ public class University
     @Override
     public int hashCode()
     {
-        return (int) (unId ^ (unId >>> 32));
+        return unId;
     }
 
     @OneToMany(mappedBy = "university", cascade = CascadeType.REMOVE)

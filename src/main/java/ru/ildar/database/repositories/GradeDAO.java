@@ -3,7 +3,6 @@ package ru.ildar.database.repositories;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import ru.ildar.database.entities.Grade;
-import ru.ildar.database.entities.Person;
 
 import java.util.List;
 

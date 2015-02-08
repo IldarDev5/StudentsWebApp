@@ -107,6 +107,21 @@
         <put-attribute name="body" value="/WEB-INF/pages/admin/addTeachersGroups.jsp" />
         <put-attribute name="currentId" value="adminTeachersLi" />
     </definition>
+    <definition name="cities" extends="base.definition">
+        <put-attribute name="title" value="admin.cities.title" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/cities.jsp" />
+        <put-attribute name="currentId" value="adminCitiesLi" />
+    </definition>
+    <definition name="localizeCity" extends="base.definition">
+        <put-attribute name="title" value="admin.localizeCity.title" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/localizeCity.jsp" />
+        <put-attribute name="currentId" value="adminCitiesLi" />
+    </definition>
+    <definition name="setCityToUni" extends="base.definition">
+        <put-attribute name="title" value="admin.setCityToUni.title" />
+        <put-attribute name="body" value="/WEB-INF/pages/admin/setCityToUni.jsp" />
+        <put-attribute name="currentId" value="adminUnisLi" />
+    </definition>
     <definition name="unis" extends="base.definition">
         <put-attribute name="title" value="admin.unis.title" />
         <put-attribute name="body" value="/WEB-INF/pages/admin/unis.jsp" />

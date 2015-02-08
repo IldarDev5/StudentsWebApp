@@ -9,6 +9,20 @@ create table students_app.cities(
   constraint uk_city_country unique(city_name, country)
 );
 
+create table STUDENTS_APP.cities_localized(
+  id int PRIMARY KEY,
+  city_id int not null,
+  language varchar2(25) not null,
+  translated_name varchar2(50) not null,
+
+  CONSTRAINT fk_city_localize FOREIGN KEY (city_id)
+  REFERENCES STUDENTS_APP.CITIES(id)
+    ON DELETE CASCADE,
+  CONSTRAINT fk_language FOREIGN KEY (language)
+  REFERENCES STUDENTS_APP.LANGUAGES(language),
+  CONSTRAINT uk_city_language UNIQUE (city_id, language)
+);
+
 create table STUDENTS_APP.languages(
   language varchar2(25) PRIMARY KEY,
   lang_abbrev varchar(5) not null unique
@@ -18,7 +32,7 @@ create table students_app.universities(
   un_id int primary key,
   un_name varchar2(150) not null,
   un_address varchar2(100),
-  un_city_id int not null,
+  un_city_id int,
   un_image blob,
   teachers_count int default 0,
 
@@ -252,3 +266,12 @@ for each row
       set group_id = null
       where group_id = :OLD.group_id;
   end;
+
+create or replace trigger STUDENTS_APP.remove_city
+before delete on STUDENTS_APP.cities
+  FOR EACH ROW
+  BEGIN
+    update STUDENTS_APP.universities
+      set un_city_id = null
+      where un_city_id = :OLD.id;
+  END;

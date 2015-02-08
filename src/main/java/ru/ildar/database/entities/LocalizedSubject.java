@@ -37,6 +37,7 @@ public class LocalizedSubject
         this.id = id;
     }
 
+
     @ManyToOne
     @JoinColumn(name = "subject_name", referencedColumnName = "subject_name", nullable = false)
     public Subject getSubject()
@@ -58,6 +59,22 @@ public class LocalizedSubject
     public void setSubjectTranslation(String subjectTranslation)
     {
         this.subjectTranslation = subjectTranslation;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LocalizedSubject that = (LocalizedSubject) o;
+        return this.getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return id != null ? id.hashCode() : 0;
     }
 
     @ManyToOne

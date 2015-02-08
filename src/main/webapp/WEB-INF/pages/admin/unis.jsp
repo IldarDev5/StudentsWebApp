@@ -51,6 +51,10 @@
                     <img src="/images/user_icons/description.png"
                          title="<spring:message code="uni.description" />">
                 </a>
+                <a href="/admin/unis/city?unId=${un.unId}" style="text-decoration: none;">
+                    <img src="/images/user_icons/city.png" height="24"
+                         title="<spring:message code="uni.setCity" />">
+                </a>
             </td>
         </tr>
     </c:forEach>
