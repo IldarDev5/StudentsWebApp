@@ -37,7 +37,8 @@ public class AuthConfig extends WebSecurityConfigurerAdapter
                 defaultSuccessUrl("/startPage").failureUrl("/loginPage?auth=fail")
                 .usernameParameter("username").passwordParameter("password")
             .and().logout().logoutUrl("/logout").logoutSuccessUrl("/startPage")
-            .and().authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')").
+            .and().authorizeRequests().
+                antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')").
                 antMatchers("/teacher/**").access("hasAnyRole('ROLE_TEACHER')").
                 antMatchers("/stud/**").access("hasAnyRole('ROLE_STUDENT')").
                 antMatchers("/auth/**").access("isFullyAuthenticated()").

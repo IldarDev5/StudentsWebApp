@@ -9,7 +9,7 @@ $(function() {
         var subjName = subjectName.val();
         var language = $(this).val();
 
-        $.getJSON('/admin/subjects/getLocalization', { name : subjName, lang : language },
+        $.getJSON('/admin/subjects/localized/get', { name : subjName, lang : language },
             function(tr) {
                 if(tr.translation) {
                     //There is already a translation of this subject in this locale

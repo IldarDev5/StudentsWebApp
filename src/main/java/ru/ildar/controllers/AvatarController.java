@@ -18,7 +18,7 @@ import java.security.Principal;
  */
 @Controller
 @RequestMapping("/pictures")
-public class PictureController
+public class AvatarController
 {
     @Autowired
     private PictureService pictureService;

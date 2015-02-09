@@ -1,4 +1,4 @@
-package ru.ildar.controllers.admin;
+package ru.ildar.controllers.admin.subject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,14 +6,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.ildar.controllers.pojos.LocalizedSubjectPojo;
-import ru.ildar.database.entities.LocalizedSubject;
 import ru.ildar.database.entities.Subject;
-import ru.ildar.services.LanguageService;
 import ru.ildar.services.SubjectService;
 
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -25,8 +21,6 @@ public class SubjectsController
 {
     @Autowired
     private SubjectService subjectService;
-    @Autowired
-    private LanguageService languageService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView subjects(ModelMap model)
@@ -82,51 +76,5 @@ public class SubjectsController
     {
         subjectService.removeSubject(subjectName);
         return "ok";
-    }
-
-    @RequestMapping(value = "localized", method = RequestMethod.GET)
-    public ModelAndView localizedSubjects(@RequestParam("subject") String subject, ModelMap model)
-    {
-        LocalizedSubjectPojo subjectPojo = new LocalizedSubjectPojo();
-        subjectPojo.setSubjectName(subject);
-        model.addAttribute("subjects", subjectService.getAllSubjects());
-        model.addAttribute("languages", languageService.getAllLanguages());
-        return new ModelAndView("localizedSubjects", "subject", subjectPojo);
-    }
-
-    @RequestMapping(value = "localized", method = RequestMethod.POST)
-    public ModelAndView localizedSubjects(@ModelAttribute("subject") @Valid LocalizedSubjectPojo
-                                                      subjectPojo, BindingResult result, ModelMap model)
-            throws UnsupportedEncodingException
-    {
-        if(result.hasErrors())
-        {
-            model.addAttribute("subjects", subjectService.getAllSubjects());
-            model.addAttribute("languages", languageService.getAllLanguages());
-            return new ModelAndView("localizedSubjects", "subject", subjectPojo);
-        }
-
-        subjectPojo.setSubjectTranslation(new String(subjectPojo
-                .getSubjectTranslation().getBytes("ISO-8859-1"), "UTF-8"));
-        LocalizedSubject subject = new LocalizedSubject(subjectPojo.getId(),
-                null, subjectPojo.getSubjectTranslation(), null);
-        subjectService.setSubjectAndLangAndSaveLocalization
-                (subjectPojo.getSubjectName(), subjectPojo.getLanguageAbbrev(), subject);
-        return new ModelAndView("redirect:/admin/subjects");
-    }
-
-    @RequestMapping(value = "getLocalization", method = RequestMethod.GET)
-    @ResponseBody
-    public String getLocalization(@RequestParam("name") String subjectName,
-                                  @RequestParam("lang") String languageAbbrev)
-    {
-        LocalizedSubject subject = subjectService.getSubjectLocalization(subjectName, languageAbbrev);
-        if(subject != null)
-        {
-            return "{ \"translation\":\"" + subject.getSubjectTranslation() + "\", " +
-                    "\"id\":\"" + subject.getId() + "\" }";
-        }
-        else
-            return "{}";
     }
 }

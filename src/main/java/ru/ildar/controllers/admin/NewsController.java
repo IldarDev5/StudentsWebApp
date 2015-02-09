@@ -11,13 +11,14 @@ import ru.ildar.database.entities.News;
 import ru.ildar.services.NewsService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.sql.Timestamp;
 
+/**
+ * Controller that allows performing CRUD operations with news
+ */
 @Controller
 @RequestMapping("/admin/news")
 public class NewsController
@@ -26,7 +27,6 @@ public class NewsController
     private NewsService newsService;
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView addNews()
     {
         return new ModelAndView("addNews", "newsObj", new News());
