@@ -13,6 +13,9 @@ import ru.ildar.database.entities.University;
 import ru.ildar.services.CityService;
 import ru.ildar.services.UniversityService;
 
+/**
+ * Controller that allows modifying cities and addresses of universities
+ */
 @Controller
 @RequestMapping("/admin/unis/city")
 public class UniversityCityController
@@ -35,6 +38,9 @@ public class UniversityCityController
         return new ModelAndView("setCityToUni", "uni", universityInfoPojo);
     }
 
+    /**
+     * Set new city and address to university
+     */
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ModelAndView setCity(@ModelAttribute("uni") UniversityInfoPojo uni)
     {

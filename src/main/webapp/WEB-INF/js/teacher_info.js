@@ -44,8 +44,8 @@ $(function() {
                 xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
             },
             success : function(data) {
-                    university = $('#universitySelect').text();
-                    city = $('#citySelect').text();
+                    university = $("#universitySelect").find("option[value='" + university + "']").text();
+                    city = $("#citySelect").find("option[value='" + city + "']").text();
 
                     if(data) {
                     $('#firstNameTd').html(firstName);
@@ -63,8 +63,14 @@ $(function() {
         return false;
     });
 
-    loadDataForSelect('/ajax/cities', '#citySelect', "");
-    loadDataForSelect('/ajax/universities', '#universitySelect', "?cityId=" + cityId);
+    loadDataForSelect('/ajax/cities', '#citySelect', "",
+                        function(empty) {
+                            $('#citySelect').val(cityId);
+                            loadDataForSelect('/ajax/universities', '#universitySelect',
+                                "?cityId=" + cityId, function(empty) {
+                                    $('#universitySelect').val(universityId);
+                                });
+                        });
 
     var citySelect = $('#citySelect');
     var uniSelect = $('#universitySelect');

@@ -42,7 +42,7 @@
     </tr>
     <tr>
         <td><spring:message code="teach.university" /></td>
-        <td id="facultyTd">${teacher.university.unName}, ${cityLoc.translatedName}</td>
+        <td id="universityTd">${teacher.university.unName}, ${cityLoc.translatedName}</td>
     </tr>
 </table>
 
@@ -113,7 +113,7 @@
             </tr>
         </table>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-        <input type="submit" value="<spring:message code="teach.save" />">
+        <input type="submit" value="<spring:message code="teach.save" />"> <br /><br />
     </form>
 
     <div class="button_small" style="margin-right: 7px;">
