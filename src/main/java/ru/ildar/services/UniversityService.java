@@ -153,9 +153,10 @@ public class UniversityService
         return uniDescriptionDAO.findOneByUniversity_UnId(unId);
     }
 
-    public void setCity(Integer unId, Integer cityId)
+    public void setCity(Integer unId, Integer cityId, String address)
     {
         University university = universityDAO.findOne(unId);
+        university.setUnAddress(address);
         City city = cityService.getById(cityId);
         university.setCity(city);
     }
