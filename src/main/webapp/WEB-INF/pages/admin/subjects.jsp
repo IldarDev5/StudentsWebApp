@@ -2,23 +2,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
+<script type="text/javascript" src="/scripts/subjects.js"></script>
 <script type="text/javascript">
-    function removeSubject(subjectName) {
-        var choice = confirm('<spring:message code="sub.confirmRemoval" />');
-        if(choice == false)
-            return;
+    $(function() {
+        setToken('${_csrf.token}');
+    });
 
-        $.ajax({
-            type: 'post',
-            url: '/admin/subjects/remove?subjectName=' + subjectName,
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('X-CSRF-TOKEN', '${_csrf.token}');
-            },
-            success: function(data) {
-                $('#' + subjectName.replace(" ", "") + 'Tr').remove();
-            }
-        });
-    }
+    var i18n = [];
+    i18n["confirmRemoval"] = "<spring:message code="sub.confirmRemoval" />";
 </script>
 
 <h1><spring:message code="sub.subjects" /></h1>
@@ -40,20 +31,17 @@
             <td>${subject.subjectName}</td>
             <td>${subject.subjectType}</td>
             <td>
-                <a href="/admin/teachers/bySubject?subject=${subject.subjectName}"
-                        style="text-decoration: none;">
+                <a href="/admin/teachers/bySubject?subject=${subject.subjectName}">
                     <img src="/images/user_icons/teachers.png"
                          title="<spring:message code="sub.teachers" />">
                 </a>
 
-                <a href="javascript:removeSubject('${subject.subjectName}');"
-                        style="text-decoration: none;">
+                <a href="javascript:removeSubject('${subject.subjectName}');">
                     <img src="/images/user_icons/remove_uni.png"
                          title="<spring:message code="sub.remove" />">
                 </a>
 
-                <a href="/admin/subjects/localized?subject=${subject.subjectName}"
-                        style="text-decoration: none;">
+                <a href="/admin/subjects/localized?subject=${subject.subjectName}">
                     <img src="/images/user_icons/localize.png"
                          title="<spring:message code="sub.localized" />">
                 </a>

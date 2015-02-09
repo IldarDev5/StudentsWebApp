@@ -7,8 +7,7 @@ var currNewsPage = 1;
 function operations(newsObj) {
     var result = "";
     if(isAdmin === true) {
-        result += "<a href='javascript:removeNews(" + newsObj.newsId + ")' " +
-                    "style='text-decoration:none;'>" +
+        result += "<a href='javascript:removeNews(" + newsObj.newsId + ")'>" +
                     "<img src='/images/user_icons/remove.png' title='" + i18n["newsRemove"] + "'>" +
                   "</a>";
         if(newsObj.author.username.localeCompare(username) == 0) {

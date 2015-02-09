@@ -1,277 +1,282 @@
-create user students_app identified by ildar;
-grant connect, resource to students_app;
+CREATE USER STUDENTS_APP IDENTIFIED BY ildar;
+GRANT CONNECT, RESOURCE TO STUDENTS_APP;
 
-create table students_app.cities(
-  id int primary key,
-  city_name varchar2(100) not null,
-  country varchar2(100) not null,
+CREATE TABLE STUDENTS_APP.CITIES(
+  id INT PRIMARY KEY,
+  city_name VARCHAR2(100) NOT NULL,
+  country VARCHAR2(100) NOT NULL,
 
-  constraint uk_city_country unique(city_name, country)
+  CONSTRAINT UK_city_country UNIQUE(city_name, country)
 );
 
-create table STUDENTS_APP.cities_localized(
-  id int PRIMARY KEY,
-  city_id int not null,
-  language varchar2(25) not null,
-  translated_name varchar2(50) not null,
+CREATE TABLE STUDENTS_APP.CITIES_LOCALIZED(
+  id INT PRIMARY KEY,
+  city_id INT NOT NULL,
+  language VARCHAR2(25) NOT NULL,
+  translated_name VARCHAR2(50) NOT NULL,
 
   CONSTRAINT fk_city_localize FOREIGN KEY (city_id)
   REFERENCES STUDENTS_APP.CITIES(id)
     ON DELETE CASCADE,
   CONSTRAINT fk_language FOREIGN KEY (language)
   REFERENCES STUDENTS_APP.LANGUAGES(language),
-  CONSTRAINT uk_city_language UNIQUE (city_id, language)
+  CONSTRAINT UK_city_language UNIQUE (city_id, language)
 );
 
-create table STUDENTS_APP.languages(
-  language varchar2(25) PRIMARY KEY,
-  lang_abbrev varchar(5) not null unique
+CREATE TABLE STUDENTS_APP.LANGUAGES(
+  language VARCHAR2(25) PRIMARY KEY,
+  lang_abbrev varchar(5) NOT NULL UNIQUE
 );
 
-create table students_app.universities(
-  un_id int primary key,
-  un_name varchar2(150) not null,
-  un_address varchar2(100),
-  un_city_id int,
-  un_image blob,
-  teachers_count int default 0,
+CREATE TABLE STUDENTS_APP.UNIVERSITIES(
+  un_id INT PRIMARY KEY,
+  un_name VARCHAR2(150) NOT NULL,
+  un_address VARCHAR2(100),
+  un_city_id INT,
+  un_image BLOB,
+  TEACHERS_count INT DEFAULT 0,
 
-  constraint fk_city foreign key(un_city_id)
-  references students_app.cities(id),
-  constraint uk_name_city unique(un_name, un_city_id)
+  CONSTRAINT fk_city FOREIGN KEY(un_city_id)
+  REFERENCES STUDENTS_APP.CITIES(id),
+  CONSTRAINT UK_name_city UNIQUE(un_name, un_city_id)
 );
 
-create table STUDENTS_APP.Un_Description(
-  id int PRIMARY KEY,
-  un_id int not null,
+CREATE TABLE STUDENTS_APP.UN_DESCRIPTION(
+  id INT PRIMARY KEY,
+  un_id INT NOT NULL,
   description CLOB NOT NULL,
   last_change_date TIMESTAMP NOT NULL,
   last_change_person_username varchar(70) NOT NULL,
-  language varchar2(25) not null,
+  language VARCHAR2(25) NOT NULL,
 
   CONSTRAINT fk_university FOREIGN KEY(un_id)
   REFERENCES STUDENTS_APP.UNIVERSITIES(un_id),
   CONSTRAINT fk_change_person FOREIGN KEY(last_change_person_username)
   REFERENCES STUDENTS_APP.PEOPLE(USERNAME),
   CONSTRAINT fk_descr_language FOREIGN KEY(language)
-  REFERENCES STUDENTS_APP.languages(language)
+  REFERENCES STUDENTS_APP.LANGUAGES(language)
 );
 
-create table students_app.faculties(
-  faculty_id int primary key,
-  un_id int not null,
-  faculty_name varchar2(150) not null,
-  students_count int default 0,
-  found_date date,
+CREATE TABLE STUDENTS_APP.FACULTIES(
+  faculty_id INT PRIMARY KEY,
+  un_id INT NOT NULL,
+  faculty_name VARCHAR2(150) NOT NULL,
+  STUDENTS_count INT DEFAULT 0,
+  found_date DATE,
 
-  constraint fk_un foreign key(un_id)
-  references students_app.universities(un_id),
-  constraint uk_faculty unique(un_id, faculty_name)
+  CONSTRAINT fk_un FOREIGN KEY(un_id)
+  REFERENCES STUDENTS_APP.UNIVERSITIES(un_id),
+  CONSTRAINT UK_faculty UNIQUE(un_id, faculty_name)
 );
 
-create table students_app.roles(
-  role_name varchar2(50) primary key
+CREATE TABLE STUDENTS_APP.ROLES(
+  role_name VARCHAR2(50) PRIMARY KEY
 );
 
-create table students_app.people(
-  role_name varchar2(50) not null,
-  username varchar2(70) primary key,
-  password varchar2(70) not null,
+CREATE TABLE STUDENTS_APP.PEOPLE(
+  role_name VARCHAR2(50) NOT NULL,
+  username VARCHAR2(70) PRIMARY KEY,
+  password VARCHAR2(70) NOT NULL,
 
-  constraint fk_role_id foreign key(role_name)
-  references students_app.roles(role_name)
+  CONSTRAINT fk_role_id FOREIGN KEY(role_name)
+  REFERENCES STUDENTS_APP.ROLES(role_name)
 );
 
-create table students_app.subject_types(
-  subject_type varchar2(50) primary key
+CREATE TABLE STUDENTS_APP.SUBJECT_TYPES(
+  subject_type VARCHAR2(50) PRIMARY KEY
 );
 
-create table students_app.subjects(
-  subject_name varchar2(100) primary key,
-  subject_type varchar2(50) not null,
+CREATE TABLE STUDENTS_APP.SUBJECTS(
+  subject_name VARCHAR2(100) PRIMARY KEY,
+  subject_type VARCHAR2(50) NOT NULL,
 
-  constraint fk_subject_type foreign key (subject_type)
-  references students_app.subject_types(subject_type)
+  CONSTRAINT fk_subject_type FOREIGN KEY (subject_type)
+  REFERENCES STUDENTS_APP.SUBJECT_TYPES(subject_type)
 );
 
-create table STUDENTS_APP.SUBJECTS_LOCALIZED(
-  id INT primary key,
-  subject_name VARCHAR2(100) not null,
-  subject_translation VARCHAR2(100) not null,
-  language VARCHAR2(25) not null,
+CREATE TABLE STUDENTS_APP.SUBJECTS_LOCALIZED(
+  id INT PRIMARY KEY,
+  subject_name VARCHAR2(100) NOT NULL,
+  subject_translation VARCHAR2(100) NOT NULL,
+  language VARCHAR2(25) NOT NULL,
 
   CONSTRAINT fk_i18n_subject_name FOREIGN KEY (subject_name)
-  REFERENCES STUDENTS_APP.SUBJECTS(subject_name),
+  REFERENCES STUDENTS_APP.SUBJECTS(subject_name)
+    ON DELETE CASCADE,
   CONSTRAINT fk_i8n_language FOREIGN KEY (language)
   REFERENCES STUDENTS_APP.LANGUAGES(language),
-  CONSTRAINT uk_subject_localized UNIQUE (subject_name, language)
+  CONSTRAINT UK_subject_LOCALIZED UNIQUE (subject_name, language)
 );
 
-create table students_app.groups(
-  group_id varchar2(20) primary key,
-  faculty_id int not null,
-  students_count int default 0,
+CREATE TABLE STUDENTS_APP.GROUPS(
+  group_id VARCHAR2(20) PRIMARY KEY,
+  faculty_id INT NOT NULL,
+  STUDENTS_count INT DEFAULT 0,
 
-  constraint fk_faculty_group foreign key(faculty_id)
-  references students_app.faculties(faculty_id)
+  CONSTRAINT fk_faculty_group FOREIGN KEY(faculty_id)
+  REFERENCES STUDENTS_APP.FACULTIES(faculty_id)
 );
 
-create table students_app.students(
-  username varchar2(70) primary key,
-  first_name varchar2(100),
-  last_name varchar2(100),
-  email varchar2(100),
-  group_id varchar2(20),
-  enrollment date,
-  person_photo blob,
+CREATE TABLE STUDENTS_APP.STUDENTS(
+  username VARCHAR2(70) PRIMARY KEY,
+  first_name VARCHAR2(100),
+  last_name VARCHAR2(100),
+  email VARCHAR2(100),
+  group_id VARCHAR2(20),
+  enrollment DATE,
+  person_photo BLOB,
 
-  constraint fk_person_student foreign key(username)
-  references students_app.people(username),
-  constraint fk_person foreign key(group_id)
-  references students_app.groups(group_id),
-  constraint uk_person unique(first_name, last_name, email, group_id)
+  CONSTRAINT fk_person_student FOREIGN KEY(username)
+  REFERENCES STUDENTS_APP.PEOPLE(username),
+  CONSTRAINT fk_person FOREIGN KEY(group_id)
+  REFERENCES STUDENTS_APP.GROUPS(group_id),
+  CONSTRAINT UK_person UNIQUE(first_name, last_name, email, group_id)
 );
 
-create table students_app.teachers(
-  username varchar2(70) primary key,
-  first_name varchar2(100),
-  last_name varchar2(100),
-  email varchar2(100),
-  title varchar2(150),
-  university_id int,
-  work_start date,
-  person_photo blob,
+CREATE TABLE STUDENTS_APP.TEACHERS(
+  username VARCHAR2(70) PRIMARY KEY,
+  first_name VARCHAR2(100),
+  last_name VARCHAR2(100),
+  email VARCHAR2(100),
+  title VARCHAR2(150),
+  university_id INT,
+  work_start DATE,
+  person_photo BLOB,
 
-  constraint fk_person_teacher foreign key(username)
-  references students_app.people(username),
-  constraint fk_teacher_university foreign key(university_id)
-    references students_app.universities(un_id)
+  CONSTRAINT fk_person_teacher FOREIGN KEY(username)
+  REFERENCES STUDENTS_APP.PEOPLE(username),
+  CONSTRAINT fk_teacher_university FOREIGN KEY(university_id)
+    REFERENCES STUDENTS_APP.UNIVERSITIES(un_id)
 );
 
-create table students_app.teachers_groups(
-  id int primary key,
-  teacher_username varchar2(70) not null,
-  group_id varchar2(20),
-  subject_name varchar2(100) not null,
-  semester int not null check (semester between 1 and 8),
+CREATE TABLE STUDENTS_APP.TEACHERS_GROUPS(
+  id INT PRIMARY KEY,
+  teacher_username VARCHAR2(70) NOT NULL,
+  group_id VARCHAR2(20),
+  subject_name VARCHAR2(100) NOT NULL,
+  semester INT NOT NULL CHECK (semester BETWEEN 1 AND 8),
 
-  constraint uk_teachers_groups unique(teacher_username, group_id,
+  CONSTRAINT UK_TEACHERS_GROUPS UNIQUE(teacher_username, group_id,
                                        subject_name, semester),
-  constraint fk_tg_teacher foreign key(teacher_username)
-  references students_app.teachers(username),
-  constraint fk_tg_group foreign key(group_id)
-  references students_app.groups(group_id),
-  constraint fk_tg_subject_name foreign key(subject_name)
-  references students_app.subjects(subject_name)
-    on delete cascade
+  CONSTRAINT fk_tg_teacher FOREIGN KEY(teacher_username)
+  REFERENCES STUDENTS_APP.TEACHERS(username),
+  CONSTRAINT fk_tg_group FOREIGN KEY(group_id)
+  REFERENCES STUDENTS_APP.GROUPS(group_id),
+  CONSTRAINT fk_tg_subject_name FOREIGN KEY(subject_name)
+  REFERENCES STUDENTS_APP.SUBJECTS(subject_name)
+    ON DELETE CASCADE
 );
 
-create table students_app.grades(
-  grade_id int primary key,
-  stud_username varchar2(70) not null,
-  teacher_username varchar2(70) not null,
-  grade_value int not null check(grade_value between 0 and 100),
-  subject_name varchar2(100) not null,
-  semester int not null check(semester between 1 and 8),
+CREATE TABLE STUDENTS_APP.GRADES(
+  grade_id INT PRIMARY KEY,
+  stud_username VARCHAR2(70) NOT NULL,
+  teacher_username VARCHAR2(70) NOT NULL,
+  grade_value INT NOT NULL CHECK(grade_value BETWEEN 0 AND 100),
+  subject_name VARCHAR2(100) NOT NULL,
+  semester INT NOT NULL CHECK(semester BETWEEN 1 AND 8),
 
-  constraint uk_grade unique(stud_username, teacher_username, subject_name, semester),
+  CONSTRAINT UK_grade UNIQUE(stud_username, teacher_username, subject_name, semester),
 
-  constraint fk_gr_student foreign key(stud_username)
-  references students_app.students(username),
-  constraint fk_gr_teacher foreign key(teacher_username)
-  references students_app.teachers(username),
-  constraint fk_gr_subject foreign key(subject_name)
-  references students_app.subjects(subject_name)
-    on delete cascade
+  CONSTRAINT fk_gr_student FOREIGN KEY(stud_username)
+  REFERENCES STUDENTS_APP.STUDENTS(username),
+  CONSTRAINT fk_gr_teacher FOREIGN KEY(teacher_username)
+  REFERENCES STUDENTS_APP.TEACHERS(username),
+  CONSTRAINT fk_gr_subject FOREIGN KEY(subject_name)
+  REFERENCES STUDENTS_APP.SUBJECTS(subject_name)
+    ON DELETE CASCADE
 );
 
-create table STUDENTS_APP.news(
-  news_id int primary key,
-  author_username varchar2(70) not null,
-  publish_date timestamp not null,
-  brief_description varchar2(150) not null,
-  full_description varchar2(1500) not null,
+CREATE TABLE STUDENTS_APP.NEWS(
+  NEWS_id INT PRIMARY KEY,
+  author_username VARCHAR2(70) NOT NULL,
+  publish_date TIMESTAMP NOT NULL,
+  brief_description VARCHAR2(150) NOT NULL,
+  full_description VARCHAR2(1500) NOT NULL,
 
-  CONSTRAINT fk_news_author foreign key(author_username)
+  CONSTRAINT fk_NEWS_author FOREIGN KEY(author_username)
   REFERENCES STUDENTS_APP.PEOPLE(USERNAME)
 );
 
+--Trigger that fires when the student faculty he was studying in has been changed
+CREATE OR REPLACE TRIGGER STUDENTS_APP.FACULTY_PERSON
+BEFORE INSERT OR UPDATE OF group_id ON STUDENTS_APP.STUDENTS
+FOR EACH ROW
+  BEGIN
+    CASE
+      WHEN UPDATING THEN
+      BEGIN
+        UPDATE STUDENTS_APP.GROUPS
+        SET STUDENTS_count = STUDENTS_count - 1
+        WHERE group_id = :OLD.group_id;
 
-create or replace trigger students_app.faculty_person
-before insert or update of group_id on students_app.students
-for each row
-  begin
-    case
-      when updating then
-      begin
-        update students_app.groups
-        set students_count = students_count - 1
-        where group_id = :OLD.group_id;
+        UPDATE STUDENTS_APP.FACULTIES
+        SET STUDENTS_count = STUDENTS_count - 1
+        WHERE faculty_id = (SELECT faculty_id
+                            FROM STUDENTS_APP.GROUPS
+                            WHERE group_id = :OLD.group_id);
+      END;
+    ELSE dbms_output.put_line('');
+    END CASE;
 
-        update students_app.faculties
-        set students_count = students_count - 1
-        where faculty_id = (select faculty_id
-                            from students_app.groups
-                            where group_id = :OLD.group_id);
-      end;
-    else dbms_output.put_line('');
-    end case;
+    UPDATE STUDENTS_APP.GROUPS
+    SET STUDENTS_count = STUDENTS_count + 1
+    WHERE group_id = :NEW.group_id;
 
-    update students_app.groups
-    set students_count = students_count + 1
-    where group_id = :NEW.group_id;
+    UPDATE STUDENTS_APP.FACULTIES
+    SET STUDENTS_count = STUDENTS_count + 1
+    WHERE faculty_id = (SELECT faculty_id
+                        FROM STUDENTS_APP.GROUPS
+                        WHERE group_id = :NEW.group_id);
+  END;
 
-    update students_app.faculties
-    set students_count = students_count + 1
-    where faculty_id = (select faculty_id
-                        from students_app.groups
-                        where group_id = :NEW.group_id);
-  end;
-
-create or replace trigger students_app.university_teacher
-before insert or update of university_id on students_app.teachers
-for each row
-  begin
-    case
-      when updating then
-        update students_app.universities
-          set teachers_count = teachers_count - 1
-          where un_id = :OLD.university_id;
-      else
+  --Trigger that fires when teacher changes his university
+CREATE OR REPLACE TRIGGER STUDENTS_APP.UNIVERSITY_TEACHER
+BEFORE INSERT OR UPDATE OF university_id ON STUDENTS_APP.TEACHERS
+FOR EACH ROW
+  BEGIN
+    CASE
+      WHEN UPDATING THEN
+        UPDATE STUDENTS_APP.UNIVERSITIES
+          SET TEACHERS_count = TEACHERS_count - 1
+          WHERE un_id = :OLD.university_id;
+      ELSE
         dbms_output.put_line('');
-    end case;
+    END CASE;
 
-    update students_app.universities
-      set teachers_count = teachers_count + 1
-      where un_id = :NEW.university_id;
-  end;
+    UPDATE STUDENTS_APP.UNIVERSITIES
+      SET TEACHERS_count = TEACHERS_count + 1
+      WHERE un_id = :NEW.university_id;
+  END;
 
-create or replace trigger students_app.remove_university
-before delete on students_app.universities
-for each row
-  begin
-    update students_app.teachers
-      set university_id = null
-      where university_id = :OLD.un_id;
-  end;
+  --Trigger that fires when university is being removed
+CREATE OR REPLACE TRIGGER STUDENTS_APP.REMOVE_UNIVERSITY
+BEFORE DELETE ON STUDENTS_APP.UNIVERSITIES
+FOR EACH ROW
+  BEGIN
+    UPDATE STUDENTS_APP.TEACHERS
+      SET university_id = NULL
+      WHERE university_id = :OLD.un_id;
+  END;
 
-create or replace trigger students_app.remove_group
-before delete on students_app.groups
-for each row
-  begin
-    update students_app.teachers_groups
-      set group_id = null
-      where group_id = :OLD.group_id;
-    update students_app.students
-      set group_id = null
-      where group_id = :OLD.group_id;
-  end;
+  --Trigger that fires when group is being removed
+CREATE OR REPLACE TRIGGER STUDENTS_APP.REMOVE_GROUP
+BEFORE DELETE ON STUDENTS_APP.GROUPS
+FOR EACH ROW
+  BEGIN
+    UPDATE STUDENTS_APP.TEACHERS_GROUPS
+      SET group_id = NULL
+      WHERE group_id = :OLD.group_id;
+    UPDATE STUDENTS_APP.STUDENTS
+      SET group_id = NULL
+      WHERE group_id = :OLD.group_id;
+  END;
 
-create or replace trigger STUDENTS_APP.remove_city
-before delete on STUDENTS_APP.cities
+  --Trigger that fires when city is being removed
+CREATE OR REPLACE TRIGGER STUDENTS_APP.REMOVE_CITY
+BEFORE DELETE ON STUDENTS_APP.CITIES
   FOR EACH ROW
   BEGIN
-    update STUDENTS_APP.universities
-      set un_city_id = null
-      where un_city_id = :OLD.id;
+    UPDATE STUDENTS_APP.UNIVERSITIES
+      SET un_city_id = NULL
+      WHERE un_city_id = :OLD.id;
   END;

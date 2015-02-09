@@ -5,26 +5,7 @@
 
 <h1><spring:message code="localizeCity.localize" /></h1>
 
-<script type="text/javascript">
-    var cityId;
-
-    $(function() {
-        $('#language').change(function() {
-            var lang = $(this).val();
-            $.getJSON('/admin/cities/localize/get', { cityId : cityId, language: lang },
-                        function(resp) {
-                            if(resp.translation) {
-                                $('#cityTranslation').val(resp.translation);
-                                $('#locCityId').val(resp.locCityId);
-                            }
-                            else {
-                                $('#cityTranslation').val('');
-                                $('#locCityId').val('');
-                            }
-                        })
-        });
-    });
-</script>
+<script type="text/javascript" src="/scripts/localizeCity.js"></script>
 <script type="text/javascript">
     cityId = "${city.id}";
 </script>

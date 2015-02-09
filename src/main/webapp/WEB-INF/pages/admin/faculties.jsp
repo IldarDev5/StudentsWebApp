@@ -3,19 +3,27 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <script type="text/javascript">
+    var token;
+    function setToken(t) { token = t; }
+
     function removeFaculty(facultyId) {
         $.ajax({
             url : '/admin/faculties/remove?facultyId=' + facultyId,
             type : 'post',
             contentType : "application/json",
             beforeSend : function(xhr) {
-                xhr.setRequestHeader('X-CSRF-TOKEN', '${_csrf.token}');
+                xhr.setRequestHeader('X-CSRF-TOKEN', token);
             },
             success : function(data) {
                 $('#faculty' + facultyId).remove();
             }
         });
     }
+</script>
+<script type="text/javascript">
+    $(function() {
+        setToken('${_csrf.token}');
+    });
 </script>
 
 <%--@elvariable id="uni" type="ru.ildar.database.entities.University"--%>
@@ -40,8 +48,9 @@
             <td>${faculty.studentsCount}</td>
             <td>
                 <a href="javascript:removeFaculty(${faculty.facultyId});">
-                    <spring:message code="fac.remove" />
-                </a>
+                    <img src="/images/user_icons/remove.png"
+                         title="<spring:message code="fac.remove" />">
+                 </a>
             </td>
         </tr>
     </c:forEach>

@@ -39,19 +39,19 @@
             </td>
             <td><c:out value="${un.teachersCount}" /></td>
             <td>
-                <a href="/admin/faculties?un_id=${un.unId}" style="text-decoration: none;">
+                <a href="/admin/faculties?un_id=${un.unId}">
                     <img src="/images/user_icons/faculties.png"
                          title="<spring:message code="uni.faculties" />">
                 </a>
-                <a href="javascript:removeUn(${un.unId});" style="text-decoration: none;">
+                <a href="javascript:removeUn(${un.unId});">
                     <img src="/images/user_icons/remove_uni.png"
                          title="<spring:message code="uni.remove" />">
                 </a>
-                <a href="/admin/unis/description?unId=${un.unId}" style="text-decoration: none;">
+                <a href="/admin/unis/description?unId=${un.unId}">
                     <img src="/images/user_icons/description.png"
                          title="<spring:message code="uni.description" />">
                 </a>
-                <a href="/admin/unis/city?unId=${un.unId}" style="text-decoration: none;">
+                <a href="/admin/unis/city?unId=${un.unId}">
                     <img src="/images/user_icons/city.png" height="24"
                          title="<spring:message code="uni.setCity" />">
                 </a>

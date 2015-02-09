@@ -46,14 +46,12 @@
             <td id="${grade.student.username}Td">${grade.gradeValue}</td>
             <td>
                 <div>
-                <a href="javascript:updateGrade('${grade.student.username}', '${grade.semester}', '${grade.subjectName}');"
-                        style="text-decoration: none;">
+                <a href="javascript:updateGrade('${grade.student.username}', '${grade.semester}', '${grade.subjectName}');">
                     <img src="/images/user_icons/update.png"
                          title="<spring:message code="teach.updateGrade" />">
                 </a>
 
-                <a href="javascript:removeGrade('${grade.gradeId}', '${tGroup.id}');"
-                        style="text-decoration: none;">
+                <a href="javascript:removeGrade('${grade.gradeId}', '${tGroup.id}');">
                     <img src="/images/user_icons/remove.png"
                          title="<spring:message code="teach.remove" />">
                 </a>

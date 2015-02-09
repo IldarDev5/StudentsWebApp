@@ -16,6 +16,11 @@
     <!-- modernizr enables HTML5 elements and feature detects -->
     <script type="text/javascript" src="/scripts/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/scripts/modernizr-1.5.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("a").has("img").css("text-decoration", "none");
+        });
+    </script>
 </head>
 
 <script type="text/javascript" src="/scripts/layout.js"></script>
@@ -61,8 +66,7 @@
                             <p>
                                 <c:out value="${newsObj.briefDescription}" />
                                 <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                    <a href="javascript:removeNews(${newsObj.newsId})"
-                                            style="text-decoration: none;">
+                                    <a href="javascript:removeNews(${newsObj.newsId})">
                                         <img src="/images/user_icons/remove.png"
                                              title="<spring:message code="news.remove" />">
                                     </a>
