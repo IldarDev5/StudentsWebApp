@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.StudentRegisterPojo;
 import ru.ildar.database.entities.City;
+import ru.ildar.database.entities.LocalizedCity;
 import ru.ildar.database.entities.Person;
 import ru.ildar.database.entities.Student;
 import ru.ildar.services.CityService;
@@ -26,6 +27,7 @@ import ru.ildar.services.StudentService;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Student controller that handles registering new
@@ -43,9 +45,9 @@ public class StudentRegisterController
     private CityService cityService;
 
     @ModelAttribute("cities")
-    public List<City> cities()
+    public List<LocalizedCity> cities(Locale locale)
     {
-        return cityService.getAllCities();
+        return cityService.getCitiesLocalizations(locale.getLanguage());
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)

@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.City;
+import ru.ildar.database.entities.LocalizedCity;
 import ru.ildar.services.CityService;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -30,6 +32,11 @@ public class CitiesController
     {
         Map<String, String> result = new HashMap<>();
         cityService.addCity(city);
+
+        //Adding default localization - English
+        LocalizedCity localizedCity = new LocalizedCity(city.getId(), city.getCityName());
+        cityService.setCityAndLanguageAndAddCityLocalization(city.getId(), Locale.US.getLanguage(),
+                localizedCity);
 
         result.put("cityId", String.valueOf(city.getId()));
         result.put("status", "OK");

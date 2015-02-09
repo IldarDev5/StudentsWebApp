@@ -61,7 +61,8 @@ public class CitiesLocalizationController
             return new ModelAndView("localizeCity", "cityLocalization", cityLocPojo);
         }
 
-        LocalizedCity cityLoc = new LocalizedCity(cityLocPojo.getLocCityId(), cityLocPojo.getCityTranslation());
+        LocalizedCity cityLoc = new
+                LocalizedCity(cityLocPojo.getLocCityId(), cityLocPojo.getCityTranslation());
         cityLoc.setTranslatedName(new String(cityLoc.getTranslatedName().getBytes("ISO-8859-1"), "UTF-8"));
         cityService.setCityAndLanguageAndAddCityLocalization(cityLocPojo.getCityId(),
                 cityLocPojo.getLanguage(), cityLoc);

@@ -47,8 +47,9 @@
                     <spring:message code="stud.reg.chooseCity" />
                 </form:label>
             </td>
-            <td><%--@elvariable id="cities" type="java.util.List<ru.ildar.database.entities.City>"--%>
-            <form:select path="citySelect" items="${cities}" itemValue="id" itemLabel="cityName" /></td>
+            <td><%--@elvariable id="cities" type="java.util.List<ru.ildar.database.entities.LocalizedCity>"--%>
+            <form:select path="citySelect" items="${cities}"
+                         itemValue="city.id" itemLabel="translatedName" /></td>
             <td><form:errors path="citySelect" /></td>
         </tr>
         <tr>

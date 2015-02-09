@@ -10,6 +10,7 @@ import ru.ildar.database.repositories.LocalizedCityDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class CityService
@@ -60,5 +61,26 @@ public class CityService
     public void removeCity(int cityId)
     {
         cityDAO.delete(cityId);
+    }
+
+    public List<LocalizedCity> getCitiesLocalizations(String languageAbbrev)
+    {
+        Iterable<City> cities = cityDAO.findAll();
+        List<LocalizedCity> citiesLocs = new ArrayList<>();
+        cities.forEach((city) ->
+        {
+            LocalizedCity cityLoc = localizedCityDAO.findByCity_IdAndLanguage_Abbreviation
+                    (city.getId(), languageAbbrev);
+            if(cityLoc != null)
+                citiesLocs.add(cityLoc);
+            else
+            //If there's no city localization for such locale, add default locale - English
+            {
+                cityLoc = localizedCityDAO.findByCity_IdAndLanguage_Abbreviation
+                        (city.getId(), Locale.US.getLanguage());
+                citiesLocs.add(cityLoc);
+            }
+        });
+        return citiesLocs;
     }
 }

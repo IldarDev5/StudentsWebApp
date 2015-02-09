@@ -25,7 +25,7 @@
         <tr>
             <td><spring:message code="uni.city" />:</td>
             <td><form:select path="cityId"
-                    items="${cities}" itemLabel="cityName" itemValue="id" /></td>
+                    items="${cities}" itemLabel="translatedName" itemValue="city.id" /></td>
         </tr>
         <tr>
             <td><spring:message code="uni.name" />:</td>

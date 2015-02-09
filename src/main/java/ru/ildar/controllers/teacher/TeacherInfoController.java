@@ -2,16 +2,20 @@ package ru.ildar.controllers.teacher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.JsonTeacherDetails;
+import ru.ildar.database.entities.LocalizedCity;
 import ru.ildar.database.entities.Teacher;
+import ru.ildar.services.CityService;
 import ru.ildar.services.TeacherService;
 
 import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/info/teacher")
@@ -19,10 +23,12 @@ public class TeacherInfoController
 {
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private CityService cityService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView userInfo(@RequestParam(value = "username", required = false) String username,
-                                 Principal principal)
+                                 Principal principal, Locale locale, ModelMap model)
     {
         if(username == null)
             username = principal.getName();
@@ -31,6 +37,15 @@ public class TeacherInfoController
         if(teacher.getPersonPhoto() != null)
             //Set bytes size to 1 so JSP side would know that this teacher has an avatar
             teacher.setPersonPhoto(new byte[1]);
+
+        //Adding city localization; if there's no localization of the current locale,
+        //set default localization - US
+        int cityId = teacher.getUniversity().getCity().getId();
+        LocalizedCity cityLoc = cityService.getLocalization(cityId, locale.getLanguage());
+        if(cityLoc == null)
+            cityLoc = cityService.getLocalization(cityId, Locale.US.getLanguage());
+
+        model.addAttribute("cityLoc", cityLoc);
         return new ModelAndView("teacherInfo", "teacher", teacher);
     }
 

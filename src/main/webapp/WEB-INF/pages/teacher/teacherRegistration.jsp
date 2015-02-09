@@ -57,7 +57,8 @@
                     <spring:message code="teach.reg.city" />
                 </form:label>
             </td>
-            <td><form:select path="citySelect" items="${cities}" itemLabel="cityName" itemValue="id" /></td>
+            <td><form:select path="citySelect" items="${cities}"
+                             itemLabel="translatedName" itemValue="city.id" /></td>
             <td><form:errors path="citySelect" /></td>
         </tr>
         <tr>

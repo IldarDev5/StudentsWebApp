@@ -1,3 +1,4 @@
+<%--@elvariable id="cityLoc" type="ru.ildar.database.entities.LocalizedCity"--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -50,7 +51,7 @@
     <tr>
         <td><spring:message code="stud.unName" /></td>
         <td id="universityTd">${stud.group.faculty.university.unName},
-        ${stud.group.faculty.university.city.cityName}</td>
+        ${cityLoc.translatedName}</td>
     </tr>
 </table>
 

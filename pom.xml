@@ -21,6 +21,20 @@
       <io.version>2.4</io.version>
   </properties>
 
+    <developers>
+        <developer>
+            <id>ildar</id>
+            <name>Ildar Sayfeev</name>
+            <url>http://github.com/IldarS1995</url>
+            <email>ildars1995@gmail.com</email>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+        </developer>
+    </developers>
+
   <dependencies>
       <dependency>
           <groupId>org.springframework</groupId>
