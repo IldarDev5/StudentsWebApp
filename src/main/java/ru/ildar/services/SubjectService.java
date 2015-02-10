@@ -89,15 +89,43 @@ public class SubjectService
         subjectDAO.delete(subjectName);
     }
 
-    public void setSubjectAndLangAndSaveLocalization(String subjectName, String langAbbrev, LocalizedSubject subject)
+    /**
+     * Save localization, but before this set subject specified by its name and
+     * language specified by its abbreviation
+     * @param subjectName Name of the subject whose localization to save
+     * @param langAbbrev Abbreviation of the language
+     * @param locSubject Localized subject object to save
+     */
+    public void setSubjectAndLangAndSaveLocalization(String subjectName,
+                                                     String langAbbrev, LocalizedSubject locSubject)
     {
-        subject.setSubject(subjectDAO.findOne(subjectName));
-        subject.setLanguage(languageService.getLanguageByAbbreviation(langAbbrev));
-        localizedSubjectDAO.save(subject);
+        locSubject.setSubject(subjectDAO.findOne(subjectName));
+        locSubject.setLanguage(languageService.getLanguageByAbbreviation(langAbbrev));
+        localizedSubjectDAO.save(locSubject);
     }
 
+    /**
+     * Returns localization of a subject
+     * @param subjectName Name of the subject whose localization to return
+     * @param languageAbbrev Abbreviation of the language which is the localization's language
+     */
     public LocalizedSubject getSubjectLocalization(String subjectName, String languageAbbrev)
     {
-        return localizedSubjectDAO.findBySubject_SubjectNameAndLanguage_Abbreviation(subjectName, languageAbbrev);
+        return localizedSubjectDAO.findBySubject_SubjectNameAndLanguage_Abbreviation
+                (subjectName, languageAbbrev);
+    }
+
+    /**
+     * Remove subject localization by the localization ID
+     */
+    public void removeSubjectLocalization(Integer id)
+    {
+        localizedSubjectDAO.delete(id);
+    }
+
+    public void setLanguageAndSaveLocalization(String languageAbbrev, LocalizedSubject locSubject)
+    {
+        locSubject.setLanguage(languageService.getLanguageByAbbreviation(languageAbbrev));
+        localizedSubjectDAO.save(locSubject);
     }
 }

@@ -14,7 +14,7 @@ public class LocalizedCityPojo
     private Integer locCityId;
 
     @NotNull
-    @Size(min = 0, max = 25)
+    @Size(min = 2, max = 25)
     private String language;
 
     @NotNull

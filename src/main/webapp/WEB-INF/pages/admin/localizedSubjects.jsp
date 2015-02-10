@@ -14,16 +14,19 @@
             <td><%--@elvariable id="subjects" type="java.util.List<ru.ildar.database.entities.Subject>"--%>
             <form:select path="subjectName" items="${subjects}"
                              itemLabel="subjectName" itemValue="subjectName" /></td>
+            <td><form:errors path="subjectName" /></td>
         </tr>
         <tr>
             <td><spring:message code="sub.language" />:</td>
             <td><%--@elvariable id="languages" type="java.util.List<ru.ildar.database.entities.Language>"--%>
             <form:select path="languageAbbrev" items="${languages}"
                          itemValue="abbreviation" itemLabel="language" /></td>
+            <td><form:errors path="languageAbbrev" /></td>
         </tr>
         <tr>
             <td><spring:message code="sub.translation" />:</td>
             <td><form:input path="subjectTranslation" /></td>
+            <td><form:errors path="subjectTranslation" /></td>
         </tr>
     </table>
     <form:hidden path="id" />

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.LocalizedCityPojo;
@@ -28,15 +29,14 @@ public class CitiesLocalizationController
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView localizeCity(@RequestParam("cityId") int cityId, ModelMap model)
     {
-        model.addAttribute("languages", languageService.getAllLanguages());
-        model.addAttribute("city", cityService.getById(cityId));
-        return new ModelAndView("localizeCity", "cityLocalization", new LocalizedCityPojo());
+        return cityLocalizationView(new LocalizedCityPojo(), cityId, model);
     }
 
     @RequestMapping(value = "get", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, String> getLocalization(@RequestParam("cityId") int cityId,
                                                @RequestParam("language") String langAbbrev)
+            //Get localization of the specified city in the specified language via AJAX call
     {
         Map<String, String> result = new HashMap<>();
         LocalizedCity cityLoc = cityService.getLocalization(cityId, langAbbrev);
@@ -56,16 +56,34 @@ public class CitiesLocalizationController
     {
         if(result.hasErrors())
         {
-            model.addAttribute("languages", languageService.getAllLanguages());
-            model.addAttribute("city", cityService.getById(cityLocPojo.getCityId()));
-            return new ModelAndView("localizeCity", "cityLocalization", cityLocPojo);
+            return cityLocalizationView(cityLocPojo, cityLocPojo.getCityId(), model);
         }
 
         LocalizedCity cityLoc = new
                 LocalizedCity(cityLocPojo.getLocCityId(), cityLocPojo.getCityTranslation());
+        if(cityLoc.getTranslatedName().length() == 0)
+            //Admin tries to remove the city localization;
+            //Remove localization only if it's not the default localization(English)
+        {
+            if(!cityService.removeCityLocalization(cityLocPojo.getLocCityId()))
+            {
+                //Admin tried to remove the default localization
+                result.rejectValue("cityTranslation", "localizeCity.cantDeleteDefaultTranslation");
+                return cityLocalizationView(cityLocPojo, cityLocPojo.getCityId(), model);
+            }
+            return new ModelAndView("redirect:/admin/cities");
+        }
+
         cityLoc.setTranslatedName(new String(cityLoc.getTranslatedName().getBytes("ISO-8859-1"), "UTF-8"));
         cityService.setCityAndLanguageAndAddCityLocalization(cityLocPojo.getCityId(),
                 cityLocPojo.getLanguage(), cityLoc);
         return new ModelAndView("redirect:/admin/cities");
+    }
+
+    private ModelAndView cityLocalizationView(LocalizedCityPojo cityLocPojo, int cityId, ModelMap model)
+    {
+        model.addAttribute("languages", languageService.getAllLanguages());
+        model.addAttribute("city", cityService.getById(cityId));
+        return new ModelAndView("localizeCity", "cityLocalization", cityLocPojo);
     }
 }

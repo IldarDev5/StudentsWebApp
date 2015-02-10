@@ -40,24 +40,31 @@ public class SubjectsLocalizationController
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ModelAndView localizedSubjects(@ModelAttribute("subject") @Valid LocalizedSubjectPojo
-                                                  subjectPojo, BindingResult result, ModelMap model)
+                                                 locSubjectPojo, BindingResult result, ModelMap model)
             throws UnsupportedEncodingException
     {
         if(result.hasErrors())
         {
             model.addAttribute("subjects", subjectService.getAllSubjects());
             model.addAttribute("languages", languageService.getAllLanguages());
-            return new ModelAndView("localizedSubjects", "subject", subjectPojo);
+            return new ModelAndView("localizedSubjects", "subject", locSubjectPojo);
+        }
+
+        if(locSubjectPojo.getSubjectTranslation().length() == 0 && locSubjectPojo.getId() != null)
+            //Admin tries to set the subject translation empty
+        {
+            subjectService.removeSubjectLocalization(locSubjectPojo.getId());
+            return new ModelAndView("redirect:/admin/subjects");
         }
 
         //transform subject translation encoding from ISO-8859-1 to UTF-8
         //otherwise text will not be readable
-        subjectPojo.setSubjectTranslation(new String(subjectPojo
+        locSubjectPojo.setSubjectTranslation(new String(locSubjectPojo
                 .getSubjectTranslation().getBytes("ISO-8859-1"), "UTF-8"));
-        LocalizedSubject subject = new LocalizedSubject(subjectPojo.getId(),
-                null, subjectPojo.getSubjectTranslation(), null);
+        LocalizedSubject subject = new LocalizedSubject(locSubjectPojo.getId(),
+                null, locSubjectPojo.getSubjectTranslation(), null);
         subjectService.setSubjectAndLangAndSaveLocalization
-                (subjectPojo.getSubjectName(), subjectPojo.getLanguageAbbrev(), subject);
+                (locSubjectPojo.getSubjectName(), locSubjectPojo.getLanguageAbbrev(), subject);
         return new ModelAndView("redirect:/admin/subjects");
     }
 
@@ -67,11 +74,11 @@ public class SubjectsLocalizationController
                                   @RequestParam("lang") String languageAbbrev)
     {
         Map<String, String> result = new HashMap<>();
-        LocalizedSubject subject = subjectService.getSubjectLocalization(subjectName, languageAbbrev);
-        if(subject != null)
+        LocalizedSubject locSubject = subjectService.getSubjectLocalization(subjectName, languageAbbrev);
+        if(locSubject != null)
         {
-            result.put("translation", subject.getSubjectTranslation());
-            result.put("id", String.valueOf(subject.getId()));
+            result.put("translation", locSubject.getSubjectTranslation());
+            result.put("id", String.valueOf(locSubject.getId()));
         }
 
         return result;

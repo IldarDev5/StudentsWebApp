@@ -6,11 +6,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.ildar.database.entities.LocalizedSubject;
 import ru.ildar.database.entities.Subject;
 import ru.ildar.services.SubjectService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Administrator controller that handles CRUD operations with subjects
@@ -58,6 +60,10 @@ public class SubjectsController
         }
 
         subjectService.addSubject(subject);
+        //Add also default localization for this subject
+        subjectService.setLanguageAndSaveLocalization(Locale.US.getLanguage(),
+                new LocalizedSubject(null, subject, subject.getSubjectName(), null));
+
         return new ModelAndView("redirect:/admin/subjects");
     }
 

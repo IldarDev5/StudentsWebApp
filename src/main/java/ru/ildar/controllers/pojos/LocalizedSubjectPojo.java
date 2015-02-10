@@ -18,7 +18,7 @@ public class LocalizedSubjectPojo
     private String languageAbbrev;
 
     @NotNull
-    @Size(min = 2, max = 100)
+    @Size(min = 0, max = 100)
     private String subjectTranslation;
 
     public Integer getId()
