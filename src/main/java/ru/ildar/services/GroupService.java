@@ -1,64 +1,33 @@
 package ru.ildar.services;
 
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import ru.ildar.database.entities.Faculty;
 import ru.ildar.database.entities.Group;
-import ru.ildar.database.repositories.FacultyDAO;
-import ru.ildar.database.repositories.GroupDAO;
 
 @Service
-public class GroupService
+public interface GroupService
 {
-    @Autowired
-    private GroupDAO groupDAO;
-    @Autowired
-    private FacultyService facultyService;
-
     /**
      * Find a group by the specified group ID, initialize its
      * students collection, and return it
      * @param groupId ID of the group
      */
-    public Group getGroupWithStudents(String groupId)
-    {
-        Group group = groupDAO.findOne(groupId);
-        Hibernate.initialize(group.getStudents());
-        return group;
-    }
+    Group getGroupWithStudents(String groupId);
 
     /**
      * Returns groups of the specified faculty
      * @param facultyId ID of the faculty
      */
-    public Iterable<Group> getGroupsByFaculty(int facultyId)
-    {
-        return groupDAO.findByFaculty_FacultyIdOrderByGroupIdAscStudentsCountAsc(facultyId);
-    }
+    Iterable<Group> getGroupsByFaculty(int facultyId);
 
     /**
      * Adds the specified group to the faculty
      * @param group Group to add
      * @param facultyId ID of the faculty
      */
-    public void addGroupToFaculty(Group group, int facultyId)
-    {
-        Group gr = groupDAO.findOne(group.getGroupId());
-        if(gr != null)
-            throw new DuplicateKeyException("Group with such ID already exists.");
-
-        Faculty faculty = facultyService.get(facultyId);
-        group.setFaculty(faculty);
-        groupDAO.save(group);
-    }
+    void addGroupToFaculty(Group group, int facultyId);
 
     /**
      * Returns a group by its ID
      */
-    public Group getGroupById(String groupId)
-    {
-        return groupDAO.findOne(groupId);
-    }
+    Group getGroupById(String groupId);
 }

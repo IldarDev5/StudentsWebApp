@@ -8,17 +8,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.ildar.database.entities.Person;
 import ru.ildar.services.PersonService;
 import ru.ildar.services.PictureService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import java.security.Principal;
 
 @Controller
 @RequestMapping("/info")
 public class InfoController
 {
-    @Autowired
     private PictureService pictureService;
-    @Autowired
     private PersonService personService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        pictureService = serviceFactory.getPictureService();
+        personService = serviceFactory.getPersonService();
+    }
 
     @RequestMapping(value = "removePic", method = RequestMethod.POST)
     public String removeAvatar(@RequestParam("username") String username)

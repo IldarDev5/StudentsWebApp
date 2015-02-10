@@ -12,7 +12,9 @@ import ru.ildar.database.entities.University;
 import ru.ildar.database.entities.UniversityDescription;
 import ru.ildar.services.LanguageService;
 import ru.ildar.services.UniversityService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import java.beans.PropertyEditorSupport;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
@@ -24,10 +26,18 @@ import java.util.Locale;
 @RequestMapping("/admin/unis/description")
 public class UniversityDescriptionsController
 {
-    @Autowired
     private UniversityService universityService;
-    @Autowired
     private LanguageService languageService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        universityService = serviceFactory.getUniversityService();
+        languageService = serviceFactory.getLanguageService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView viewDescription(@RequestParam("unId") int unId, Locale locale, ModelMap model)

@@ -10,7 +10,9 @@ import ru.ildar.controllers.pojos.LocalizedSubjectPojo;
 import ru.ildar.database.entities.LocalizedSubject;
 import ru.ildar.services.LanguageService;
 import ru.ildar.services.SubjectService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -23,10 +25,18 @@ import java.util.Map;
 @RequestMapping("/admin/subjects/localized")
 public class SubjectsLocalizationController
 {
-    @Autowired
     private SubjectService subjectService;
-    @Autowired
     private LanguageService languageService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        subjectService = serviceFactory.getSubjectService();
+        languageService = serviceFactory.getLanguageService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView localizedSubjects(@RequestParam("subject") String subject, ModelMap model)

@@ -1,52 +1,35 @@
 package ru.ildar.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.Faculty;
-import ru.ildar.database.repositories.FacultyDAO;
 
 @Service
-public class FacultyService
+public interface FacultyService
 {
-    @Autowired
-    private FacultyDAO facultyDAO;
-
-    public void saveOrUpdateFaculty(Faculty fac)
-    {
-        Faculty otherFac = facultyDAO.
-                findByUniversity_UnIdAndFacultyName(fac.getUniversity().getUnId(), fac.getFacultyName());
-        if(otherFac != null)
-        {
-            throw new DuplicateKeyException("Faculty with such name already exists in the specified university");
-        }
-
-        facultyDAO.save(fac);
-    }
+    /**
+     * Saves or updates faculty in the database
+     */
+    void saveOrUpdateFaculty(Faculty fac);
 
     /**
      * Returns faculties of the university, specified by the ID
      */
-    public Iterable<Faculty> getFacultiesByUniversity(int universityId)
-    {
-        return facultyDAO.findByUniversity_UnId(universityId);
-    }
+    Iterable<Faculty> getFacultiesByUniversity(int universityId);
 
     /**
      * Remove a faculty by its ID
      */
-    public void removeFaculty(int facultyId)
-    {
-        facultyDAO.delete(facultyId);
-    }
+    void removeFaculty(int facultyId);
 
-    public int getStudentsCount(int unId)
-    {
-        return facultyDAO.sumByUniversity_UnId(unId);
-    }
+    /**
+     * Returns count of students in this university - sum of counts of all students
+     * in the faculties of this university
+     * @param unId ID of the university whose count of students to return
+     */
+    int getStudentsCount(int unId);
 
-    public Faculty get(int facultyId)
-    {
-        return facultyDAO.findOne(facultyId);
-    }
+    /**
+     * Returns the faculty specified by its ID
+     */
+    Faculty get(int facultyId);
 }

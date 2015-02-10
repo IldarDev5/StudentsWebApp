@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.*;
 import ru.ildar.services.TeacherService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Set;
 
@@ -18,8 +20,16 @@ import java.util.Set;
 @RequestMapping("/admin/teachers")
 public class TeachersController
 {
-    @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        teacherService = serviceFactory.getTeacherService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView teachers(ModelMap model)

@@ -8,6 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.City;
 import ru.ildar.database.entities.LocalizedCity;
 import ru.ildar.services.CityService;
+import ru.ildar.services.factory.ServiceFactory;
+
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -16,8 +19,16 @@ import java.util.Map;
 @RequestMapping(value = "/admin/cities")
 public class CitiesController
 {
-    @Autowired
     private CityService cityService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        cityService = serviceFactory.getCityService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView viewCities()
@@ -35,8 +46,7 @@ public class CitiesController
 
         //Adding default localization - English
         LocalizedCity localizedCity = new LocalizedCity(city.getId(), city.getCityName());
-        cityService.setCityAndLanguageAndAddCityLocalization(city.getId(), Locale.US.getLanguage(),
-                localizedCity);
+        cityService.setCityAndLanguageAndAddCityLocalization(city.getId(), Locale.US.getLanguage(), localizedCity);
 
         result.put("cityId", String.valueOf(city.getId()));
         result.put("status", "OK");

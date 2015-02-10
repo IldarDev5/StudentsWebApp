@@ -10,7 +10,9 @@ import ru.ildar.database.entities.LocalizedCity;
 import ru.ildar.database.entities.Teacher;
 import ru.ildar.services.CityService;
 import ru.ildar.services.TeacherService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
@@ -21,10 +23,18 @@ import java.util.Locale;
 @RequestMapping("/info/teacher")
 public class TeacherInfoController
 {
-    @Autowired
     private TeacherService teacherService;
-    @Autowired
     private CityService cityService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        teacherService = serviceFactory.getTeacherService();
+        cityService = serviceFactory.getCityService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView userInfo(@RequestParam(value = "username", required = false) String username,

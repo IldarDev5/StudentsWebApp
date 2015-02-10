@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.*;
 import ru.ildar.services.*;
+import ru.ildar.services.factory.ServiceFactory;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Controller that gives access to the information available
@@ -15,8 +18,16 @@ import ru.ildar.services.*;
 @RequestMapping(value = "/auth")
 public class AuthController
 {
-    @Autowired
     private GroupService groupService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        groupService = serviceFactory.getGroupService();
+    }
 
     @RequestMapping(value = "studentGroup", method = RequestMethod.GET)
     public ModelAndView studentGroup(@RequestParam("groupId") String groupId)

@@ -11,7 +11,9 @@ import ru.ildar.controllers.pojos.LocalizedCityPojo;
 import ru.ildar.database.entities.LocalizedCity;
 import ru.ildar.services.CityService;
 import ru.ildar.services.LanguageService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -21,10 +23,18 @@ import java.util.Map;
 @RequestMapping("/admin/cities/localize")
 public class CitiesLocalizationController
 {
-    @Autowired
     private CityService cityService;
-    @Autowired
     private LanguageService languageService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        cityService = serviceFactory.getCityService();
+        languageService = serviceFactory.getLanguageService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView localizeCity(@RequestParam("cityId") int cityId, ModelMap model)
@@ -75,8 +85,7 @@ public class CitiesLocalizationController
         }
 
         cityLoc.setTranslatedName(new String(cityLoc.getTranslatedName().getBytes("ISO-8859-1"), "UTF-8"));
-        cityService.setCityAndLanguageAndAddCityLocalization(cityLocPojo.getCityId(),
-                cityLocPojo.getLanguage(), cityLoc);
+        cityService.setCityAndLanguageAndAddCityLocalization(cityLocPojo.getCityId(), cityLocPojo.getLanguage(), cityLoc);
         return new ModelAndView("redirect:/admin/cities");
     }
 

@@ -10,7 +10,9 @@ import ru.ildar.database.entities.*;
 import ru.ildar.services.GradeService;
 import ru.ildar.services.StudentService;
 import ru.ildar.services.TeacherService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import java.security.Principal;
 import java.util.List;
 import java.util.Locale;
@@ -19,8 +21,16 @@ import java.util.Locale;
 @RequestMapping("/teacher")
 public class TeacherController
 {
-    @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        teacherService = serviceFactory.getTeacherService();
+    }
 
     @RequestMapping(value = "groups", method = RequestMethod.GET)
     public ModelAndView teacherGroups(Principal principal, Locale locale)

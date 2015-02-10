@@ -12,7 +12,9 @@ import ru.ildar.database.entities.Grade;
 import ru.ildar.database.entities.Teacher;
 import ru.ildar.services.GradeService;
 import ru.ildar.services.TeacherService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import java.security.Principal;
 import java.util.*;
 
@@ -24,10 +26,18 @@ import java.util.*;
 @RequestMapping("/stud")
 public class StudentController
 {
-    @Autowired
     private GradeService gradeService;
-    @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        gradeService = serviceFactory.getGradeService();
+        teacherService = serviceFactory.getTeacherService();
+    }
 
     @RequestMapping(value = "grades", method = RequestMethod.GET)
     public ModelAndView studGrades(Principal principal)

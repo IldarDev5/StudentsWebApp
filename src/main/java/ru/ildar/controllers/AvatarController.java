@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.ildar.services.PictureService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
@@ -20,8 +22,16 @@ import java.security.Principal;
 @RequestMapping("/pictures")
 public class AvatarController
 {
-    @Autowired
     private PictureService pictureService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        pictureService = serviceFactory.getPictureService();
+    }
 
     @RequestMapping(value = "avatar", method = RequestMethod.GET)
     public void showAvatar(@RequestParam(value = "username", required = false) String username,

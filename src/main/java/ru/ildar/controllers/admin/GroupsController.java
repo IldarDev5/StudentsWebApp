@@ -8,7 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.Group;
 import ru.ildar.services.CityService;
 import ru.ildar.services.GroupService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,10 +23,18 @@ import java.util.Map;
 @RequestMapping("/admin/groups")
 public class GroupsController
 {
-    @Autowired
     private GroupService groupService;
-    @Autowired
     private CityService cityService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        groupService = serviceFactory.getGroupService();
+        cityService = serviceFactory.getCityService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView groups()

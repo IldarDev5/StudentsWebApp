@@ -9,7 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.LocalizedSubject;
 import ru.ildar.database.entities.Subject;
 import ru.ildar.services.SubjectService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
@@ -21,8 +23,16 @@ import java.util.Locale;
 @RequestMapping("/admin/subjects")
 public class SubjectsController
 {
-    @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        subjectService = serviceFactory.getSubjectService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView subjects(ModelMap model)
@@ -61,8 +71,7 @@ public class SubjectsController
 
         subjectService.addSubject(subject);
         //Add also default localization for this subject
-        subjectService.setLanguageAndSaveLocalization(Locale.US.getLanguage(),
-                new LocalizedSubject(null, subject, subject.getSubjectName(), null));
+        subjectService.setLanguageAndSaveLocalization(Locale.US.getLanguage(), new LocalizedSubject(null, subject, subject.getSubjectName(), null));
 
         return new ModelAndView("redirect:/admin/subjects");
     }

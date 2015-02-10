@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.News;
 import ru.ildar.services.NewsService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
@@ -23,8 +25,16 @@ import java.sql.Timestamp;
 @RequestMapping("/admin/news")
 public class NewsController
 {
-    @Autowired
     private NewsService newsService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        newsService = serviceFactory.getNewsService();
+    }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public ModelAndView addNews()

@@ -6,14 +6,24 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.ildar.database.entities.News;
 import ru.ildar.services.NewsService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @ControllerAdvice
 public class CommonController
 {
-    @Autowired
     private NewsService newsService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        newsService = serviceFactory.getNewsService();
+    }
 
     @ModelAttribute("utils")
     public RequestUtils utils()

@@ -1,63 +1,47 @@
 package ru.ildar.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.News;
-import ru.ildar.database.entities.Person;
-import ru.ildar.database.repositories.NewsDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class NewsService
+public interface NewsService
 {
-    @Autowired
-    private NewsDAO newsDAO;
-    @Autowired
-    private PersonService personService;
+    /**
+     * Returns news on the specified page
+     * @param page Number of page from which news are to be returned
+     * @param newsCountPerPage Count of news per page
+     */
+    List<News> getNews(int page, int newsCountPerPage);
 
-    public List<News> getNews(int page, int newsCountPerPage)
-    {
-        Page<News> news = newsDAO.findAll(new PageRequest(page, newsCountPerPage,
-                new Sort(Sort.Direction.DESC, "publishDate")));
-        List<News> result = new ArrayList<>();
-        news.forEach(result::add);
-        return result;
-    }
+    /**
+     * Returns single news by its ID
+     */
+    News getNews(int newsId);
 
-    public News getNews(int newsId)
-    {
-        return newsDAO.findOne(newsId);
-    }
+    /**
+     * Returns amount of pages of news
+     * @param newsPerPage Count of news per page
+     */
+    Integer pagesCount(int newsPerPage);
 
-    public Integer pagesCount(int newsPerPage)
-    {
-        return (int)Math.ceil((double)newsDAO.count() / newsPerPage);
-    }
+    /**
+     * Saves news instance into the database, but before this sets author to the news
+     * specified by his username
+     * @param news News instance to save to DB
+     * @param username Username of the author to set to the news
+     */
+    void setAuthorAndSaveNews(News news, String username);
 
-    public void setAuthorAndSaveNews(News news, String username)
-    {
-        Person person = personService.getByUserName(username);
-        news.setAuthor(person);
-        newsDAO.save(news);
-    }
+    /**
+     * Remove single news instance from the database
+     * @param newsId ID of the news to delete
+     */
+    void removeNews(int newsId);
 
-    public void removeNews(int newsId)
-    {
-        newsDAO.delete(newsId);
-    }
-
-    public void updateNews(News news)
-    {
-        News prevNews = newsDAO.findOne(news.getNewsId());
-        if(prevNews != null)
-        {
-            prevNews.setBriefDescription(news.getBriefDescription());
-            prevNews.setFullDescription(news.getFullDescription());
-        }
-    }
+    /**
+     * Updates news instance in the database
+     */
+    void updateNews(News news);
 }

@@ -23,7 +23,9 @@ import ru.ildar.database.entities.Teacher;
 import ru.ildar.services.CityService;
 import ru.ildar.services.PersonService;
 import ru.ildar.services.TeacherService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
@@ -33,12 +35,20 @@ import java.util.Locale;
 @RequestMapping("/register/teacher")
 public class TeacherRegisterController
 {
-    @Autowired
     private TeacherService teacherService;
-    @Autowired
     private PersonService personService;
-    @Autowired
     private CityService cityService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        teacherService = serviceFactory.getTeacherService();
+        personService = serviceFactory.getPersonService();
+        cityService = serviceFactory.getCityService();
+    }
 
     @ModelAttribute("cities")
     public List<LocalizedCity> cities(Locale locale)

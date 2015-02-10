@@ -18,7 +18,9 @@ import ru.ildar.database.entities.UniversityDescription;
 import ru.ildar.services.CityService;
 import ru.ildar.services.LanguageService;
 import ru.ildar.services.UniversityService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -40,10 +42,18 @@ import java.util.Locale;
 @RequestMapping("/admin/unis")
 public class UniversitiesController
 {
-    @Autowired
     private UniversityService universityService;
-    @Autowired
     private CityService cityService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        universityService = serviceFactory.getUniversityService();
+        cityService = serviceFactory.getCityService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView getUniversities(ModelMap model)

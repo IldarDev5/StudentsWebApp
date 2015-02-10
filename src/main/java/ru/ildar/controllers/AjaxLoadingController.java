@@ -14,7 +14,9 @@ import ru.ildar.services.CityService;
 import ru.ildar.services.FacultyService;
 import ru.ildar.services.GroupService;
 import ru.ildar.services.UniversityService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,15 +28,22 @@ import java.util.List;
 @RequestMapping("/ajax")
 public class AjaxLoadingController
 {
-    @Autowired
     private GroupService groupService;
-    @Autowired
     private CityService cityService;
-    @Autowired
     private UniversityService universityService;
-    @Autowired
     private FacultyService facultyService;
 
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        groupService = serviceFactory.getGroupService();
+        cityService = serviceFactory.getCityService();
+        universityService = serviceFactory.getUniversityService();
+        facultyService = serviceFactory.getFacultyService();
+    }
 
     public static class IdVal<I>
     {

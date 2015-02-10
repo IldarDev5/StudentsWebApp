@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.Person;
 import ru.ildar.database.repositories.PersonDAO;
+import ru.ildar.services.PersonService;
+import ru.ildar.services.factory.ServiceFactory;
 
 import java.util.Arrays;
 
@@ -19,12 +21,12 @@ import java.util.Arrays;
 public class LoginUserDetailsService implements UserDetailsService
 {
     @Autowired
-    private PersonService personService;
+    private ServiceFactory serviceFactory;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        Person p = personService.getByUserName(username);
+        Person p = serviceFactory.getPersonService().getByUserName(username);
         return new User(username, p.getPassword(), true, true, true, true,
                 Arrays.asList(new SimpleGrantedAuthority(p.getRoleName())));
     }

@@ -14,7 +14,9 @@ import ru.ildar.database.entities.Faculty;
 import ru.ildar.database.entities.University;
 import ru.ildar.services.FacultyService;
 import ru.ildar.services.UniversityService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.text.ParseException;
@@ -27,10 +29,18 @@ import java.text.SimpleDateFormat;
 @RequestMapping("/admin/faculties")
 public class FacultiesController
 {
-    @Autowired
     private UniversityService universityService;
-    @Autowired
     private FacultyService facultyService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        universityService = serviceFactory.getUniversityService();
+        facultyService = serviceFactory.getFacultyService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView faculties(@RequestParam("un_id") int unId)

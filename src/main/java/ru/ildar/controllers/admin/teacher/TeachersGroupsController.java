@@ -15,7 +15,9 @@ import ru.ildar.database.entities.TeachersGroups;
 import ru.ildar.services.CityService;
 import ru.ildar.services.SubjectService;
 import ru.ildar.services.TeacherService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -28,12 +30,20 @@ import java.util.List;
 @RequestMapping("/admin/teachers/groups")
 public class TeachersGroupsController
 {
-    @Autowired
     private CityService cityService;
-    @Autowired
     private TeacherService teacherService;
-    @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        cityService = serviceFactory.getCityService();
+        teacherService = serviceFactory.getTeacherService();
+        subjectService = serviceFactory.getSubjectService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView teachersGroups(ModelMap model)

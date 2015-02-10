@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.StudentRegisterPojo;
-import ru.ildar.database.entities.City;
 import ru.ildar.database.entities.LocalizedCity;
 import ru.ildar.database.entities.Person;
 import ru.ildar.database.entities.Student;
 import ru.ildar.services.CityService;
 import ru.ildar.services.PersonService;
 import ru.ildar.services.StudentService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
@@ -37,12 +38,20 @@ import java.util.Locale;
 @RequestMapping("/register/student")
 public class StudentRegisterController
 {
-    @Autowired
     private StudentService studentService;
-    @Autowired
     private PersonService personService;
-    @Autowired
     private CityService cityService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        cityService = serviceFactory.getCityService();
+        personService = serviceFactory.getPersonService();
+        studentService = serviceFactory.getStudentService();
+    }
 
     @ModelAttribute("cities")
     public List<LocalizedCity> cities(Locale locale)

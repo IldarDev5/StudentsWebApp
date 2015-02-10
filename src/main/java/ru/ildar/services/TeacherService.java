@@ -1,110 +1,47 @@
 package ru.ildar.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.*;
-import ru.ildar.database.repositories.*;
 
 import java.util.*;
 
 @Service
-public class TeacherService
+public interface TeacherService
 {
-    @Autowired
-    private TeacherDAO teacherDAO;
-    @Autowired
-    private TeachersGroupsDAO teachersGroupsDAO;
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private UniversityService universityService;
-    @Autowired
-    private GroupService groupService;
-    @Autowired
-    private SubjectService subjectService;
-
     /**
      * Returns teachers of the specified subject.
      * The method searches, whether any of the teachers teaches
      * this subject some group, and collects all these teachers
      */
-    public Set<Teacher> getTeachersBySubject(String subjectName)
-    {
-        List<TeachersGroups> lst = teachersGroupsDAO.findBySubjectName(subjectName);
-        Set<Teacher> teachers = new TreeSet<>();
-        lst.forEach((tg) -> teachers.add(tg.getTeacher()));
-        return teachers;
-    }
+    Set<Teacher> getTeachersBySubject(String subjectName);
 
     /**
      * Rounding method for amount of pages
      */
-    public int getTeachersPagesCount(int teachersPerPage)
-    {
-        return (int)Math.ceil((double)teacherDAO.count() / teachersPerPage);
-    }
+    int getTeachersPagesCount(int teachersPerPage);
 
     /**
      * Returns teachers of the specified student and subjects that each teacher
      * teaches him. Teacher of the student = teacher of the group this student is in.
      */
-    public Map<Teacher, Set<String>> getStudentTeachers(String studName, Locale locale)
-    {
-        Map<Teacher, Set<String>> result = new TreeMap<>();
-        Student student = studentService.getByUsername(studName);
-        Group group = student.getGroup();
-
-        List<TeachersGroups> tgs = teachersGroupsDAO.findByGroup(group);
-        for(TeachersGroups tg : tgs)
-        {
-            if(result.containsKey(tg.getTeacher()))
-                continue;
-
-            Set<String> subjs = new TreeSet<>();
-            tgs.stream().filter((tgr) -> tgr.getTeacher().equals(tg.getTeacher()))
-                    .forEach((tgr) ->
-                    {
-                        LocalizedSubject locSubj = subjectService
-                                .getSubjectLocalization(tgr.getSubjectName(), locale.getLanguage());
-                        subjs.add(locSubj != null ? locSubj.getSubjectTranslation() : tgr.getSubjectName());
-                    });
-            result.put(tg.getTeacher(), subjs);
-        }
-
-        return result;
-    }
+    Map<Teacher, Set<String>> getStudentTeachers(String studName, Locale locale);
 
     /**
      * Returns teachers on the specified page
      * @param pageNumber Number of the page
      * @param teachersPerPage Amount of teachers per paga
      */
-    public List<Teacher> getTeachers(int pageNumber, int teachersPerPage)
-    {
-        Iterable<Teacher> teachers = teacherDAO.findAll(new PageRequest(pageNumber, teachersPerPage));
-        List<Teacher> result = new ArrayList<>();
-        teachers.forEach(result::add);
-        return result;
-    }
+    List<Teacher> getTeachers(int pageNumber, int teachersPerPage);
 
     /**
      * Returns a photo of the teacher specified by his username
      */
-    public byte[] getTeacherPhoto(String username)
-    {
-        return teacherDAO.findOne(username).getPersonPhoto();
-    }
+    byte[] getTeacherPhoto(String username);
 
     /**
      * Returns the teacher specified by his username
      */
-    public Teacher getByUserName(String username)
-    {
-        return teacherDAO.findOne(username);
-    }
+    Teacher getByUserName(String username);
 
     /**
      * Assigns the photo and the university to the teacher instance
@@ -112,56 +49,30 @@ public class TeacherService
      * @param details Teacher instance the values of which would be used for updating
      * @param unId ID of the university
      */
-    public void setUniversityAndPhotoAndUpdate(Teacher details, int unId)
-    {
-        byte[] photo = getTeacherPhoto(details.getUsername());
-        University un = universityService.getById(unId);
-        details.setPersonPhoto(photo);
-        details.setUniversity(un);
-
-        teacherDAO.save(details);
-    }
+    void setUniversityAndPhotoAndUpdate(Teacher details, int unId);
 
     /**
      * Sets the university to the teacher and updates it
      * @param teacher Teacher instance the values of which would be used for updating
      * @param uniId ID of the university
      */
-    public void setUniversityAndAddTeacher(Teacher teacher, int uniId)
-    {
-        University university = universityService.getById(uniId);
-        teacher.setUniversity(university);
-        teacherDAO.save(teacher);
-    }
+    void setUniversityAndAddTeacher(Teacher teacher, int uniId);
 
     /**
      * Get groups that this teachers teaches, no matter what subjects
      */
-    public List<TeachersGroups> getTeachersGroups(String name)
-    {
-        Sort sort = new Sort(Sort.Direction.ASC, "group_GroupId");
-        sort = sort.and(new Sort(Sort.Direction.ASC, "semester"));
-        return teachersGroupsDAO.findByTeacher_Username(name, sort);
-    }
+    List<TeachersGroups> getTeachersGroups(String name);
 
     /**
      * Returns the TeachersGroups instance specified by its ID
      */
-    public TeachersGroups getTeachersGroupsById(int id)
-    {
-        return teachersGroupsDAO.findOne(id);
-    }
+    TeachersGroups getTeachersGroupsById(int id);
 
     /**
      * Get TeachersGroups instances specified by three fields - subject, name, and student username
      */
-    public TeachersGroups getTeachersGroupsBySubjectSemesterAndGroupStudent(String subject, int semester,
-                                                 String studentSelect, String teacherUsername)
-    {
-        Student student = studentService.getByUsername(studentSelect);
-        return teachersGroupsDAO.findBySubjectNameAndSemesterAndGroupAndTeacher_Username
-                (subject, semester, student.getGroup(), teacherUsername);
-    }
+    TeachersGroups getTeachersGroupsBySubjectSemesterAndGroupStudent(String subject, int semester,
+                                                 String studentSelect, String teacherUsername);
 
     /**
      * Add TeachersGroups instance to the database, but before
@@ -170,47 +81,22 @@ public class TeacherService
      * @param groupId ID of the group
      * @param teacherUsername Username of the teacher
      */
-    public void setGroupAndTeacherAndAddTeachersGroups(TeachersGroups tg,
-                                                       String groupId, String teacherUsername)
-    {
-        Group group = groupService.getGroupById(groupId);
-        TeachersGroups otherTg = teachersGroupsDAO.findBySubjectNameAndSemesterAndGroupAndTeacher_Username
-                (tg.getSubjectName(), tg.getSemester(), group, teacherUsername);
-        if(otherTg != null)
-        {
-            throw new DuplicateKeyException("This group already has this teacher teaching this subject in this semester.");
-        }
-
-
-        Teacher teacher = teacherDAO.findOne(teacherUsername);
-        tg.setGroup(group);
-        tg.setTeacher(teacher);
-
-        teachersGroupsDAO.save(tg);
-    }
+    void setGroupAndTeacherAndAddTeachersGroups(TeachersGroups tg,
+                                                       String groupId, String teacherUsername);
 
     /**
      * Get all teachers of the university specified by its ID
      */
-    public List<Teacher> getTeachersByUniversity(int uniId)
-    {
-        return teacherDAO.findByUniversity_UnId(uniId);
-    }
+    List<Teacher> getTeachersByUniversity(int uniId);
 
     /** Remove TeachersGroups instance from the database by its ID */
-    public void removeTeachersGroups(Integer tGroupId)
-    {
-        teachersGroupsDAO.delete(tGroupId);
-    }
+    void removeTeachersGroups(Integer tGroupId);
 
-    public void setTranslationToSubjects(List<TeachersGroups> tGroups, String languageAbbrev)
-    {
-        tGroups.forEach((tGroup) ->
-        {
-            LocalizedSubject locSubj = subjectService
-                    .getSubjectLocalization(tGroup.getSubjectName(), languageAbbrev);
-            if(locSubj != null)
-                tGroup.setSubjectTranslation(locSubj.getSubjectTranslation());
-        });
-    }
+    /**
+     * Sets localization based on the language parameter to the subjects of TeachersGroups instances
+     * @param tGroups TeachersGroups instances that have subjectTranslation field that has to be
+     *                filled
+     * @param languageAbbrev Abbreviation of the language whose localization to set to tGroups
+     */
+    void setTranslationToSubjects(List<TeachersGroups> tGroups, String languageAbbrev);
 }

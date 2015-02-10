@@ -18,7 +18,9 @@ import ru.ildar.database.entities.UniversityDescription;
 import ru.ildar.services.CityService;
 import ru.ildar.services.FacultyService;
 import ru.ildar.services.UniversityService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -32,12 +34,20 @@ import java.util.Locale;
 @Controller
 public class GuestController
 {
-    @Autowired
     private UniversityService universityService;
-    @Autowired
     private FacultyService facultyService;
-    @Autowired
     private CityService cityService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        universityService = serviceFactory.getUniversityService();
+        facultyService = serviceFactory.getFacultyService();
+        cityService = serviceFactory.getCityService();
+    }
 
     @Autowired
     private MessageSource messageSource;

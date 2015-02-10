@@ -6,17 +6,30 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.database.entities.News;
 import ru.ildar.services.NewsService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
+/**
+ * Controller that provides ability to view news for every role(and unauthenticated users, too)
+ */
 @Controller
 @RequestMapping("/news")
 public class ViewNewsController
 {
     public static final int newsPerPage = 5;
 
-    @Autowired
     private NewsService newsService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        newsService = serviceFactory.getNewsService();
+    }
 
     @RequestMapping(value = "{pageNumber}", method = RequestMethod.GET)
     @ResponseBody

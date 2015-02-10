@@ -14,7 +14,9 @@ import ru.ildar.database.entities.TeachersGroups;
 import ru.ildar.services.GradeService;
 import ru.ildar.services.StudentService;
 import ru.ildar.services.TeacherService;
+import ru.ildar.services.factory.ServiceFactory;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -24,12 +26,20 @@ import java.util.Locale;
 @RequestMapping("/teacher/grades")
 public class TeacherGradesController
 {
-    @Autowired
     private GradeService gradeService;
-    @Autowired
     private StudentService studentService;
-    @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        gradeService = serviceFactory.getGradeService();
+        studentService = serviceFactory.getStudentService();
+        teacherService = serviceFactory.getTeacherService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView gradesToGroupForSubjectBySemester(@RequestParam("id") int id, ModelMap model,

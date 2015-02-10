@@ -12,6 +12,9 @@ import ru.ildar.controllers.pojos.UniversityInfoPojo;
 import ru.ildar.database.entities.University;
 import ru.ildar.services.CityService;
 import ru.ildar.services.UniversityService;
+import ru.ildar.services.factory.ServiceFactory;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Controller that allows modifying cities and addresses of universities
@@ -20,10 +23,18 @@ import ru.ildar.services.UniversityService;
 @RequestMapping("/admin/unis/city")
 public class UniversityCityController
 {
-    @Autowired
     private CityService cityService;
-    @Autowired
     private UniversityService universityService;
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    @PostConstruct
+    private void construct()
+    {
+        cityService = serviceFactory.getCityService();
+        universityService = serviceFactory.getUniversityService();
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView setCity(@RequestParam("unId") int unId, ModelMap model)
