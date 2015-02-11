@@ -39,7 +39,7 @@ public class GroupsController
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView groups()
     {
-        return new ModelAndView("groups", "cities", cityService.getAllCities());
+        return new ModelAndView("admin/group/groups", "cities", cityService.getAllCities());
     }
 
     @RequestMapping(value = "OfFaculty", method = RequestMethod.GET)

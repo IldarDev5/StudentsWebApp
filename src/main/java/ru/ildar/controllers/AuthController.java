@@ -33,6 +33,6 @@ public class AuthController
     public ModelAndView studentGroup(@RequestParam("groupId") String groupId)
     {
         Group group = groupService.getGroupWithStudents(groupId);
-        return new ModelAndView("groupStudents", "group", group);
+        return new ModelAndView("auth/group/group", "group", group);
     }
 }

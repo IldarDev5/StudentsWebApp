@@ -93,6 +93,6 @@ public class CitiesLocalizationController
     {
         model.addAttribute("languages", languageService.getAllLanguages());
         model.addAttribute("city", cityService.getById(cityId));
-        return new ModelAndView("localizeCity", "cityLocalization", cityLocPojo);
+        return new ModelAndView("admin/city/localizeCity", "cityLocalization", cityLocPojo);
     }
 }

@@ -42,6 +42,7 @@
                 <value>/WEB-INF/messages/validation</value>
                 <value>/WEB-INF/messages/javascript</value>
                 <value>/WEB-INF/messages/titles</value>
+                <value>/WEB-INF/messages/lis</value>
             </list>
         </property>
         <property name="defaultEncoding" value="UTF-8" />

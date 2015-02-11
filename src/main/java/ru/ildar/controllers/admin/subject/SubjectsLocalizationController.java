@@ -45,7 +45,7 @@ public class SubjectsLocalizationController
         subjectPojo.setSubjectName(subject);
         model.addAttribute("subjects", subjectService.getAllSubjects());
         model.addAttribute("languages", languageService.getAllLanguages());
-        return new ModelAndView("localizedSubjects", "subject", subjectPojo);
+        return new ModelAndView("admin/subject/localizedSubjects", "subject", subjectPojo);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -57,7 +57,7 @@ public class SubjectsLocalizationController
         {
             model.addAttribute("subjects", subjectService.getAllSubjects());
             model.addAttribute("languages", languageService.getAllLanguages());
-            return new ModelAndView("localizedSubjects", "subject", locSubjectPojo);
+            return new ModelAndView("admin/subject/localizedSubjects", "subject", locSubjectPojo);
         }
 
         if(locSubjectPojo.getSubjectTranslation().length() == 0 && locSubjectPojo.getId() != null)

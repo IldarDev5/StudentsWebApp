@@ -59,7 +59,7 @@ public class UniversityDescriptionsController
         }
 
         model.addAttribute("languages", languageService.getAllLanguagesValues());
-        return new ModelAndView("uniDescription", "description", descr);
+        return new ModelAndView("admin/university/uniDescription", "description", descr);
     }
 
     @InitBinder

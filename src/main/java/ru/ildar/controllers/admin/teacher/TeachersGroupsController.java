@@ -51,7 +51,7 @@ public class TeachersGroupsController
     public ModelAndView teachersGroups(ModelMap model)
     {
         model.addAttribute("cities", cityService.getAllCities());
-        return new ModelAndView("teachersGroups", "taughtGroup", new TaughtGroup());
+        return new ModelAndView("admin/teacher/teachersGroups", "taughtGroup", new TaughtGroup());
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET, params = {"get"})
@@ -61,7 +61,7 @@ public class TeachersGroupsController
         model.addAttribute("cities", cityService.getAllCities());
         if(result.hasErrors())
         {
-            return new ModelAndView("teachersGroups", "taughtGroup", tGroup);
+            return new ModelAndView("admin/teacher/teachersGroups", "taughtGroup", tGroup);
         }
 
         model.addAttribute("tGroups", teacherService.getTeachersGroups(tGroup.getTeacherSelect()));
@@ -87,7 +87,7 @@ public class TeachersGroupsController
         else
             tg.setSubjectName(subjectName);
 
-        return new ModelAndView("addTeachersGroups", "tgroup", tg);
+        return new ModelAndView("admin/teacher/addTeachersGroups", "tgroup", tg);
     }
 
     @RequestMapping(value ="add", method = RequestMethod.POST)

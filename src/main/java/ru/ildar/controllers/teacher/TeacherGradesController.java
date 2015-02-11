@@ -2,7 +2,6 @@ package ru.ildar.controllers.teacher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +51,7 @@ public class TeacherGradesController
         model.addAttribute("tGroup", tGroups);
         model.addAttribute("grades", grades);
 
-        return new ModelAndView("studentsGrades");
+        return new ModelAndView("teacher/grade/studsGrades");
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
@@ -70,7 +69,7 @@ public class TeacherGradesController
         List<Student> studs = studentService.getByGroup(pojo.getGroupId());
 
         model.addAttribute("students", studs);
-        return new ModelAndView("addGrade", "studGrade", pojo);
+        return new ModelAndView("teacher/grade/addGrade", "studGrade", pojo);
     }
 
     @RequestMapping(value = "checkStudentGrade", method = RequestMethod.GET)

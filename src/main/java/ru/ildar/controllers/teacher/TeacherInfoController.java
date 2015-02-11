@@ -56,7 +56,7 @@ public class TeacherInfoController
             cityLoc = cityService.getLocalization(cityId, Locale.US.getLanguage());
 
         model.addAttribute("cityLoc", cityLoc);
-        return new ModelAndView("teacherInfo", "teacher", teacher);
+        return new ModelAndView("teacher/info/info", "teacher", teacher);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, consumes = "application/json")

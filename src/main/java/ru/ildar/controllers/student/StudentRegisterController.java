@@ -64,7 +64,7 @@ public class StudentRegisterController
     {
         StudentRegisterPojo pojo = new StudentRegisterPojo();
         pojo.setRole("ROLE_STUDENT");
-        return new ModelAndView("registerStudent", "student", pojo);
+        return new ModelAndView("student/registration/studRegistration", "student", pojo);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -73,7 +73,7 @@ public class StudentRegisterController
     {
         if(result.hasErrors())
         {
-            return new ModelAndView("registerStudent", "student", stud);
+            return new ModelAndView("student/registration/studRegistration", "student", stud);
         }
 
         if(studentService.getByUsername(stud.getUsername()) != null)
@@ -102,6 +102,6 @@ public class StudentRegisterController
         ModelMap model = new ModelMap();
         model.addAttribute("user", user);
         model.addAttribute(attr, true);
-        return new ModelAndView("registerStudent", model);
+        return new ModelAndView("student/registration/studRegistration", model);
     }
 }

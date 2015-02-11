@@ -39,7 +39,7 @@ public class NewsController
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public ModelAndView addNews()
     {
-        return new ModelAndView("addNews", "newsObj", new News());
+        return new ModelAndView("admin/news/addNews", "newsObj", new News());
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -49,7 +49,7 @@ public class NewsController
     {
         if(result.hasErrors())
         {
-            return new ModelAndView("addNews", "newsObj", news);
+            return new ModelAndView("admin/news/addNews", "newsObj", news);
         }
 
         String username = principal.getName();
@@ -86,7 +86,7 @@ public class NewsController
             throw new ResourceAccessDeniedException();
         }
 
-        return new ModelAndView("editNews", "newsObj", news);
+        return new ModelAndView("admin/news/editNews", "newsObj", news);
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
@@ -96,7 +96,7 @@ public class NewsController
     {
         if(result.hasErrors())
         {
-            return new ModelAndView("editNews", "newsObj", news);
+            return new ModelAndView("admin/news/editNews", "newsObj", news);
         }
 
         news.setBriefDescription(new String(news.getBriefDescription().getBytes("ISO-8859-1"), "UTF-8"));

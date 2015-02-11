@@ -37,6 +37,6 @@ public class TeacherController
     {
         List<TeachersGroups> tGroups = teacherService.getTeachersGroups(principal.getName());
         teacherService.setTranslationToSubjects(tGroups, locale.getLanguage());
-        return new ModelAndView("teacherGroups", "groups", tGroups);
+        return new ModelAndView("teacher/group/groups", "groups", tGroups);
     }
 }

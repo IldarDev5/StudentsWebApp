@@ -43,7 +43,7 @@ public class StudentController
     public ModelAndView studGrades(Principal principal)
     {
         Set<Long> semesters = gradeService.getStudentSemesters(principal.getName());
-        return new ModelAndView("grades", "semesters", semesters);
+        return new ModelAndView("student/grades/grades", "semesters", semesters);
     }
 
     @RequestMapping(value = "semesterGrades", method = RequestMethod.GET,
@@ -74,6 +74,6 @@ public class StudentController
             teachersSubjs.put(t.getKey(), t.getValue().stream().reduce((s, s2) -> s + ", " + s2).get());
         });
 
-        return new ModelAndView("studTeachers", "teachers", teachersSubjs);
+        return new ModelAndView("student/teacher/teachers", "teachers", teachersSubjs);
     }
 }

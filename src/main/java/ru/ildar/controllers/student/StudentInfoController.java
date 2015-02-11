@@ -60,7 +60,7 @@ public class StudentInfoController
             cityLoc = cityService.getLocalization(cityId, Locale.US.getLanguage());
 
         model.addAttribute("cityLoc", cityLoc);
-        return new ModelAndView("studInfo", "stud", student);
+        return new ModelAndView("student/info/info", "stud", student);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, consumes = "application/json")

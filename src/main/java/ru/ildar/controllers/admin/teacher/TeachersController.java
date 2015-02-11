@@ -45,7 +45,7 @@ public class TeachersController
         model.addAttribute("teachers", teachers);
         model.addAttribute("pageNumber", pageNumber);
         model.addAttribute("pagesCount", teacherService.getTeachersPagesCount(TEACHERS_PER_PAGE));
-        return new ModelAndView("adminTeachers");
+        return new ModelAndView("admin/teacher/adminTeachers");
     }
 
     @RequestMapping(value = "bySubject", method = RequestMethod.GET)
@@ -54,7 +54,7 @@ public class TeachersController
         Set<Teacher> subjTeachers = teacherService.getTeachersBySubject(subjectName);
         model.addAttribute("teachers", subjTeachers);
         model.addAttribute("subject", subjectName);
-        return new ModelAndView("adminTeachers");
+        return new ModelAndView("admin/teacher/adminTeachers");
     }
 
     @RequestMapping(value = "get", method = RequestMethod.GET)

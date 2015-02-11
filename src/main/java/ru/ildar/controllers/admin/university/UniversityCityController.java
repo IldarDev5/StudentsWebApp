@@ -46,7 +46,7 @@ public class UniversityCityController
         UniversityInfoPojo universityInfoPojo =
                 new UniversityInfoPojo(cityId, unId, university.getUnAddress());
         universityInfoPojo.setUnId(unId);
-        return new ModelAndView("setCityToUni", "uni", universityInfoPojo);
+        return new ModelAndView("admin/university/setCityToUni", "uni", universityInfoPojo);
     }
 
     /**

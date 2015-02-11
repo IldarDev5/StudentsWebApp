@@ -48,7 +48,7 @@ public class FacultiesController
     public ModelAndView faculties(@RequestParam("un_id") int unId)
     {
         University u = universityService.getByIdWithFaculties(unId);
-        return new ModelAndView("faculties", "uni", u);
+        return new ModelAndView("admin/faculty/faculties", "uni", u);
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
@@ -68,7 +68,7 @@ public class FacultiesController
         model.addAttribute("university", un);
         FacultyPojo pojo = new FacultyPojo();
         pojo.setUnId(uniId);
-        return new ModelAndView("addFaculty", "faculty", pojo);
+        return new ModelAndView("admin/faculty/addFaculty", "faculty", pojo);
     }
 
     @InitBinder
@@ -87,7 +87,7 @@ public class FacultiesController
         if(result.hasErrors())
         {
             model.addAttribute("university", un);
-            return new ModelAndView("addFaculty", "faculty", pojo);
+            return new ModelAndView("admin/faculty/addFaculty", "faculty", pojo);
         }
 
         Faculty fac = new Faculty(pojo.getFacultyName(), new Date(pojo.getFoundDate().getTime()), un);
@@ -101,7 +101,7 @@ public class FacultiesController
         {
             model.addAttribute("university", un);
             model.addAttribute("facultyExists", true);
-            return new ModelAndView("addFaculty", "faculty", pojo);
+            return new ModelAndView("admin/faculty/addFaculty", "faculty", pojo);
         }
 
         return new ModelAndView("redirect:/admin/faculties?un_id=" + pojo.getUnId());

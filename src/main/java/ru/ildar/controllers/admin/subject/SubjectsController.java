@@ -51,14 +51,14 @@ public class SubjectsController
         model.addAttribute("subjects", subjects);
         model.addAttribute("pagesCount", subjectService.getPagesCount(SUBJECTS_PER_PAGE));
         model.addAttribute("pageNumber", pageNumber);
-        return new ModelAndView("subjects");
+        return new ModelAndView("admin/subject/subjects");
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public ModelAndView addNewSubject(ModelMap model)
     {
         model.addAttribute("subjectTypes", subjectService.getSubjectTypes());
-        return new ModelAndView("addSubject", "subject", new Subject());
+        return new ModelAndView("admin/subject/addSubject", "subject", new Subject());
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)

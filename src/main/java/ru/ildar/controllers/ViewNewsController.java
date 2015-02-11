@@ -46,6 +46,6 @@ public class ViewNewsController
     public ModelAndView viewNews(@RequestParam("newsId") int newsId)
     {
         News news = newsService.getNews(newsId);
-        return new ModelAndView("viewNews", "newsObj", news);
+        return new ModelAndView("common/news/viewNews", "newsObj", news);
     }
 }

@@ -72,14 +72,14 @@ public class UniversitiesController
         model.addAttribute("pagesCount", count);
         model.addAttribute("pageNumber", pageNumber);
 
-        return new ModelAndView("unis");
+        return new ModelAndView("admin/university/unis");
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public ModelAndView addUniversity(ModelMap model)
     {
         model.addAttribute("cities", cityService.getAllCities());
-        return new ModelAndView("addUniversity", "uni", new UniversityPojo());
+        return new ModelAndView("admin/university/addUniversity", "uni", new UniversityPojo());
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -102,7 +102,7 @@ public class UniversitiesController
         {
             model.addAttribute("cities", cityService.getAllCities());
             model.addAttribute("uniExists", true);
-            return new ModelAndView("addUniversity", "uni", uni);
+            return new ModelAndView("admin/university/addUniversity", "uni", uni);
         }
 
         return new ModelAndView("redirect:/admin/unis");

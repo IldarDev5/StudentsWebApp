@@ -61,31 +61,32 @@ public class GuestController
                 new Image("/images/home_2.jpg", welcome));
         model.addAttribute("images", images);
         model.addAttribute("showSlideImages", true);
-        return "startPage";
+
+        return "common/start/startPage";
     }
 
     @RequestMapping(value = "/loginPage", method = RequestMethod.GET)
     public String loginPage()
     {
-        return "loginPage";
+        return "auth/login/login";
     }
 
     @RequestMapping(value = "/unis/info", method = RequestMethod.GET)
     public ModelAndView viewUniversityInfo(ModelMap model, Locale locale)
     {
         model.addAttribute("cities", cityService.getCitiesLocalizations(locale.getLanguage()));
-        return new ModelAndView("unisInfo", "university", new UniversityInfoPojo());
+        return new ModelAndView("common/university/unisInfo", "university", new UniversityInfoPojo());
     }
 
     @RequestMapping(value = "/unis/info", method = RequestMethod.POST)
     public ModelAndView viewUniversityInfo(@ModelAttribute @Valid UniversityInfoPojo pojo,
                                            BindingResult result, Locale locale, ModelMap model)
     {
-        model.addAttribute("cities", cityService.getAllCities());
+        model.addAttribute("cities", cityService.getCitiesLocalizations(locale.getLanguage()));
 
         if(result.hasErrors())
         {
-            return new ModelAndView("unisInfo", "university", pojo);
+            return new ModelAndView("common/university/unisInfo", "university", pojo);
         }
 
         UniversityDescription description = universityService.
@@ -107,7 +108,7 @@ public class GuestController
                 {
                     model.addAttribute("description",
                             new UniversityDescription(null, null, null, null, null));
-                    return new ModelAndView("unisInfo", "university", pojo);
+                    return new ModelAndView("common/university/unisInfo", "university", pojo);
                 }
             }
         }
@@ -116,7 +117,7 @@ public class GuestController
 
         model.addAttribute("description", description);
         model.addAttribute("studentsCount", studentsCount);
-        return new ModelAndView("unisInfo", "university", pojo);
+        return new ModelAndView("common/university/unisInfo", "university", pojo);
     }
 
     @RequestMapping(value = "/unis/image", method = RequestMethod.GET)
