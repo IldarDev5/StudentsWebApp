@@ -5,6 +5,7 @@ import ru.ildar.database.entities.LocalizedSubject;
 import ru.ildar.database.entities.Subject;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public interface SubjectService
@@ -29,7 +30,7 @@ public interface SubjectService
     /**
      * Returns list of the subjects types
      */
-    List<String> getSubjectTypes();
+    Set<String> getSubjectTypes();
     /**
      * Add a subject to the database
      */

@@ -8,6 +8,10 @@
 <script type="text/javascript">
     $(function() {
         setToken('${_csrf.token}');
+        <c:if test="${taughtGroup.uniSelect != null}">
+            selectedUni = '${taughtGroup.uniSelect}';
+            selectedTeacher = '${taughtGroup.teacherSelect}';
+        </c:if>
     });
 </script>
 

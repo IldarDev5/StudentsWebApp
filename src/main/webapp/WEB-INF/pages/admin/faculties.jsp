@@ -2,24 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
-<script type="text/javascript">
-    var token;
-    function setToken(t) { token = t; }
-
-    function removeFaculty(facultyId) {
-        $.ajax({
-            url : '/admin/faculties/remove?facultyId=' + facultyId,
-            type : 'post',
-            contentType : "application/json",
-            beforeSend : function(xhr) {
-                xhr.setRequestHeader('X-CSRF-TOKEN', token);
-            },
-            success : function(data) {
-                $('#faculty' + facultyId).remove();
-            }
-        });
-    }
-</script>
+<script type="text/javascript" src="/scripts/faculties.js"></script>
 <script type="text/javascript">
     $(function() {
         setToken('${_csrf.token}');

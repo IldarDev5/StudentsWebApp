@@ -21,7 +21,9 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Administrator controller that handles CRUD operations with teachers groups
@@ -115,9 +117,11 @@ public class TeachersGroupsController
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     @ResponseBody
-    public String removeTGroups(@RequestParam("tGroupId") Integer tGroupId)
+    public Map<String, Object> removeTGroups(@RequestParam("tGroupId") Integer tGroupId)
     {
+        Map<String, Object> result = new HashMap<>();
         teacherService.removeTeachersGroups(tGroupId);
-        return "ok";
+        result.put("removed", true);
+        return result;
     }
 }

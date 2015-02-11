@@ -5,6 +5,9 @@
 var token;
 function setToken(t) { token = t; }
 
+var selectedUni = null;
+var selectedTeacher = null;
+
 function removeTGroup(tGroupId) {
     $.ajax({
         url: '/admin/teachers/groups/remove?tGroupId=' + tGroupId,
@@ -13,8 +16,9 @@ function removeTGroup(tGroupId) {
         beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRF-TOKEN', token);
         },
-        success: function(data) {
-            $('#tGroup' + tGroupId + 'Tr').remove();
+        success: function(resp) {
+            if(resp.removed === true)
+                $('#tGroup' + tGroupId + 'Tr').remove();
         }
     });
 }
@@ -32,13 +36,26 @@ $(function() {
         $.getJSON('/admin/teachers/get', { uniId : uniId }, function(data) {
             teacher.empty();
             $.each(data, function(index, val) {
+                var firstName = val.firstName != null ? val.firstName : "";
+                var lastName = val.lastName != null ? val.lastName : "";
+                var name = firstName +
+                    (val.firstName == null || val.lastName == null ? "" : ", ") + lastName;
                 teacher.append("<option value=\"" + val.username + "\">"
-                + val.firstName + ", " + val.lastName + " (" + val.username + ")" + "</option>");
+                            + name + " (" + val.username + ")" + "</option>");
             });
+
+            if(selectedTeacher != null) {
+                teacher.val(selectedTeacher);
+                selectedTeacher = null;
+            }
         });
     });
 
-    loadUnis("?cityId=" + citySelect.val());
+    loadUnis("?cityId=" + citySelect.val(), function(empty) {
+        if(selectedUni != null) {
+            $('#uniSelect').val(selectedUni);
+        }
+    });
 
     citySelect.change(function() {
         loadUnis("?cityId=" + $(this).val());

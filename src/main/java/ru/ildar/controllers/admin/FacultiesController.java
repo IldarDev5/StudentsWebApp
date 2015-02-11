@@ -21,6 +21,8 @@ import javax.validation.Valid;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Administrator controller that handles CRUD operations with faculties
@@ -51,10 +53,12 @@ public class FacultiesController
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     @ResponseBody
-    public String removeFaculty(@RequestParam("facultyId") int facultyId)
+    public Map<String, Object> removeFaculty(@RequestParam("facultyId") int facultyId)
     {
+        Map<String, Object> result = new HashMap<>();
         facultyService.removeFaculty(facultyId);
-        return "ok";
+        result.put("removed", true);
+        return result;
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)

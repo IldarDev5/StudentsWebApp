@@ -16,8 +16,9 @@ function removeSubject(subjectName) {
         beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRF-TOKEN', token);
         },
-        success: function(data) {
-            $('#' + subjectName.replace(" ", "") + 'Tr').remove();
+        success: function(resp) {
+            if(resp.removed === true)
+                $('#' + subjectName.replace(/ /g, '') + 'Tr').remove();
         }
     });
 }

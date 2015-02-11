@@ -13,8 +13,10 @@ import ru.ildar.services.factory.ServiceFactory;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Administrator controller that handles CRUD operations with subjects
@@ -79,17 +81,21 @@ public class SubjectsController
     @RequestMapping(value = "checkName", method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody
-    public String checkSubjectName(@RequestParam("name") String subjectName)
+    public Map<String, String> checkSubjectName(@RequestParam("name") String subjectName)
     {
+        Map<String, String> result = new HashMap<>();
         boolean exists = subjectService.subjectNameExists(subjectName);
-        return exists ? "{exists:true}" : "{exists:false}";
+        result.put("exists", String.valueOf(exists));
+        return result;
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     @ResponseBody
-    public String removeSubject(@RequestParam("subjectName") String subjectName)
+    public Map<String, Object> removeSubject(@RequestParam("subjectName") String subjectName)
     {
+        Map<String, Object> result = new HashMap<>();
         subjectService.removeSubject(subjectName);
-        return "ok";
+        result.put("removed", true);
+        return result;
     }
 }

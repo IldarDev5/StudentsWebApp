@@ -12,6 +12,8 @@ import ru.ildar.services.factory.impl.JpaServiceFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class SubjectServiceJpaImpl implements SubjectService
@@ -49,9 +51,9 @@ public class SubjectServiceJpaImpl implements SubjectService
     }
 
     @Override
-    public List<String> getSubjectTypes()
+    public Set<String> getSubjectTypes()
     {
-        List<String> types = new ArrayList<>();
+        Set<String> types = new TreeSet<>();
         subjectDAO.findAll().forEach((t) -> types.add(t.getSubjectType()));
         return types;
     }
