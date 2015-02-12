@@ -96,6 +96,9 @@ public class CityServiceJpaImpl implements CityService
     @Override
     public boolean removeCityLocalization(Integer locCityId)
     {
+        if(locCityId == null)
+            return true;
+
         LocalizedCity locCity = localizedCityDAO.findOne(locCityId);
         if(locCity.getLanguage().getAbbreviation().equals(Locale.US.getLanguage()))
         {

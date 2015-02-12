@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.JsonTeacherDetails;
+import ru.ildar.database.entities.City;
 import ru.ildar.database.entities.LocalizedCity;
 import ru.ildar.database.entities.Teacher;
 import ru.ildar.services.CityService;
@@ -17,7 +18,9 @@ import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/info/teacher")
@@ -48,22 +51,37 @@ public class TeacherInfoController
             //Set bytes size to 1 so JSP side would know that this teacher has an avatar
             teacher.setPersonPhoto(new byte[1]);
 
-        //Adding city localization; if there's no localization of the current locale,
-        //set default localization - US
-        int cityId = teacher.getUniversity().getCity().getId();
-        LocalizedCity cityLoc = cityService.getLocalization(cityId, locale.getLanguage());
-        if(cityLoc == null)
-            cityLoc = cityService.getLocalization(cityId, Locale.US.getLanguage());
+        City city = teacher.getUniversity().getCity();
+        if(city != null)
+            //city == null happens when admin removed the city of the university,
+            //and this teacher is from this university
+        {
+            //Adding city localization; if there's no localization of the current locale,
+            //set default localization - US
+            int cityId = city.getId();
+            LocalizedCity cityLoc = cityService.getLocalization(cityId, locale.getLanguage());
+            if(cityLoc == null)
+                cityLoc = cityService.getLocalization(cityId, Locale.US.getLanguage());
 
-        model.addAttribute("cityLoc", cityLoc);
+            model.addAttribute("cityLoc", cityLoc);
+        }
+
         return new ModelAndView("teacher/info/info", "teacher", teacher);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public String userInfo(@RequestBody JsonTeacherDetails pd, Principal principal)
+    public Map<String, Object> userInfo(@RequestBody JsonTeacherDetails pd, Principal principal)
             throws ParseException
     {
+        Map<String, Object> result = new HashMap<>();
+        if(pd.getUnId() == null)
+            //If user has tried to choose no university
+        {
+            result.put("updated", false);
+            return result;
+        }
+
         int unId = Integer.parseInt(pd.getUnId());
 
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
@@ -75,6 +93,7 @@ public class TeacherInfoController
                 pd.getEmail(), pd.getTitle(), null, dt, null);
 
         teacherService.setUniversityAndPhotoAndUpdate(details, unId);
-        return "true";
+        result.put("updated", true);
+        return result;
     }
 }

@@ -33,7 +33,7 @@ public class CitiesController
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView viewCities()
     {
-        return new ModelAndView("cities", "cities", cityService.getAllCities());
+        return new ModelAndView("admin/city/cities", "cities", cityService.getAllCities());
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST,

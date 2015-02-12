@@ -30,7 +30,7 @@
     <table>
         <tr>
             <td><spring:message code="auth.enterUsername" /></td>
-            <td><input type="text" name="username" id="username"></td>
+            <td><input type="text" name="username" id="username" autofocus="autofocus"></td>
         </tr>
         <tr>
             <td><spring:message code="auth.enterPassword" /></td>

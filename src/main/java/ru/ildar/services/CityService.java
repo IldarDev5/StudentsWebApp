@@ -54,7 +54,8 @@ public interface CityService
 
     /**
      * Deletes city localization from the database and returns true if
-     * localization was successfully deleted; otherwise returns false.
+     * localization was successfully deleted or if <code>locCityId</code>
+     * is null; otherwise returns false.
      * Localization can be deleted only if it's not a default localization(English)
      * @param locCityId ID of the city localization object
      */

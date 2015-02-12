@@ -50,8 +50,12 @@
     </tr>
     <tr>
         <td><spring:message code="stud.unName" /></td>
-        <td id="universityTd">${stud.group.faculty.university.unName},
-        ${cityLoc.translatedName}</td>
+        <td id="universityTd">
+            ${stud.group.faculty.university.unName}
+            <c:if test="${cityLoc != null}">
+                , ${cityLoc.translatedName}
+            </c:if>
+        </td>
     </tr>
 </table>
 

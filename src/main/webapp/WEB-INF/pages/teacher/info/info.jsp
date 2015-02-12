@@ -42,7 +42,11 @@
     </tr>
     <tr>
         <td><spring:message code="teach.university" /></td>
-        <td id="universityTd">${teacher.university.unName}, ${cityLoc.translatedName}</td>
+        <td id="universityTd">${teacher.university.unName}
+            <c:if test="${cityLoc != null}">
+                , ${cityLoc.translatedName}
+            </c:if>
+        </td>
     </tr>
 </table>
 
@@ -50,13 +54,17 @@
 
     <script type="text/javascript">
         //Necessary variables that are initialized with model values
-        var universityId = ${teacher.university.unId};
-        var cityId = ${teacher.university.city.id};
+        //If city is not set for this university, set variables to null so
+        //browser wouldn't try to find these values in the downloaded list
+        var universityId = ${teacher.university.city != null ? teacher.university.unId : 'null'};
+        var cityId = ${teacher.university.city != null ? teacher.university.city.id : 'null'};
 
         var csrfToken = '${_csrf.token}';
 
         var i18n = [];
         i18n["dataUpdated"] = "<spring:message code="teacherInfo.dataUpdated" />";
+        i18n["someDataAbsent"] = "<spring:message code="teacherInfo.someDataAbsent" />";
+        i18n["dataNotUpdated"] = "<spring:message code="teacherInfo.dataNotUpdated" />";
     </script>
     <script type="text/javascript" src="/scripts/selectBox.js"></script>
     <script type="text/javascript" src="/scripts/teacher_info.js"></script>

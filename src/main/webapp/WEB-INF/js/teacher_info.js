@@ -15,6 +15,8 @@ function removeAvatar() {
 }
 
 $(function() {
+    var citySelect = $('#citySelect');
+    var uniSelect = $('#universitySelect');
     var updForm = $('#updateForm');
 
     updForm.submit(function() {
@@ -23,8 +25,13 @@ $(function() {
         var email = $('#email').val();
         var title = $('#title').val();
         var workStart = $('#workStart').val();
-        var city = $('#citySelect').val();
-        var university = $('#universitySelect').val();
+        var city = citySelect.val();
+        var university = uniSelect.val();
+
+        if(city == null || university == null) {
+            alert(i18n["someDataAbsent"]);
+            return false;
+        }
 
         //Update information about teacher - first name, last name, e-mail, title,
         // work start date and university
@@ -43,11 +50,17 @@ $(function() {
             beforeSend : function(xhr) {
                 xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
             },
-            success : function(data) {
-                    university = $("#universitySelect").find("option[value='" + university + "']").text();
-                    city = $("#citySelect").find("option[value='" + city + "']").text();
+            success : function(resp) {
+                if(resp.updated === false) {
+                    //Wasn't updated due to some error
+                    $('#updateSpan').html(i18n["dataNotUpdated"]);
+                    return;
+                }
 
-                    if(data) {
+                university = uniSelect.find("option[value='" + university + "']").text();
+                city = citySelect.find("option[value='" + city + "']").text();
+
+                if(resp.updated === true) {
                     $('#firstNameTd').html(firstName);
                     $('#lastNameTd').html(lastName);
                     $('#emailTd').html(email);
@@ -65,15 +78,25 @@ $(function() {
 
     loadDataForSelect('/ajax/cities', '#citySelect', "",
                         function(empty) {
-                            $('#citySelect').val(cityId);
+                            if(cityId != null) {
+                                //If there's no city defined for this teacher's university,
+                                //Get first city from the loaded list. Otherwise set the current
+                                //city as selected
+                                citySelect.val(cityId);
+                            }
+                            else {
+                                cityId = citySelect.val();
+                            }
                             loadDataForSelect('/ajax/universities', '#universitySelect',
                                 "?cityId=" + cityId, function(empty) {
-                                    $('#universitySelect').val(universityId);
+                                    if(universityId != null)
+                                        uniSelect.val(universityId);
+                                    else
+                                        uniSelect.val(uniSelect.find("option:first").val());
                                 });
                         });
 
-    var citySelect = $('#citySelect');
-    var uniSelect = $('#universitySelect');
+
 
     citySelect.change(function() {
             var cityId = $(this).val();

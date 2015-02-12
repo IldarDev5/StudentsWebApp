@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.JsonStudentDetails;
+import ru.ildar.database.entities.City;
 import ru.ildar.database.entities.LocalizedCity;
 import ru.ildar.database.entities.Student;
 import ru.ildar.services.CityService;
@@ -52,14 +53,21 @@ public class StudentInfoController
             //Set bytes size to 1 so JSP side would know that this student has an avatar
             student.setPersonPhoto(new byte[1]);
 
-        //Adding city localization; if there's no localization of the current locale,
-        //set default localization - US
-        int cityId = student.getGroup().getFaculty().getUniversity().getCity().getId();
-        LocalizedCity cityLoc = cityService.getLocalization(cityId, locale.getLanguage());
-        if(cityLoc == null)
-            cityLoc = cityService.getLocalization(cityId, Locale.US.getLanguage());
+        City city = student.getGroup().getFaculty().getUniversity().getCity();
+        if(city != null)
+        //city == null happens when admin removed the city of the university,
+        //and this teacher is from this university
+        {
+            //Adding city localization; if there's no localization of the current locale,
+            //set default localization - US
+            int cityId = city.getId();
+            LocalizedCity cityLoc = cityService.getLocalization(cityId, locale.getLanguage());
+            if(cityLoc == null)
+                cityLoc = cityService.getLocalization(cityId, Locale.US.getLanguage());
 
-        model.addAttribute("cityLoc", cityLoc);
+            model.addAttribute("cityLoc", cityLoc);
+        }
+
         return new ModelAndView("student/info/info", "stud", student);
     }
 
