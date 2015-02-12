@@ -46,6 +46,13 @@ public class ViewNewsController
     public ModelAndView viewNews(@RequestParam("newsId") int newsId)
     {
         News news = newsService.getNews(newsId);
+        if(news == null)
+        //news == null -> Either user has entered ID of news that doesn't exist in the DB,
+        //or user was already watching edit page of this news and he removed this news from
+        //the panel on the right
+        {
+            return new ModelAndView("redirect:/startPage");
+        }
         return new ModelAndView("common/news/viewNews", "newsObj", news);
     }
 }
