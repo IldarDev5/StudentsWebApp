@@ -65,7 +65,7 @@ public class TeachersGroupsController
         }
 
         model.addAttribute("tGroups", teacherService.getTeachersGroups(tGroup.getTeacherSelect()));
-        return new ModelAndView("teachersGroups", "taughtGroup", tGroup);
+        return new ModelAndView("admin/teacher/teachersGroups", "taughtGroup", tGroup);
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)

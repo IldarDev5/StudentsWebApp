@@ -15,7 +15,7 @@
     <table>
         <tr>
             <td><spring:message code="sub.name" />:</td>
-            <td><form:input path="subjectName" /></td>
+            <td><form:input path="subjectName" autofocus="autofocus" /></td>
             <td><form:errors path="subjectName" /></td>
         </tr>
         <tr>

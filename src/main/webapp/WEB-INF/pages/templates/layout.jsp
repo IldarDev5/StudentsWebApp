@@ -25,7 +25,8 @@
 
 <script type="text/javascript" src="/scripts/layout.js"></script>
 <script type="text/javascript">
-    var currId = '<tiles:insertAttribute name="currentId" />';
+    <c:set var="currentId"><tiles:getAsString name="currentId" /></c:set>
+    var currId = "<spring:message code="${currentId}" />";
 
     var i18n = [];
     i18n["moreNews"] = "<spring:message code="news.more" />";

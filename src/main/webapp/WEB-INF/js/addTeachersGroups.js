@@ -20,8 +20,11 @@ $(function() {
         $.getJSON('/admin/teachers/get', { uniId : uniId }, function(data) {
             teacher.empty();
             $.each(data, function(index, val) {
+                var firstName = val.firstName != null ? val.firstName : "";
+                var lastName = val.lastName != null ? val.lastName : "";
+                var name = firstName + (firstName == "" || lastName == "" ? "" : ", ") + lastName;
                 teacher.append("<option value=\"" + val.username + "\">"
-                + val.firstName + ", " + val.lastName + " (" + val.username + ")" + "</option>");
+                            + name + " (" + val.username + ")" + "</option>");
             });
         });
     });

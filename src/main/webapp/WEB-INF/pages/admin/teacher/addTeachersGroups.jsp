@@ -6,7 +6,7 @@
 <h1><spring:message code="teacher.addTGroup" /></h1>
 
 <script type="text/javascript" src="/scripts/selectBox.js"></script>
-<script type="text/javascript" src="/scripts/add_teachers_groups.js"></script>
+<script type="text/javascript" src="/scripts/addTeachersGroups.js"></script>
 
 <%--@elvariable id="tGroupExists" type="java.lang.Boolean"--%>
 <c:if test="${tGroupExists != null && tGroupExists == true}">
