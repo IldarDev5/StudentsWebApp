@@ -145,7 +145,7 @@ public class Teacher implements Comparable<Teacher>
     }
 
     @ManyToOne
-    @JoinColumn(name = "UNIVERSITY_ID", referencedColumnName = "UN_ID", nullable = false)
+    @JoinColumn(name = "UNIVERSITY_ID", referencedColumnName = "UN_ID")
     public University getUniversity()
     {
         return university;

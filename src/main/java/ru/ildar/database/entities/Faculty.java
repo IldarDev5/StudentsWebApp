@@ -7,7 +7,8 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 @Entity
-@Table(name = "FACULTIES", schema = "STUDENTS_APP", catalog = "")
+@Table(name = "FACULTIES", schema = "STUDENTS_APP", catalog = "",
+        uniqueConstraints = @UniqueConstraint(columnNames = { "UN_ID", "FACULTY_NAME" }))
 public class Faculty
 {
     private int facultyId;
@@ -96,11 +97,11 @@ public class Faculty
     @Override
     public int hashCode()
     {
-        return (facultyId ^ (facultyId >>> 32));
+        return facultyId;
     }
 
     @ManyToOne
-    @JoinColumn(name = "UN_ID", referencedColumnName = "UN_ID", nullable = false)
+    @JoinColumn(name = "UN_ID", referencedColumnName = "UN_ID")
     public University getUniversity()
     {
         return university;

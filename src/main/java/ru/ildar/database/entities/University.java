@@ -7,7 +7,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "UNIVERSITIES", schema = "STUDENTS_APP", catalog = "",
-        uniqueConstraints = @UniqueConstraint( columnNames = {"UN_NAME", "UN_CITY_ID"}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {"UN_NAME", "UN_CITY_ID"}))
 public class University
 {
     private int unId;
@@ -117,7 +117,7 @@ public class University
         return unId;
     }
 
-    @OneToMany(mappedBy = "university", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "university")
     public Collection<Faculty> getFaculties()
     {
         return faculties;
