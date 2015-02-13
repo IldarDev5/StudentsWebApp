@@ -36,6 +36,9 @@ public class UniversityCityController
         universityService = serviceFactory.getUniversityService();
     }
 
+    /**
+     * Allows setting city to the university
+     */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView setCity(@RequestParam("unId") int unId, ModelMap model)
     {

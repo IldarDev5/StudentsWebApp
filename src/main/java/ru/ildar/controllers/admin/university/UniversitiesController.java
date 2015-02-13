@@ -115,6 +115,9 @@ public class UniversitiesController
         return new ModelAndView("redirect:/admin/unis");
     }
 
+    /**
+     * Set image of the university
+     */
     @RequestMapping(value = "image", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String setUniImage(@RequestParam("uploadUnId") int unId,

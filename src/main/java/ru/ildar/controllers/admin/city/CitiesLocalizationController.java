@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.LocalizedCityPojo;
@@ -19,6 +18,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Controller that allows performing CRUD operations on cities localizations
+ * Localizations of cities are shown to users(teachers, students), when they select
+ * appropriate locale 
+ */
 @Controller
 @RequestMapping("/admin/cities/localize")
 public class CitiesLocalizationController
@@ -42,11 +46,13 @@ public class CitiesLocalizationController
         return cityLocalizationView(new LocalizedCityPojo(), cityId, model);
     }
 
+    /**
+     *  Get localization of the specified city in the specified language via AJAX call
+     */
     @RequestMapping(value = "get", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, String> getLocalization(@RequestParam("cityId") int cityId,
                                                @RequestParam("language") String langAbbrev)
-            //Get localization of the specified city in the specified language via AJAX call
     {
         Map<String, String> result = new HashMap<>();
         LocalizedCity cityLoc = cityService.getLocalization(cityId, langAbbrev);
@@ -59,6 +65,9 @@ public class CitiesLocalizationController
         return result;
     }
 
+    /**
+     * Add localization of the city
+     */
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ModelAndView localizeCity(@ModelAttribute("cityLocalization") @Valid LocalizedCityPojo
                                              cityLocPojo, BindingResult result, ModelMap model)

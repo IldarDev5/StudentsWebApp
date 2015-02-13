@@ -78,6 +78,9 @@ public class SubjectsController
         return new ModelAndView("redirect:/admin/subjects");
     }
 
+    /**
+     * Checks if a subject with such name exists in the database
+     */
     @RequestMapping(value = "checkName", method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody

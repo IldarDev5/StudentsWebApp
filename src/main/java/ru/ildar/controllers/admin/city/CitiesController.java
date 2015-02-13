@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Controller that allows performing CRUD operations on cities
+ */
 @Controller
 @RequestMapping(value = "/admin/cities")
 public class CitiesController

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.ildar.controllers.pojos.TaughtGroup;
 import ru.ildar.controllers.pojos.TeachersGroupsPojo;
-import ru.ildar.database.entities.City;
 import ru.ildar.database.entities.Subject;
 import ru.ildar.database.entities.TeachersGroups;
 import ru.ildar.services.CityService;
@@ -78,6 +77,7 @@ public class TeachersGroupsController
     private ModelAndView addTGroups(String subjectName, ModelMap model, TeachersGroupsPojo tg)
     {
         if(subjectName == null)
+            //If there's no selected subject, add subjects' list so user can choose the subject
         {
             List<Subject> subjects = subjectService.getAllSubjects();
             List<String> subjectsStr = new ArrayList<>();

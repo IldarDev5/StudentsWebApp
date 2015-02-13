@@ -22,6 +22,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ *  Controller that allows adding and modifying descriptions of the universities.
+ *  Descriptions are internationalized, that is, they can be written for different locales.
+ */
 @Controller
 @RequestMapping("/admin/unis/description")
 public class UniversityDescriptionsController

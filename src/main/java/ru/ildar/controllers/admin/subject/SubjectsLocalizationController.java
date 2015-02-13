@@ -48,6 +48,9 @@ public class SubjectsLocalizationController
         return new ModelAndView("admin/subject/localizedSubjects", "subject", subjectPojo);
     }
 
+    /**
+     * View localization of the subject
+     */
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ModelAndView localizedSubjects(@ModelAttribute("subject") @Valid LocalizedSubjectPojo
                                                  locSubjectPojo, BindingResult result, ModelMap model)
