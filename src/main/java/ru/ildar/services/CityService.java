@@ -20,7 +20,9 @@ public interface CityService
     City getById(int cityId);
 
     /**
-     * Add city to the database
+     * Add city to the database. Either database or service layer must handle the automatic adding
+     * of city localization after the new city was inserted. It's the application constraint
+     * that each city must have at least one localization, that is, default localization(which is English).
      */
     void addCity(City city);
 

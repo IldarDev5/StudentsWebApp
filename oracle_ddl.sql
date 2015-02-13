@@ -50,7 +50,8 @@ CREATE TABLE STUDENTS_APP.UN_DESCRIPTION(
   language VARCHAR2(25) NOT NULL,
 
   CONSTRAINT fk_university FOREIGN KEY(un_id)
-  REFERENCES STUDENTS_APP.UNIVERSITIES(un_id),
+  REFERENCES STUDENTS_APP.UNIVERSITIES(un_id)
+  ON DELETE CASCADE,
   CONSTRAINT fk_change_person FOREIGN KEY(last_change_person_username)
   REFERENCES STUDENTS_APP.PEOPLE(USERNAME),
   CONSTRAINT fk_descr_language FOREIGN KEY(language)
@@ -59,7 +60,7 @@ CREATE TABLE STUDENTS_APP.UN_DESCRIPTION(
 
 CREATE TABLE STUDENTS_APP.FACULTIES(
   faculty_id INT PRIMARY KEY,
-  un_id INT NOT NULL,
+  un_id INT,
   faculty_name VARCHAR2(150) NOT NULL,
   STUDENTS_count INT DEFAULT 0,
   found_date DATE,
@@ -115,6 +116,7 @@ CREATE TABLE STUDENTS_APP.GROUPS(
 
   CONSTRAINT fk_faculty_group FOREIGN KEY(faculty_id)
   REFERENCES STUDENTS_APP.FACULTIES(faculty_id)
+  ON DELETE CASCADE
 );
 
 CREATE TABLE STUDENTS_APP.STUDENTS(
@@ -236,6 +238,9 @@ FOR EACH ROW
   BEGIN
     CASE
       WHEN UPDATING THEN
+        IF :NEW.university_id IS NULL THEN
+          RETURN;
+        END IF;
         UPDATE STUDENTS_APP.UNIVERSITIES
           SET TEACHERS_count = TEACHERS_count - 1
           WHERE un_id = :OLD.university_id;
@@ -253,12 +258,15 @@ CREATE OR REPLACE TRIGGER STUDENTS_APP.REMOVE_UNIVERSITY
 BEFORE DELETE ON STUDENTS_APP.UNIVERSITIES
 FOR EACH ROW
   BEGIN
+    UPDATE STUDENTS_APP.FACULTIES
+      SET un_id = NULL
+      WHERE un_id = :OLD.un_id;
     UPDATE STUDENTS_APP.TEACHERS
       SET university_id = NULL
       WHERE university_id = :OLD.un_id;
   END;
 
-  --Trigger that fires when group is being removed
+--Trigger that fires when group is being removed
 CREATE OR REPLACE TRIGGER STUDENTS_APP.REMOVE_GROUP
 BEFORE DELETE ON STUDENTS_APP.GROUPS
 FOR EACH ROW
@@ -279,4 +287,17 @@ BEFORE DELETE ON STUDENTS_APP.CITIES
     UPDATE STUDENTS_APP.UNIVERSITIES
       SET un_city_id = NULL
       WHERE un_city_id = :OLD.id;
+  END;
+
+  --Trigger that fires when city is being added and adds default localization for this city
+CREATE OR REPLACE TRIGGER STUDENTS_APP.ADD_CITY
+AFTER INSERT ON STUDENTS_APP.CITIES
+  FOR EACH ROW
+  DECLARE
+    max_id int;
+  BEGIN
+    SELECT MAX(id) INTO max_id
+      FROM STUDENTS_APP.CITIES_LOCALIZED;
+    INSERT INTO STUDENTS_APP.CITIES_LOCALIZED(id, city_id, language, translated_name)
+      VALUES (max_id + 1, :NEW.id, 'English', :NEW.city_name);
   END;

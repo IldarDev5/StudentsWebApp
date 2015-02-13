@@ -61,7 +61,7 @@ Administrator can remove cities, universities, faculties, subjects, and groups. 
 
 ## Technical details
 
-This application uses Oracle Database and DDL and DML files are written specially for Oracle dialect. To use Oracle, you must have Oracle RDBMS installed on your PC and also you must install the Oracle JDBC driver into your local Maven repository. This is done via the following command:
+This application uses Oracle Database and DDL and DML files are written specially for Oracle dialect. To use Oracle, you must have Oracle RDBMS installed on your PC and also you must install the Oracle JDBC driver into your local Maven repository. This is done via the following command:  
 mvn install:install-file -Dfile=[path to file]\ojdbc6.jar -DgroupId=com.oracle -DartifactId=jdbc -Dversion=1.6 -Dpackaging=jar  
 JDBC driver ojdbc6.jar goes with this application and is placed in the directory StudentsWebApp/libs.
 

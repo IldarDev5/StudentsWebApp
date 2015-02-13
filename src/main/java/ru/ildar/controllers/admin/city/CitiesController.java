@@ -47,10 +47,6 @@ public class CitiesController
         Map<String, String> result = new HashMap<>();
         cityService.addCity(city);
 
-        //Adding default localization - English
-        LocalizedCity localizedCity = new LocalizedCity(city.getId(), city.getCityName());
-        cityService.setCityAndLanguageAndAddCityLocalization(city.getId(), Locale.US.getLanguage(), localizedCity);
-
         result.put("cityId", String.valueOf(city.getId()));
         result.put("status", "OK");
         return result;
