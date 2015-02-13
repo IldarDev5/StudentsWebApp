@@ -12,8 +12,8 @@ There are 17 tables in the database:
 * UNIVERSITIES - stores universities data - its name, city of location, foundation date etc.
 * UN_DESCRIPTION - stores universities descriptions in various locales. University description is a text describing the university.
 * PEOPLE - stores information about registered people of all roles - ADMIN, TEACHER and STUDENT. You can't register admin account via application, but you can register teachers and students. Students and teachers have to have their details in STUDENTS and TEACHERS tables respectively.
-* STUDENTS - stores information about students accounts. Connected to PEOPLE table with one-to-one relationship via username, that is a primary key in both tables. Students usually pertain to some academic group.
-* TEACHERS - stores information about teachers accounts. Connected to PEOPLE table with one-to-one relationship via username, that is a primary key in both tables. Teachers usually pertain to some university.
+* STUDENTS - stores information about students accounts. Connected to PEOPLE table with one-to-one relationship via username that is a primary key in both tables. Students usually pertain to some academic group.
+* TEACHERS - stores information about teachers accounts. Connected to PEOPLE table with one-to-one relationship via username that is a primary key in both tables. Teachers usually pertain to some university.
 * FACULTIES - stores faculties. Each faculty belongs to some university. One university can have many faculties.
 * GROUPS - stores academic groups. Groups are connected to the FACULTIES table via one-to-many relationship. Each group must pertain to some faculty. Group IDs are unique for all universities and cities.
 * LANGUAGES - stores languages names and their abbreviations, for example English-en. Needed for cities and subjects localization purposes.
@@ -21,9 +21,9 @@ There are 17 tables in the database:
 * SUBJECT_TYPES - stores types of subjects, for example formal subjects, social subjects etc. Each subject must pertain to some type.
 * SUBJECTS - stores information about subjects. Subjects are studied by academic groups, they can have localizations, each subject can be taught by more than one teacher, each teacher can teach more that one subject.
 * SUBJECTS_LOCALIZED - stores subjects localizations. These translated subjects names will be shown to teachers and students who have appropriate locale set.
-* NEWS - stores news. Each news has a brief description, that is shown in the panel on the right of the page, and a full description, that is visible when clicking "More info". Only administrators can create, modify, and delete news. Every admin can delete any news, but admin can only modify news created by himself.
+* NEWS - stores news. Each news has a brief description that is shown in the panel on the right of the page, and a full description that is visible when clicking "More info". Only administrators can create, modify, and delete news. Every admin can delete any news, but admin can only modify news created by himself.
 * TEACHERS_GROUPS - stores information that shows - what teachers teach subjects and what groups do they teach them, and what semester this is.
-* GRADES - stores information about grades. Grade is set by teacher for some subject to some student, that is from the group that this teacher teaches.
+* GRADES - stores information about grades. Grade is set by teacher for some subject to some student that is from the group that this teacher teaches.
 
 ### Roles privileges
 Administrator:
