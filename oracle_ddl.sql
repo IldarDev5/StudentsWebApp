@@ -66,8 +66,7 @@ CREATE TABLE STUDENTS_APP.FACULTIES(
   found_date DATE,
 
   CONSTRAINT fk_un FOREIGN KEY(un_id)
-  REFERENCES STUDENTS_APP.UNIVERSITIES(un_id),
-  CONSTRAINT UK_faculty UNIQUE(un_id, faculty_name)
+  REFERENCES STUDENTS_APP.UNIVERSITIES(un_id)
 );
 
 CREATE TABLE STUDENTS_APP.ROLES(
@@ -298,6 +297,32 @@ AFTER INSERT ON STUDENTS_APP.CITIES
   BEGIN
     SELECT MAX(id) INTO max_id
       FROM STUDENTS_APP.CITIES_LOCALIZED;
+    IF max_id IS NULL THEN
+      max_id := 1;
+    END IF;
     INSERT INTO STUDENTS_APP.CITIES_LOCALIZED(id, city_id, language, translated_name)
       VALUES (max_id + 1, :NEW.id, 'English', :NEW.city_name);
+  END;
+
+  --Trigger that fires when a faculty is being added to a university. This trigger checks
+  --if there's already some faculty in the database with the same un_id and
+  --faculty_name fields. At first it seems that this check could be done via setting
+  --the unique constraint on these fields, but there's a problem: faculty can have un_id
+  --set to null, which means that its university has been deleted; and two universities
+  --can have a faculty with the same name. So, when these universities are deleted,
+  --we have unique constraint violation for these faculties, because they both have the same
+  --un_id set to null and the same faculty name.
+CREATE OR REPLACE TRIGGER STUDENTS_APP.ADD_FACULTY
+BEFORE INSERT ON STUDENTS_APP.FACULTIES
+FOR EACH ROW
+  DECLARE
+    row_count int;
+  BEGIN
+    SELECT COUNT(*) INTO row_count
+      FROM STUDENTS_APP.FACULTIES f
+    WHERE f.un_id = :NEW.un_id
+          AND f.faculty_name = :NEW.faculty_name;
+    IF row_count <> 0 THEN
+      RAISE DUP_VAL_ON_INDEX;
+    END IF;
   END;

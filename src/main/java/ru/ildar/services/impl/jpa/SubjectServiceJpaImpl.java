@@ -7,6 +7,7 @@ import ru.ildar.database.entities.LocalizedSubject;
 import ru.ildar.database.entities.Subject;
 import ru.ildar.database.repositories.LocalizedSubjectDAO;
 import ru.ildar.database.repositories.SubjectDAO;
+import ru.ildar.database.repositories.SubjectTypeDAO;
 import ru.ildar.services.SubjectService;
 import ru.ildar.services.factory.impl.JpaServiceFactory;
 
@@ -20,6 +21,8 @@ public class SubjectServiceJpaImpl implements SubjectService
 {
     @Autowired
     private SubjectDAO subjectDAO;
+    @Autowired
+    private SubjectTypeDAO subjectTypeDAO;
     @Autowired
     private LocalizedSubjectDAO localizedSubjectDAO;
 
@@ -54,7 +57,7 @@ public class SubjectServiceJpaImpl implements SubjectService
     public Set<String> getSubjectTypes()
     {
         Set<String> types = new TreeSet<>();
-        subjectDAO.findAll().forEach((t) -> types.add(t.getSubjectType()));
+        subjectTypeDAO.findAll().forEach((t) -> types.add(t.getSubjectType()));
         return types;
     }
 
