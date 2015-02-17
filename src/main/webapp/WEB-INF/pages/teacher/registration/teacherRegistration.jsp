@@ -30,7 +30,7 @@
                     <spring:message code="teach.reg.username" />
                 </form:label>
             </td>
-            <td><form:input path="username" /></td>
+            <td><form:input path="username" autofocus="autofocus" /></td>
             <td><form:errors path="username" /></td>
         </tr>
         <tr>

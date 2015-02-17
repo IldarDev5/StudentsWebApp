@@ -1,6 +1,7 @@
 /**
  * Created by Ildar on 24.01.2015.
  */
+
 $(function() {
     setLoad(true, true, true);
     triggerUniChange = true;

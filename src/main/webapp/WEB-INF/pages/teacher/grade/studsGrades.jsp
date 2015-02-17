@@ -15,8 +15,8 @@
 
 <h2>
     <spring:message code="teach.studGrades">
-        <spring:argument value="${tGroup.teacher.firstName}" />
-        <spring:argument value="${tGroup.teacher.lastName}" />
+        <spring:argument value="${tGroup.teacher.firstName == null ? '' : tGroup.teacher.firstName}" />
+        <spring:argument value="${tGroup.teacher.lastName == null ? '' : tGroup.teacher.lastName}" />
         <spring:argument value="${tGroup.teacher.username}" />
         <spring:argument value="${tGroup.subjectName}" />
         <spring:argument value="${tGroup.semester}" />
