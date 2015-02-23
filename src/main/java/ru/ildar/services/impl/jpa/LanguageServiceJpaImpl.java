@@ -1,8 +1,10 @@
 package ru.ildar.services.impl.jpa;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.Language;
+import ru.ildar.database.entities.QLanguage;
 import ru.ildar.database.repositories.LanguageDAO;
 import ru.ildar.services.LanguageService;
 
@@ -34,6 +36,12 @@ public class LanguageServiceJpaImpl implements LanguageService
     @Override
     public Language getLanguageByAbbreviation(String abbrev)
     {
-        return languageDAO.findLanguageByAbbreviation(abbrev);
+        return languageDAO.findOne(QLanguage.language1.abbreviation.eq(abbrev));
+    }
+
+    @Override
+    public Language getLanguages(BooleanExpression expr)
+    {
+        return languageDAO.findOne(expr);
     }
 }

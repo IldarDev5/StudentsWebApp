@@ -1,11 +1,16 @@
 package ru.ildar.services.impl.jpa;
 
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.Faculty;
+import ru.ildar.database.entities.QFaculty;
 import ru.ildar.database.repositories.FacultyDAO;
 import ru.ildar.services.FacultyService;
+
+import javax.persistence.EntityManager;
 
 @Service
 public class FacultyServiceJpaImpl implements FacultyService
@@ -16,8 +21,10 @@ public class FacultyServiceJpaImpl implements FacultyService
     @Override
     public void saveOrUpdateFaculty(Faculty fac)
     {
-        Faculty otherFac = facultyDAO.
-                findByUniversity_UnIdAndFacultyName(fac.getUniversity().getUnId(), fac.getFacultyName());
+        QFaculty f = QFaculty.faculty;
+        BooleanExpression expr = f.university.unId.eq(fac.getUniversity().getUnId())
+                .and(f.facultyName.eq(fac.getFacultyName()));
+        Faculty otherFac = facultyDAO.findOne(expr);
         if(otherFac != null)
         {
             throw new DuplicateKeyException("Faculty with such name already exists in the specified university");
@@ -29,7 +36,8 @@ public class FacultyServiceJpaImpl implements FacultyService
     @Override
     public Iterable<Faculty> getFacultiesByUniversity(int universityId)
     {
-        return facultyDAO.findByUniversity_UnId(universityId);
+        BooleanExpression expr = QFaculty.faculty.university.unId.eq(universityId);
+        return facultyDAO.findAll(expr);
     }
 
     @Override

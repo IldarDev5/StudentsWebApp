@@ -3,11 +3,13 @@ package ru.ildar.services.impl.jpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.Group;
+import ru.ildar.database.entities.QStudent;
 import ru.ildar.database.entities.Student;
 import ru.ildar.database.repositories.StudentDAO;
 import ru.ildar.services.StudentService;
 import ru.ildar.services.factory.impl.JpaServiceFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,6 +54,9 @@ public class StudentServiceJpaImpl implements StudentService
     @Override
     public List<Student> getByGroup(String groupId)
     {
-        return studentDAO.getByGroup_GroupId(groupId);
+        Iterable<Student> iter = studentDAO.findAll(QStudent.student.group.groupId.eq(groupId));
+        List<Student> res = new ArrayList<>();
+        iter.forEach(res::add);
+        return res;
     }
 }

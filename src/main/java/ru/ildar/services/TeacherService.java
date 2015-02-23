@@ -71,8 +71,7 @@ public interface TeacherService
     /**
      * Get TeachersGroups instances specified by three fields - subject, name, and student username
      */
-    TeachersGroups getTeachersGroupsBySubjectSemesterAndGroupStudent(String subject, int semester,
-                                                 String studentSelect, String teacherUsername);
+    TeachersGroups getTeachersGroups(String subject, long semester, String studentSelect, String teacherUsername);
 
     /**
      * Add TeachersGroups instance to the database, but before

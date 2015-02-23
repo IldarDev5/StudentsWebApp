@@ -1,5 +1,6 @@
 package ru.ildar.services.impl.jpa;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -66,13 +67,15 @@ public class UniversityServiceJpaImpl implements UniversityService
     @Override
     public Iterable<University> getUniversitiesByCity(int cityId)
     {
-        return universityDAO.findByCity_Id(cityId);
+        return universityDAO.findAll(QUniversity.university.city.id.eq(cityId));
     }
 
     @Override
     public void setCityAndAddUniversity(University university, int cityId)
     {
-        University uni = universityDAO.findByCity_IdAndUnName(cityId, university.getUnName());
+        QUniversity qUni = QUniversity.university;
+        BooleanExpression expr = qUni.city.id.eq(cityId).and(qUni.unName.eq(university.getUnName()));
+        University uni = universityDAO.findOne(expr);
         if(uni != null)
             throw new DuplicateKeyException("University with such name and city already exists.");
 
@@ -98,7 +101,9 @@ public class UniversityServiceJpaImpl implements UniversityService
     @Override
     public UniversityDescription getDescription(int unId, String lang)
     {
-        return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang);
+        QUniversityDescription qUniD = QUniversityDescription.universityDescription;
+        BooleanExpression expr = qUniD.university.unId.eq(unId).and(qUniD.language.eq(lang));
+        return uniDescriptionDAO.findOne(expr);
     }
 
     @Override
@@ -113,13 +118,16 @@ public class UniversityServiceJpaImpl implements UniversityService
     public UniversityDescription getDescriptionByLanguageAbbrev(int unId, String langAbbrev)
     {
         Language lang = serviceFactory.getLanguageService().getLanguageByAbbreviation(langAbbrev);
-        return uniDescriptionDAO.findByUniversity_UnIdAndLanguage(unId, lang.getLanguage());
+        QUniversityDescription qUniD = QUniversityDescription.universityDescription;
+        BooleanExpression expr = qUniD.university.unId.eq(unId).and(qUniD.language.eq(lang.getLanguage()));
+        return uniDescriptionDAO.findOne(expr);
     }
 
     @Override
     public UniversityDescription getFirstDescriptionForUniversity(int unId)
     {
-        return uniDescriptionDAO.findOneByUniversity_UnId(unId);
+        return uniDescriptionDAO.findOne(QUniversityDescription.universityDescription
+                .university.unId.eq(unId));
     }
 
     @Override

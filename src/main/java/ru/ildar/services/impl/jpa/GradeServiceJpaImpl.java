@@ -1,5 +1,6 @@
 package ru.ildar.services.impl.jpa;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import ru.ildar.database.repositories.GradeDAO;
 import ru.ildar.services.GradeService;
 import ru.ildar.services.factory.impl.JpaServiceFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -24,7 +26,14 @@ public class GradeServiceJpaImpl implements GradeService
     @Override
     public List<Grade> getStudentGradesInSemester(String studUsername, long semester)
     {
-        return gradeDAO.findByStudent_UsernameAndSemester(studUsername, semester);
+        QGrade grade = QGrade.grade;
+        BooleanExpression expr = grade.student.username.eq(studUsername)
+                .and(grade.semester.eq(semester));
+        Iterable<Grade> iter = gradeDAO.findAll(expr);
+
+        List<Grade> result = new ArrayList<>();
+        iter.forEach(result::add);
+        return result;
     }
 
     @Override
@@ -36,9 +45,11 @@ public class GradeServiceJpaImpl implements GradeService
     @Override
     public Set<Long> getStudentSemesters(String studUsername)
     {
-        List<Grade> grades = gradeDAO.findByStudent_Username(studUsername);
+        BooleanExpression expr = QGrade.grade.student.username.eq(studUsername);
+        Iterable<Grade> grades = gradeDAO.findAll(expr);
         Set<Long> results = new TreeSet<>();
-        grades.stream().map(Grade::getSemester).forEach(results::add);
+        for(Grade grade : grades)
+            results.add(grade.getSemester());
 
         return results;
     }
@@ -50,24 +61,33 @@ public class GradeServiceJpaImpl implements GradeService
         String subject = tGroups.getSubjectName();
         long semester = tGroups.getSemester();
 
-        Sort sort = new Sort(Sort.Direction.ASC, "student_Username");
-        sort = sort.and(new Sort(Sort.Direction.ASC, "semester"));
+        QGrade grade = QGrade.grade;
+        BooleanExpression expr = grade.subjectName.eq(subject)
+                .and(grade.semester.eq(semester))
+                .and(grade.student.group.groupId.eq(groupId));
+        Iterable<Grade> iter = gradeDAO.findAll(expr,
+                grade.student.username.asc(), grade.semester.asc());
 
-        List<Grade> grades =
-                gradeDAO.findBySubjectNameAndSemesterAndStudent_Group_GroupId(subject, semester, groupId, sort);
+        List<Grade> grades = new ArrayList<>();
+        iter.forEach(grades::add);
         return grades;
     }
 
     @Override
-    public Grade getStudentGrade(String subject, int semester, String username, String teacher)
+    public Grade getStudentGrade(String subject, long semester, String username, String teacher)
     {
-        return gradeDAO.findOneBySubjectNameAndSemesterAndStudent_UsernameAndTeacher_Username(subject, semester, username, teacher);
+        QGrade grade = QGrade.grade;
+        BooleanExpression expr = grade.subjectName.eq(subject)
+                .and(grade.semester.eq(semester))
+                .and(grade.student.username.eq(username))
+                .and(grade.teacher.username.eq(teacher));
+        return gradeDAO.findOne(expr);
     }
 
     @Override
     public void setStudentAndTeacherAndAddGrade(String studStr, String teacherStr, Grade grade)
     {
-        Grade prevGrade = gradeDAO.findOneBySubjectNameAndSemesterAndStudent_UsernameAndTeacher_Username(grade.getSubjectName(), grade.getSemester(), studStr, teacherStr);
+        Grade prevGrade = getStudentGrade(grade.getSubjectName(), grade.getSemester(), studStr, teacherStr);
 
         if(prevGrade != null)
         {

@@ -9,7 +9,6 @@ import ru.ildar.database.entities.News;
 import ru.ildar.database.entities.Person;
 import ru.ildar.database.repositories.NewsDAO;
 import ru.ildar.services.NewsService;
-import ru.ildar.services.PersonService;
 import ru.ildar.services.factory.impl.JpaServiceFactory;
 
 import java.util.ArrayList;

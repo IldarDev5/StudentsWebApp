@@ -1,10 +1,9 @@
 package ru.ildar.services.impl.jpa;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.ildar.database.entities.City;
-import ru.ildar.database.entities.Language;
-import ru.ildar.database.entities.LocalizedCity;
+import ru.ildar.database.entities.*;
 import ru.ildar.database.repositories.CityDAO;
 import ru.ildar.database.repositories.LocalizedCityDAO;
 import ru.ildar.services.CityService;
@@ -62,13 +61,21 @@ public class CityServiceJpaImpl implements CityService
     @Override
     public LocalizedCity getLocalization(int cityId, String langAbbrev)
     {
-        return localizedCityDAO.findByCity_IdAndLanguage_Abbreviation(cityId, langAbbrev);
+        return findByCity_IdAndLanguage_Abbreviation(cityId, langAbbrev);
     }
 
     @Override
     public void removeCity(int cityId)
     {
         cityDAO.delete(cityId);
+    }
+
+    private LocalizedCity findByCity_IdAndLanguage_Abbreviation(int cityId, String langAbbrev)
+    {
+        QLocalizedCity locCity = QLocalizedCity.localizedCity;
+        BooleanExpression expr = locCity.city.id.eq(cityId)
+                .and(locCity.language.abbreviation.eq(langAbbrev));
+        return localizedCityDAO.findOne(expr);
     }
 
     @Override
@@ -78,14 +85,14 @@ public class CityServiceJpaImpl implements CityService
         List<LocalizedCity> citiesLocs = new ArrayList<>();
         cities.forEach((city) ->
         {
-            LocalizedCity cityLoc = localizedCityDAO.findByCity_IdAndLanguage_Abbreviation
+            LocalizedCity cityLoc = findByCity_IdAndLanguage_Abbreviation
                     (city.getId(), languageAbbrev);
             if(cityLoc != null)
                 citiesLocs.add(cityLoc);
             else
             //If there's no city localization for such locale, add default locale - English
             {
-                cityLoc = localizedCityDAO.findByCity_IdAndLanguage_Abbreviation
+                cityLoc = findByCity_IdAndLanguage_Abbreviation
                         (city.getId(), Locale.US.getLanguage());
                 citiesLocs.add(cityLoc);
             }

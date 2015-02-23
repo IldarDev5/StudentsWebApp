@@ -1,9 +1,11 @@
 package ru.ildar.services.impl.jpa;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.LocalizedSubject;
+import ru.ildar.database.entities.QLocalizedSubject;
 import ru.ildar.database.entities.Subject;
 import ru.ildar.database.repositories.LocalizedSubjectDAO;
 import ru.ildar.database.repositories.SubjectDAO;
@@ -91,8 +93,10 @@ public class SubjectServiceJpaImpl implements SubjectService
     @Override
     public LocalizedSubject getSubjectLocalization(String subjectName, String languageAbbrev)
     {
-        return localizedSubjectDAO.findBySubject_SubjectNameAndLanguage_Abbreviation
-                (subjectName, languageAbbrev);
+        QLocalizedSubject locSubj = QLocalizedSubject.localizedSubject;
+        BooleanExpression expr = locSubj.subject.subjectName.eq(subjectName)
+                .and(locSubj.language.abbreviation.eq(languageAbbrev));
+        return localizedSubjectDAO.findOne(expr);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ru.ildar.services.impl.jpa;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.PageRequest;
@@ -109,9 +110,14 @@ public class TeacherServiceJpaImpl implements TeacherService
     @Override
     public List<TeachersGroups> getTeachersGroups(String name)
     {
-        Sort sort = new Sort(Sort.Direction.ASC, "group_GroupId");
-        sort = sort.and(new Sort(Sort.Direction.ASC, "semester"));
-        return teachersGroupsDAO.findByTeacher_Username(name, sort);
+        QTeachersGroups tg = QTeachersGroups.teachersGroups;
+        BooleanExpression expr = tg.teacher.username.eq(name);
+
+        Iterable<TeachersGroups> iter = teachersGroupsDAO.findAll(expr,
+                tg.group.groupId.asc(), tg.semester.asc());
+        List<TeachersGroups> res = new ArrayList<>();
+        iter.forEach(res::add);
+        return res;
     }
 
     @Override
@@ -121,12 +127,16 @@ public class TeacherServiceJpaImpl implements TeacherService
     }
 
     @Override
-    public TeachersGroups getTeachersGroupsBySubjectSemesterAndGroupStudent(String subject, int semester,
-                                                                            String studentSelect, String teacherUsername)
+    public TeachersGroups getTeachersGroups(String subject, long semester, String studentSelect, String teacherUsername)
     {
         Student student = serviceFactory.getStudentService().getByUsername(studentSelect);
-        return teachersGroupsDAO.findBySubjectNameAndSemesterAndGroupAndTeacher_Username
-                (subject, semester, student.getGroup(), teacherUsername);
+
+        QTeachersGroups tg = QTeachersGroups.teachersGroups;
+        BooleanExpression expr = tg.subjectName.eq(subject)
+                .and(tg.semester.eq(semester))
+                .and(tg.group.eq(student.getGroup()))
+                .and(tg.teacher.username.eq(teacherUsername));
+        return teachersGroupsDAO.findOne(expr);
     }
 
     @Override
@@ -134,13 +144,11 @@ public class TeacherServiceJpaImpl implements TeacherService
                                                        String groupId, String teacherUsername)
     {
         Group group = serviceFactory.getGroupService().getGroupById(groupId);
-        TeachersGroups otherTg = teachersGroupsDAO.findBySubjectNameAndSemesterAndGroupAndTeacher_Username
-                (tg.getSubjectName(), tg.getSemester(), group, teacherUsername);
+        TeachersGroups otherTg = getTeachersGroups(tg.getSubjectName(), tg.getSemester(), group.getGroupId(), teacherUsername);
         if(otherTg != null)
         {
             throw new DuplicateKeyException("This group already has this teacher teaching this subject in this semester.");
         }
-
 
         Teacher teacher = teacherDAO.findOne(teacherUsername);
         tg.setGroup(group);
@@ -152,7 +160,11 @@ public class TeacherServiceJpaImpl implements TeacherService
     @Override
     public List<Teacher> getTeachersByUniversity(int uniId)
     {
-        return teacherDAO.findByUniversity_UnId(uniId);
+        BooleanExpression expr = QTeacher.teacher.university.unId.eq(uniId);
+        Iterable<Teacher> iter = teacherDAO.findAll(expr);
+        List<Teacher> res = new ArrayList<>();
+        iter.forEach(res::add);
+        return res;
     }
 
     @Override

@@ -1,11 +1,14 @@
 package ru.ildar.services.impl.jpa;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.Faculty;
 import ru.ildar.database.entities.Group;
+import ru.ildar.database.entities.QGrade;
+import ru.ildar.database.entities.QGroup;
 import ru.ildar.database.repositories.GroupDAO;
 import ru.ildar.services.GroupService;
 import ru.ildar.services.factory.impl.JpaServiceFactory;
@@ -30,7 +33,9 @@ public class GroupServiceJpaImpl implements GroupService
     @Override
     public Iterable<Group> getGroupsByFaculty(int facultyId)
     {
-        return groupDAO.findByFaculty_FacultyIdOrderByGroupIdAscStudentsCountAsc(facultyId);
+        QGroup group = QGroup.group;
+        BooleanExpression expr = group.faculty.facultyId.eq(facultyId);
+        return groupDAO.findAll(expr, group.groupId.asc(), group.studentsCount.asc());
     }
 
     @Override

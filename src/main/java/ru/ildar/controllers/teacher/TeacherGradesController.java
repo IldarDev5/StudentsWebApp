@@ -95,8 +95,7 @@ public class TeacherGradesController
         Grade grade = new Grade(s.getGradeValue(), s.getSemester(), null, null, s.getSubject());
         gradeService.setStudentAndTeacherAndAddGrade(s.getStudentSelect(), principal.getName(), grade);
 
-        TeachersGroups tGroups = teacherService.getTeachersGroupsBySubjectSemesterAndGroupStudent
-                (s.getSubject(), s.getSemester(), s.getStudentSelect(), principal.getName());
+        TeachersGroups tGroups = teacherService.getTeachersGroups(s.getSubject(), s.getSemester(), s.getStudentSelect(), principal.getName());
         return new ModelAndView("redirect:/teacher/grades?id=" + tGroups.getId());
     }
 

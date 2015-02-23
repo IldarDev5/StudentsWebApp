@@ -1,5 +1,6 @@
 package ru.ildar.services;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.stereotype.Service;
 import ru.ildar.database.entities.Language;
 
@@ -24,4 +25,6 @@ public interface LanguageService
      * @param abbrev The language abbreviation
      */
     Language getLanguageByAbbreviation(String abbrev);
+
+    Language getLanguages(BooleanExpression expr);
 }

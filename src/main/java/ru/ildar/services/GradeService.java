@@ -36,7 +36,7 @@ public interface GradeService
      * @param username Username of the student who got this grade
      * @param teacher Teacher who set this grade
      */
-    Grade getStudentGrade(String subject, int semester, String username, String teacher);
+    Grade getStudentGrade(String subject, long semester, String username, String teacher);
 
     /**
      * Set Student and Teacher instances, found by their specified usernames, to the grade
