@@ -16,6 +16,8 @@ import ru.ildar.services.factory.impl.JpaServiceFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.ildar.CollectionsUtil.getListFromIterable;
+
 @Service
 public class UniversityServiceJpaImpl implements UniversityService
 {
@@ -42,12 +44,7 @@ public class UniversityServiceJpaImpl implements UniversityService
     @Override
     public List<University> getUniversities(int pageNumber, int unisPerPage)
     {
-        Slice<University> slice = universityDAO.findAll(new PageRequest(pageNumber, unisPerPage));
-        List<University> result = new ArrayList<>();
-        for(University un : slice)
-            result.add(un);
-
-        return result;
+        return getListFromIterable(universityDAO.findAll(new PageRequest(pageNumber, unisPerPage)));
     }
 
     @Override
@@ -126,8 +123,7 @@ public class UniversityServiceJpaImpl implements UniversityService
     @Override
     public UniversityDescription getFirstDescriptionForUniversity(int unId)
     {
-        return uniDescriptionDAO.findOne(QUniversityDescription.universityDescription
-                .university.unId.eq(unId));
+        return uniDescriptionDAO.findOne(QUniversityDescription.universityDescription.university.unId.eq(unId));
     }
 
     @Override

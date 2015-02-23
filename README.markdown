@@ -76,3 +76,4 @@ The following technologies and frameworks are used in this application:
 * Apache Tiles
 * Apache Commons Fileupload
 * Jackson JSON mapper
+* Querydsl

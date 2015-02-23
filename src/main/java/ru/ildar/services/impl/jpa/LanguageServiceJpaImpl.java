@@ -11,6 +11,8 @@ import ru.ildar.services.LanguageService;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.ildar.CollectionsUtil.getListFromIterable;
+
 @Service
 public class LanguageServiceJpaImpl implements LanguageService
 {
@@ -20,17 +22,13 @@ public class LanguageServiceJpaImpl implements LanguageService
     @Override
     public List<String> getAllLanguagesValues()
     {
-        List<String> result = new ArrayList<>();
-        languageDAO.findAllValues().forEach(result::add);
-        return result;
+        return getListFromIterable(languageDAO.findAllValues());
     }
 
     @Override
     public List<Language> getAllLanguages()
     {
-        List<Language> result = new ArrayList<>();
-        languageDAO.findAll().forEach(result::add);
-        return result;
+        return getListFromIterable(languageDAO.findAll());
     }
 
     @Override

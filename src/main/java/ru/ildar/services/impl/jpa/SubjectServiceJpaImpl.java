@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static ru.ildar.CollectionsUtil.getListFromIterable;
+
 @Service
 public class SubjectServiceJpaImpl implements SubjectService
 {
@@ -34,19 +36,13 @@ public class SubjectServiceJpaImpl implements SubjectService
     @Override
     public List<Subject> getAllSubjects()
     {
-        Iterable<Subject> it = subjectDAO.findAll();
-        List<Subject> result = new ArrayList<>();
-        it.forEach(result::add);
-        return result;
+        return getListFromIterable(subjectDAO.findAll());
     }
 
     @Override
     public List<Subject> getAllSubjects(int pageNumber, int subjectsPerPage)
     {
-        Iterable<Subject> it = subjectDAO.findAll(new PageRequest(pageNumber, subjectsPerPage));
-        List<Subject> result = new ArrayList<>();
-        it.forEach(result::add);
-        return result;
+        return getListFromIterable(subjectDAO.findAll(new PageRequest(pageNumber, subjectsPerPage)));
     }
 
     @Override

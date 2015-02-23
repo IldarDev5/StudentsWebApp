@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static ru.ildar.CollectionsUtil.getListFromIterable;
+
 @Service
 public class CityServiceJpaImpl implements CityService
 {
@@ -29,10 +31,7 @@ public class CityServiceJpaImpl implements CityService
     @Override
     public List<City> getAllCities()
     {
-        Iterable<City> cities = cityDAO.findAll();
-        List<City> result = new ArrayList<>();
-        cities.forEach(result::add);
-        return result;
+        return getListFromIterable(cityDAO.findAll());
     }
 
     @Override
@@ -85,15 +84,13 @@ public class CityServiceJpaImpl implements CityService
         List<LocalizedCity> citiesLocs = new ArrayList<>();
         cities.forEach((city) ->
         {
-            LocalizedCity cityLoc = findByCity_IdAndLanguage_Abbreviation
-                    (city.getId(), languageAbbrev);
+            LocalizedCity cityLoc = findByCity_IdAndLanguage_Abbreviation(city.getId(), languageAbbrev);
             if(cityLoc != null)
                 citiesLocs.add(cityLoc);
             else
             //If there's no city localization for such locale, add default locale - English
             {
-                cityLoc = findByCity_IdAndLanguage_Abbreviation
-                        (city.getId(), Locale.US.getLanguage());
+                cityLoc = findByCity_IdAndLanguage_Abbreviation(city.getId(), Locale.US.getLanguage());
                 citiesLocs.add(cityLoc);
             }
         });

@@ -14,6 +14,8 @@ import ru.ildar.services.factory.impl.JpaServiceFactory;
 
 import java.util.*;
 
+import static ru.ildar.CollectionsUtil.getListFromIterable;
+
 @Service
 public class TeacherServiceJpaImpl implements TeacherService
 {
@@ -70,10 +72,7 @@ public class TeacherServiceJpaImpl implements TeacherService
     @Override
     public List<Teacher> getTeachers(int pageNumber, int teachersPerPage)
     {
-        Iterable<Teacher> teachers = teacherDAO.findAll(new PageRequest(pageNumber, teachersPerPage));
-        List<Teacher> result = new ArrayList<>();
-        teachers.forEach(result::add);
-        return result;
+        return getListFromIterable(teacherDAO.findAll(new PageRequest(pageNumber, teachersPerPage)));
     }
 
     @Override
@@ -113,11 +112,8 @@ public class TeacherServiceJpaImpl implements TeacherService
         QTeachersGroups tg = QTeachersGroups.teachersGroups;
         BooleanExpression expr = tg.teacher.username.eq(name);
 
-        Iterable<TeachersGroups> iter = teachersGroupsDAO.findAll(expr,
-                tg.group.groupId.asc(), tg.semester.asc());
-        List<TeachersGroups> res = new ArrayList<>();
-        iter.forEach(res::add);
-        return res;
+        return getListFromIterable(teachersGroupsDAO.findAll(expr,
+                tg.group.groupId.asc(), tg.semester.asc()));
     }
 
     @Override
@@ -161,10 +157,7 @@ public class TeacherServiceJpaImpl implements TeacherService
     public List<Teacher> getTeachersByUniversity(int uniId)
     {
         BooleanExpression expr = QTeacher.teacher.university.unId.eq(uniId);
-        Iterable<Teacher> iter = teacherDAO.findAll(expr);
-        List<Teacher> res = new ArrayList<>();
-        iter.forEach(res::add);
-        return res;
+        return getListFromIterable(teacherDAO.findAll(expr));
     }
 
     @Override

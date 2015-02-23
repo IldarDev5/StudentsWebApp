@@ -14,6 +14,8 @@ import ru.ildar.services.factory.impl.JpaServiceFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.ildar.CollectionsUtil.getListFromIterable;
+
 @Service
 public class NewsServiceJpaImpl implements NewsService
 {
@@ -26,11 +28,9 @@ public class NewsServiceJpaImpl implements NewsService
     @Override
     public List<News> getNews(int page, int newsCountPerPage)
     {
-        Page<News> news = newsDAO.findAll(new PageRequest(page, newsCountPerPage,
-                new Sort(Sort.Direction.DESC, "publishDate")));
-        List<News> result = new ArrayList<>();
-        news.forEach(result::add);
-        return result;
+        return getListFromIterable(newsDAO.findAll
+                (new PageRequest(page, newsCountPerPage,
+                        new Sort(Sort.Direction.DESC, "publishDate"))));
     }
 
     @Override

@@ -12,6 +12,8 @@ import ru.ildar.services.factory.impl.JpaServiceFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.ildar.CollectionsUtil.getListFromIterable;
+
 @Service
 public class StudentServiceJpaImpl implements StudentService
 {
@@ -54,9 +56,6 @@ public class StudentServiceJpaImpl implements StudentService
     @Override
     public List<Student> getByGroup(String groupId)
     {
-        Iterable<Student> iter = studentDAO.findAll(QStudent.student.group.groupId.eq(groupId));
-        List<Student> res = new ArrayList<>();
-        iter.forEach(res::add);
-        return res;
+        return getListFromIterable(studentDAO.findAll(QStudent.student.group.groupId.eq(groupId)));
     }
 }

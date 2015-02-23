@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static ru.ildar.CollectionsUtil.getListFromIterable;
+
 @Service
 public class GradeServiceJpaImpl implements GradeService
 {
@@ -29,11 +31,7 @@ public class GradeServiceJpaImpl implements GradeService
         QGrade grade = QGrade.grade;
         BooleanExpression expr = grade.student.username.eq(studUsername)
                 .and(grade.semester.eq(semester));
-        Iterable<Grade> iter = gradeDAO.findAll(expr);
-
-        List<Grade> result = new ArrayList<>();
-        iter.forEach(result::add);
-        return result;
+        return getListFromIterable(gradeDAO.findAll(expr));
     }
 
     @Override
@@ -65,12 +63,7 @@ public class GradeServiceJpaImpl implements GradeService
         BooleanExpression expr = grade.subjectName.eq(subject)
                 .and(grade.semester.eq(semester))
                 .and(grade.student.group.groupId.eq(groupId));
-        Iterable<Grade> iter = gradeDAO.findAll(expr,
-                grade.student.username.asc(), grade.semester.asc());
-
-        List<Grade> grades = new ArrayList<>();
-        iter.forEach(grades::add);
-        return grades;
+        return getListFromIterable(gradeDAO.findAll(expr, grade.student.username.asc(), grade.semester.asc()));
     }
 
     @Override
