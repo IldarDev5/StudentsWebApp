@@ -10,7 +10,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.ildar.services.LoginUserDetailsService;
+import ru.ildar.services.factory.ServiceFactory;
 
 /**
  * Spring Security configuration for this web app
@@ -21,12 +23,13 @@ import ru.ildar.services.LoginUserDetailsService;
 public class AuthConfig extends WebSecurityConfigurerAdapter
 {
     @Autowired
-    private LoginUserDetailsService loginUserDetailsService;
+    private ServiceFactory serviceFactory;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
-        auth.userDetailsService(loginUserDetailsService).passwordEncoder(new Md5PasswordEncoder());
+        UserDetailsService userDetailsService = serviceFactory.getUserDetailsService();
+        auth.userDetailsService(userDetailsService).passwordEncoder(new Md5PasswordEncoder());
     }
 
     @Override

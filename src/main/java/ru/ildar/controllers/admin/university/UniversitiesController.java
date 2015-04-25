@@ -89,7 +89,7 @@ public class UniversitiesController
         if(result.hasErrors())
         {
             model.addAttribute("cities", cityService.getAllCities());
-            return new ModelAndView("addUniversity", "uni", uni);
+            return new ModelAndView("admin/university/addUniversity", "uni", uni);
         }
 
         University university = new University(uni.getUnName(), uni.getUnAddress(), null, null);

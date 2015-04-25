@@ -9,6 +9,13 @@ public class Language
     private String language;
     private String abbreviation;
 
+    public Language() { }
+    public Language(String language, String abbreviation)
+    {
+        this.language = language;
+        this.abbreviation = abbreviation;
+    }
+
     @Id
     @Column(name = "LANGUAGE", nullable = false)
     public String getLanguage()

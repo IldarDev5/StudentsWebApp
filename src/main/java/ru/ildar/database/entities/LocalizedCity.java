@@ -20,6 +20,12 @@ public class LocalizedCity
         this.id = id;
         this.translatedName = translation;
     }
+    public LocalizedCity(String translatedName, City city, Language language)
+    {
+        this.translatedName = translatedName;
+        this.city = city;
+        this.language = language;
+    }
 
     @Id
     @Column(name = "ID")
